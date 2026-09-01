@@ -1,0 +1,23 @@
+@import 'tailwindcss';
+
+
+@keyframes animStar {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(-2000px);
+  }
+}
+
+.animate-stars {
+  animation: animStar 50s linear infinite;
+}
+
+.animate-stars-slow {
+  animation: animStar 100s linear infinite;
+}
+
+.animate-stars-slower {
+  animation: animStar 150s linear infinite;
+}
