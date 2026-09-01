@@ -1,16 +1,77 @@
-# React + Vite
+# 📚 Marian Sefer School Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A comprehensive web-based school management system designed specifically for **Marian Sefer School** in Dire Dawa, Ethiopia. This modern platform streamlines school administration, enhances communication between teachers, students, and parents, and provides a seamless digital learning experience.
 
-Currently, two official plugins are available:
+## 🏫 About the School
+Marian Sefer School is a [elementary/secondary/primary] school located in Dire Dawa, Ethiopia, committed to providing quality education and fostering academic excellence.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Features
 
-## React Compiler
+### For Administrators
+- 📊 **Dashboard** - Real-time analytics and insights
+- 👨‍🏫 **Staff Management** - Manage teachers and employees
+- 👨‍🎓 **Student Records** - Comprehensive student profiles
+- 📅 **Academic Calendar** - Manage events and schedules
+- 📝 **Report Generation** - Generate progress reports
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### For Teachers
+- 📖 **Class Management** - Manage classes and subjects
+- 📊 **Grade Management** - Record and track student grades
+- 📝 **Assignment Manager** - Create and grade assignments
+- 💬 **Communication** - Message parents and students
+- 📋 **Attendance Tracking** - Mark and view attendance
 
-## Expanding the ESLint configuration
+### For Students
+- 🏠 **Dashboard** - View personal information
+- 📚 **Course Materials** - Access learning resources
+- 📊 **Grades View** - Check academic progress
+- 📅 **Schedule** - View class schedule
+- 📝 **Assignments** - Submit and track assignments
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### For Parents
+- 👨‍👩‍👧‍👦 **Student Tracking** - Monitor children's progress
+- 💬 **Communication** - Contact teachers
+- 📊 **Report Cards** - View report cards
+- 📅 **Calendar** - View school events
+
+## 🛠️ Tech Stack
+
+### Frontend
+- **Framework**: React.js / Next.js
+- **Styling**: Tailwind CSS
+- **State Management**: [Redux/Context API]
+- **UI Components**: [Material-UI/Radix UI]
+
+### Backend
+- **Framework**: [Node.js/Express/Django]
+- **Database**: [PostgreSQL/MongoDB/MySQL]
+- **Authentication**: JWT
+
+### DevOps
+- **Hosting**: [Vercel/Netlify/AWS]
+- **Version Control**: Git & GitHub
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js (v16 or higher)
+- npm or yarn
+- Git
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/lenodev5-debug/marian_sefer_school.git
+
+# Navigate to project
+cd marian_sefer_school
+
+# Install dependencies
+npm install
+
+# Create .env file and add environment variables
+cp .env.example .env
+
+# Run development server
+npm run dev
