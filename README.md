@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 📚 Marian Sefer School Management System
 
 A comprehensive web-based school management system designed specifically for **Marian Sefer School** in Dire Dawa, Ethiopia. This modern platform streamlines school administration, enhances communication between teachers, students, and parents, and provides a seamless digital learning experience.
@@ -75,3 +76,7 @@ cp .env.example .env
 
 # Run development server
 npm run dev
+=======
+# mariam-sefer-school
+A comprehensive web-based school management system designed specifically for **Marian Sefer School** in Dire Dawa, Ethiopia. This modern platform streamlines school administration, enhances communication between teachers, students, and parents, and provides a seamless digital learning experience.
+>>>>>>> c1a96f009baf095f73e2e6d44a5da288cb18bcf4
