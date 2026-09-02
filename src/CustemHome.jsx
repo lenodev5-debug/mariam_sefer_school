@@ -1,8 +1,8 @@
 import SectionTimeline from "./components/shared/sectionTimeLine";
 import Home from "./components/pages/Home";
-import About from "./components/pages/About";
+import Baner from "./components/shared/Baner";
 
-export default function CustemHome() {
+export default function CustomHome() {
   const sections = [
     {
       id: "home",
@@ -10,23 +10,24 @@ export default function CustemHome() {
       component: <Home />,
     },
     {
-        id: 'About',
-        label: 'About',
-        component: <About />,
-    }
+      id: "baner",
+      label: "Banner",
+      component: <Baner />,
+    },
   ];
 
   return (
-    <main className="relative min-h-screen">
+    <main className="relative min-h-screen w-full">
       {sections.map((section) => (
         <section
           key={section.id}
           id={section.id}
-          className="scroll-mt-24 h-full"  // Add h-full
+          className="min-h-screen w-full scroll-mt-24"
         >
           {section.component}
         </section>
       ))}
+
       <SectionTimeline sections={sections} />
     </main>
   );

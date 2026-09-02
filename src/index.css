@@ -21,3 +21,104 @@
 .animate-stars-slower {
   animation: animStar 150s linear infinite;
 }
+
+
+/* baner page animation */
+@keyframes slideTags {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-33.333%);
+  }
+}
+
+@keyframes slideTagsReverse {
+  from {
+    transform: translateX(-33.333%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+.tags-track {
+  animation: slideTags 40s linear infinite;
+}
+
+.tags-track-reverse {
+  animation: slideTagsReverse 40s linear infinite;
+}
+
+@keyframes slideTags {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-33.333%);
+  }
+}
+
+/* ==================================================
+   TAG MARQUEE ← LEFT
+   ================================================== */
+
+@keyframes slideTagsReverse {
+  from {
+    transform: translateX(-33.333%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* ==================================================
+   TAG TRACK
+   ================================================== */
+
+.tags-track {
+  animation: slideTags 28s linear infinite;
+}
+
+.tags-track-reverse {
+  animation: slideTagsReverse 22s linear infinite;
+}
+
+/* ==================================================
+   PAUSE TAGS ON HOVER
+   ================================================== */
+
+.tags-track:hover,
+.tags-track-reverse:hover {
+  animation-play-state: paused;
+}
+
+/* ==================================================
+   STAT ICON FLOAT
+   ================================================== */
+
+@keyframes statIconFloat {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* ==================================================
+   STAT ICON
+   ================================================== */
+
+.stat-icon {
+  animation: statIconFloat 2.2s ease-in-out infinite;
+}

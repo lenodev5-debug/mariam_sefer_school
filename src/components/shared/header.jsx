@@ -1,4 +1,6 @@
+import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 import { useTheme } from "../../context/usetheme";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Header({ onMenuClick, sidebarOpen }) {
   const { theme, toggleTheme } = useTheme();
@@ -12,19 +14,16 @@ function Header({ onMenuClick, sidebarOpen }) {
           items-center
           justify-between
 
-          border
-          border-gray-200/70
+          border-b
+          border-gray-200/20
           
           px-4
 
-          shadow-xl
-          shadow-black/5
+          backdrop-blur-xl
+          bg-white/10
 
-          backdrop-blur-2xl
-
-          dark:border-gray-700/60
-          bg-transparent
-          dark:shadow-black/30
+          dark:border-gray-700/30
+          dark:bg-gray-900/10
         "
       >
         {/* Left */}
@@ -46,11 +45,11 @@ function Header({ onMenuClick, sidebarOpen }) {
               transition-all
               duration-300
 
-              hover:bg-gray-100
+              hover:bg-white/30
               hover:text-blue-500
 
               dark:text-gray-300
-              dark:hover:bg-gray-800
+              dark:hover:bg-gray-800/30
               dark:hover:text-blue-400
             "
           >
@@ -104,10 +103,10 @@ function Header({ onMenuClick, sidebarOpen }) {
               font-medium
               text-gray-600
               transition
-              hover:bg-gray-100
+              hover:bg-white/30
               hover:text-blue-500
               dark:text-gray-300
-              dark:hover:bg-gray-800
+              dark:hover:bg-gray-800/30
               dark:hover:text-blue-400
             "
           >
@@ -124,10 +123,10 @@ function Header({ onMenuClick, sidebarOpen }) {
               font-medium
               text-gray-600
               transition
-              hover:bg-gray-100
+              hover:bg-white/30
               hover:text-blue-500
               dark:text-gray-300
-              dark:hover:bg-gray-800
+              dark:hover:bg-gray-800/30
               dark:hover:text-blue-400
             "
           >
@@ -144,10 +143,10 @@ function Header({ onMenuClick, sidebarOpen }) {
               font-medium
               text-gray-600
               transition
-              hover:bg-gray-100
+              hover:bg-white/30
               hover:text-blue-500
               dark:text-gray-300
-              dark:hover:bg-gray-800
+              dark:hover:bg-gray-800/30
               dark:hover:text-blue-400
             "
           >
@@ -164,10 +163,10 @@ function Header({ onMenuClick, sidebarOpen }) {
               font-medium
               text-gray-600
               transition
-              hover:bg-gray-100
+              hover:bg-white/30
               hover:text-blue-500
               dark:text-gray-300
-              dark:hover:bg-gray-800
+              dark:hover:bg-gray-800/30
               dark:hover:text-blue-400
             "
           >
@@ -183,14 +182,13 @@ function Header({ onMenuClick, sidebarOpen }) {
             type="button"
             aria-label="Toggle dark mode"
             className="
-              group
               relative
               h-10
               w-[70px]
               rounded-full
               border
-              border-gray-200
-              bg-gray-100
+              border-gray-200/30
+              bg-white/20
               p-1
               shadow-inner
 
@@ -198,11 +196,12 @@ function Header({ onMenuClick, sidebarOpen }) {
               duration-300
               hover:shadow-md
 
-              dark:border-gray-700
-              dark:bg-gray-800
+              dark:border-gray-700/30
+              dark:bg-gray-800/20
             "
           >
-            <span
+            {/* Static icons on the track */}
+            <div
               className="
                 pointer-events-none
                 absolute
@@ -210,31 +209,25 @@ function Header({ onMenuClick, sidebarOpen }) {
                 flex
                 items-center
                 justify-between
-                px-2
+                px-2.5
                 text-xs
               "
             >
-              <span
-                className={
-                  theme === "dark"
-                    ? "text-gray-500"
-                    : "text-yellow-500"
-                }
-              >
-                ☀
-              </span>
+              <FontAwesomeIcon 
+                icon={faSun} 
+                className={`h-3.5 w-3.5 transition-colors duration-300 ${
+                  theme === "dark" ? "text-gray-500" : "text-yellow-500"
+                }`}
+              />
+              <FontAwesomeIcon 
+                icon={faMoon} 
+                className={`h-3.5 w-3.5 transition-colors duration-300 ${
+                  theme === "dark" ? "text-blue-300" : "text-gray-400"
+                }`}
+              />
+            </div>
 
-              <span
-                className={
-                  theme === "dark"
-                    ? "text-blue-300"
-                    : "text-gray-400"
-                }
-              >
-                ☾
-              </span>
-            </span>
-
+            {/* Sliding thumb */}
             <span
               className={`
                 relative
@@ -249,7 +242,8 @@ function Header({ onMenuClick, sidebarOpen }) {
                 shadow-md
                 transition-transform
                 duration-300
-                dark:bg-gray-950
+                ease-in-out
+                dark:bg-gray-800
 
                 ${
                   theme === "dark"
@@ -258,9 +252,15 @@ function Header({ onMenuClick, sidebarOpen }) {
                 }
               `}
             >
-              {theme === "dark" ? "☾" : "☀"}
+              <FontAwesomeIcon 
+                icon={theme === "dark" ? faMoon : faSun} 
+                className={`h-3.5 w-3.5 transition-colors duration-300 ${
+                  theme === "dark" ? "text-blue-400" : "text-yellow-500"
+                }`}
+              />
             </span>
           </button>
+          
           {/* Profile Circle */}
           <button
             type="button"
@@ -284,7 +284,7 @@ function Header({ onMenuClick, sidebarOpen }) {
               ring-2
               ring-indigo-500/20
               ring-offset-2
-              ring-offset-white
+              ring-offset-white/10
 
               transition-all
               duration-300
@@ -293,7 +293,7 @@ function Header({ onMenuClick, sidebarOpen }) {
               hover:ring-indigo-500/50
 
               dark:ring-indigo-400/20
-              dark:ring-offset-gray-950
+              dark:ring-offset-gray-950/10
             "
           >
             A
