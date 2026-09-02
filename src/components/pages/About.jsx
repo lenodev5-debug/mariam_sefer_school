@@ -1,10 +1,10 @@
 // About.js
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faGraduationCap, 
-  faBook, 
-  faMapMarkerAlt, 
-  faPhone, 
+import {
+  faGraduationCap,
+  faBook,
+  faMapMarkerAlt,
+  faPhone,
   faEnvelope,
   faUsers,
   faChalkboardTeacher,
@@ -18,9 +18,9 @@ import {
   faInfoCircle,
   faHome,
   faBookOpen,
-  faAddressCard
+  faAddressCard,
 } from '@fortawesome/free-solid-svg-icons';
-import '../../css/About.css'
+import '../../css/About.css';
 
 export default function About() {
   return (
@@ -28,7 +28,7 @@ export default function About() {
       <div className="about-container">
         <h1 className="about-main-title">Mariam Sefer School</h1>
         <p className="about-main-subtitle">Dire Dawa, Ethiopia</p>
-        
+
         <div className="palette">
           {/* About Us - Top Right */}
           <div id="color1" className="color">
@@ -43,13 +43,17 @@ export default function About() {
               </div>
               <div className="color-details">
                 <p>
-                  Mariam Sefer Primary and Secondary School is a prestigious educational 
-                  institution located in Dire Dawa, Ethiopia. Committed to academic excellence, 
-                  the school provides quality education from primary through secondary levels.
+                  Mariam Sefer Primary and Secondary School is a prestigious educational institution
+                  located in Dire Dawa, Ethiopia. Committed to academic excellence, the school
+                  provides quality education from primary through secondary levels.
                 </p>
                 <div className="color-stats">
-                  <span><FontAwesomeIcon icon={faUsers} /> 500+ Students</span>
-                  <span><FontAwesomeIcon icon={faChalkboardTeacher} /> 30+ Teachers</span>
+                  <span>
+                    <FontAwesomeIcon icon={faUsers} /> 500+ Students
+                  </span>
+                  <span>
+                    <FontAwesomeIcon icon={faChalkboardTeacher} /> 30+ Teachers
+                  </span>
                 </div>
               </div>
             </div>
@@ -68,14 +72,20 @@ export default function About() {
               </div>
               <div className="color-details">
                 <p>
-                  To empower students with knowledge, skills, and values that prepare them 
-                  for higher education and responsible citizenship, while fostering a love 
-                  for learning and personal growth.
+                  To empower students with knowledge, skills, and values that prepare them for
+                  higher education and responsible citizenship, while fostering a love for learning
+                  and personal growth.
                 </p>
                 <div className="color-values">
-                  <span><FontAwesomeIcon icon={faStar} /> Excellence</span>
-                  <span><FontAwesomeIcon icon={faHands} /> Integrity</span>
-                  <span><FontAwesomeIcon icon={faClock} /> Innovation</span>
+                  <span>
+                    <FontAwesomeIcon icon={faStar} /> Excellence
+                  </span>
+                  <span>
+                    <FontAwesomeIcon icon={faHands} /> Integrity
+                  </span>
+                  <span>
+                    <FontAwesomeIcon icon={faClock} /> Innovation
+                  </span>
                 </div>
               </div>
             </div>
@@ -94,11 +104,21 @@ export default function About() {
               </div>
               <div className="color-details">
                 <ul>
-                  <li><FontAwesomeIcon icon={faBook} /> Primary (Grades 1-8)</li>
-                  <li><FontAwesomeIcon icon={faGraduationCap} /> Secondary (Grades 9-12)</li>
-                  <li><FontAwesomeIcon icon={faAward} /> College Prep Program</li>
-                  <li><FontAwesomeIcon icon={faFlask} /> STEM Education</li>
-                  <li><FontAwesomeIcon icon={faLanguage} /> Language Arts</li>
+                  <li>
+                    <FontAwesomeIcon icon={faBook} /> Primary (Grades 1-8)
+                  </li>
+                  <li>
+                    <FontAwesomeIcon icon={faGraduationCap} /> Secondary (Grades 9-12)
+                  </li>
+                  <li>
+                    <FontAwesomeIcon icon={faAward} /> College Prep Program
+                  </li>
+                  <li>
+                    <FontAwesomeIcon icon={faFlask} /> STEM Education
+                  </li>
+                  <li>
+                    <FontAwesomeIcon icon={faLanguage} /> Language Arts
+                  </li>
                 </ul>
               </div>
             </div>
@@ -117,12 +137,16 @@ export default function About() {
               </div>
               <div className="color-details">
                 <p>
-                  <FontAwesomeIcon icon={faMapMarkerAlt} /> Dire Dawa, Ethiopia<br />
-                  <FontAwesomeIcon icon={faPhone} /> +251-XXX-XXXX<br />
+                  <FontAwesomeIcon icon={faMapMarkerAlt} /> Dire Dawa, Ethiopia
+                  <br />
+                  <FontAwesomeIcon icon={faPhone} /> +251-XXX-XXXX
+                  <br />
                   <FontAwesomeIcon icon={faEnvelope} /> info@mariamsefer.edu.et
                 </p>
                 <div className="contact-hours">
-                  <p><strong>Office Hours:</strong></p>
+                  <p>
+                    <strong>Office Hours:</strong>
+                  </p>
                   <p>Mon-Fri: 8:00 AM - 5:00 PM</p>
                   <p>Sat: 8:00 AM - 12:00 PM</p>
                 </div>
@@ -137,5 +161,5 @@ export default function About() {
         </div>
       </div>
     </div>
-  )
+  );
 }

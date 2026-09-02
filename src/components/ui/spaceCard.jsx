@@ -2,7 +2,7 @@ const Card = () => {
   return (
     <div className="w-full h-full bg-gradient-to-b from-[#1b2735] to-[#090a0f] overflow-hidden relative">
       {/* Stars Layer 1 - Smallest */}
-      <div 
+      <div
         className="absolute w-[1px] h-[1px] bg-transparent animate-stars"
         style={{
           boxShadow: `
@@ -706,12 +706,12 @@ const Card = () => {
             1662px 1994px #fff,
             1111px 106px #fff,
             1954px 838px #fff
-          `
+          `,
         }}
       />
-      
+
       {/* Stars Layer 2 - Medium */}
-      <div 
+      <div
         className="absolute w-[2px] h-[2px] bg-transparent animate-stars-slow"
         style={{
           boxShadow: `
@@ -915,12 +915,12 @@ const Card = () => {
             104px 1683px #fff,
             934px 1387px #fff,
             314px 739px #fff
-          `
+          `,
         }}
       />
-      
+
       {/* Stars Layer 3 - Largest */}
-      <div 
+      <div
         className="absolute w-[3px] h-[3px] bg-transparent animate-stars-slower"
         style={{
           boxShadow: `
@@ -1024,7 +1024,7 @@ const Card = () => {
             785px 1654px #fff,
             1543px 1757px #fff,
             287px 1272px #fff
-          `
+          `,
         }}
       />
     </div>

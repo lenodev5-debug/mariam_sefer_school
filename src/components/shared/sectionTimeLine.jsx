@@ -1,12 +1,7 @@
-
-
-
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 function SectionTimeline({ sections }) {
-  const [activeSection, setActiveSection] = useState(
-    sections[0]?.id || ""
-  );
+  const [activeSection, setActiveSection] = useState(sections[0]?.id || '');
 
   const [progress, setProgress] = useState(0);
 
@@ -24,10 +19,7 @@ function SectionTimeline({ sections }) {
 
         const rect = element.getBoundingClientRect();
 
-        if (
-          rect.top <= viewportCenter &&
-          rect.bottom >= viewportCenter
-        ) {
+        if (rect.top <= viewportCenter && rect.bottom >= viewportCenter) {
           active = section.id;
           currentIndex = index;
         }
@@ -39,36 +31,32 @@ function SectionTimeline({ sections }) {
        * Calculate continuous progress through
        * the complete home page.
        */
-      const documentHeight =
-        document.documentElement.scrollHeight - window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
 
-      const scrollProgress =
-        documentHeight > 0
-          ? (window.scrollY / documentHeight) * 100
-          : 0;
+      const scrollProgress = documentHeight > 0 ? (window.scrollY / documentHeight) * 100 : 0;
 
       setProgress(Math.min(Math.max(scrollProgress, 0), 100));
     };
 
-    window.addEventListener("scroll", handleScroll, {
+    window.addEventListener('scroll', handleScroll, {
       passive: true,
     });
 
     handleScroll();
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, [sections]);
 
-  const scrollToSection = (id) => {
+  const scrollToSection = id => {
     const element = document.getElementById(id);
 
     if (!element) return;
 
     element.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
+      behavior: 'smooth',
+      block: 'start',
     });
   };
 
@@ -90,7 +78,6 @@ function SectionTimeline({ sections }) {
       "
     >
       <div className="relative h-full w-6">
-
         {/* ==================================================
             BACKGROUND VERTICAL LINE
         ================================================== */}
@@ -145,7 +132,7 @@ function SectionTimeline({ sections }) {
             justify-between
           "
         >
-          {sections.map((section) => {
+          {sections.map(section => {
             const isActive = activeSection === section.id;
 
             return (

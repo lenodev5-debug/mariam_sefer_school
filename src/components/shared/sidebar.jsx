@@ -1,10 +1,10 @@
-import { NavLink } from "react-router-dom";
+import { NavLink } from 'react-router-dom';
 
 const Sidebar = ({ isOpen }) => {
   const menuItems = [
     {
-      name: "Dashboard",
-      path: "/dashboard",
+      name: 'Dashboard',
+      path: '/dashboard',
       icon: (
         <svg viewBox="0 0 24 24" fill="currentColor">
           <path d="M4 13h6a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1zm-1 7a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1H4a1 1 0 0 0 1 1v4zm10 0a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-7a1 1 0 0 0-1-1h-6a1 1 0 0 0-1 1v7zm1-10h6a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1h-6a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1z" />
@@ -12,8 +12,8 @@ const Sidebar = ({ isOpen }) => {
       ),
     },
     {
-      name: "Profile",
-      path: "/profile",
+      name: 'Profile',
+      path: '/profile',
       icon: (
         <svg viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 2a5 5 0 1 0 5 5 5 5 0 0 0-5-5zm0 8a3 3 0 1 1 3-3 3 3 0 0 1-3 3zm9 11v-1a7 7 0 0 0-7-7h-4a7 7 0 0 0-7 7v1h2v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1z" />
@@ -21,8 +21,8 @@ const Sidebar = ({ isOpen }) => {
       ),
     },
     {
-      name: "Messages",
-      path: "/messages",
+      name: 'Messages',
+      path: '/messages',
       badge: 4,
       icon: (
         <svg viewBox="0 0 24 24" fill="currentColor">
@@ -32,8 +32,8 @@ const Sidebar = ({ isOpen }) => {
       ),
     },
     {
-      name: "About",
-      path: "/about",
+      name: 'About',
+      path: '/about',
       icon: (
         <svg viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
@@ -41,8 +41,8 @@ const Sidebar = ({ isOpen }) => {
       ),
     },
     {
-      name: "Settings",
-      path: "/settings",
+      name: 'Settings',
+      path: '/settings',
       icon: (
         <svg viewBox="0 0 24 24" fill="currentColor">
           <path d="M19.43 12.98c.04-.32.07-.65.07-.98s-.02-.66-.07-.98l2.11-1.65-2-3.46-2.49 1a7.3 7.3 0 0 0-1.69-.98L15 3h-4l-.36 2.53c-.61.25-1.17.58-1.69.98l-2.49-1-2 3.46 2.11 1.65c-.04.32-.08.65-.08.98s.03.66.08.98l-2.11 1.65 2 3.46 2.49-1c.52.4 1.08.73 1.69.98L11 21h4l.36-2.53c.61-.25 1.17-.58 1.69-.98l2.49 1 2-3.46-2.11-1.65zM13 15.5A3.5 3.5 0 1 1 13 8a3.5 3.5 0 0 1 0 7.5z" />
@@ -64,11 +64,7 @@ const Sidebar = ({ isOpen }) => {
         duration-500
         ease-[cubic-bezier(0.4,0,0.2,1)]
 
-        ${
-          isOpen
-            ? "translate-x-0 opacity-100"
-            : "-translate-x-28 opacity-0 pointer-events-none"
-        }
+        ${isOpen ? 'translate-x-0 opacity-100' : '-translate-x-28 opacity-0 pointer-events-none'}
       `}
     >
       <div
@@ -96,7 +92,7 @@ const Sidebar = ({ isOpen }) => {
       >
         {/* Navigation */}
         <nav className="flex w-full flex-col gap-1">
-          {menuItems.map((item) => (
+          {menuItems.map(item => (
             <NavLink
               key={item.path}
               to={item.path}

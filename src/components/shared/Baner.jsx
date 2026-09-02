@@ -1,4 +1,4 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import {
   faAtom,
@@ -20,29 +20,28 @@ import {
   faUsers,
   faShareFromSquare,
   faCloud,
-} from "@fortawesome/free-solid-svg-icons";
-
+} from '@fortawesome/free-solid-svg-icons';
 
 const userData = [
   {
-    name: "Students",
-    number: "3,142",
+    name: 'Students',
+    number: '3,142',
     icon: faBook,
     icon1: faPencil,
     icon2: faHeart,
     icon3: faClock,
   },
   {
-    name: "Privacy",
-    number: "100%",
+    name: 'Privacy',
+    number: '100%',
     icon: faShield,
     icon1: faLock,
     icon2: faKey,
     icon3: faEyeSlash,
   },
   {
-    name: "Community",
-    number: "200,000",
+    name: 'Community',
+    number: '200,000',
     icon: faUsers,
     icon1: faHeart,
     icon2: faShareFromSquare,
@@ -50,15 +49,15 @@ const userData = [
   },
 ];
 const tags = [
-  { name: "Mathematics", icon: faCalculator },
-  { name: "Science", icon: faFlask },
-  { name: "Biology", icon: faAtom },
-  { name: "History", icon: faLandmark },
-  { name: "Geography", icon: faGlobe },
-  { name: "Languages", icon: faLanguage },
-  { name: "School Books", icon: faBookOpen },
-  { name: "Study Guides", icon: faGraduationCap },
-  { name: "Library", icon: faBook },
+  { name: 'Mathematics', icon: faCalculator },
+  { name: 'Science', icon: faFlask },
+  { name: 'Biology', icon: faAtom },
+  { name: 'History', icon: faLandmark },
+  { name: 'Geography', icon: faGlobe },
+  { name: 'Languages', icon: faLanguage },
+  { name: 'School Books', icon: faBookOpen },
+  { name: 'Study Guides', icon: faGraduationCap },
+  { name: 'Library', icon: faBook },
 ];
 
 // ============================================================
@@ -130,7 +129,7 @@ function StatCard({ item }) {
             text-white
           "
           style={{
-            animationDelay: "0s",
+            animationDelay: '0s',
           }}
         />
         <FontAwesomeIcon
@@ -144,7 +143,7 @@ function StatCard({ item }) {
             text-white
           "
           style={{
-            animationDelay: "0.4s",
+            animationDelay: '0.4s',
           }}
         />
         <FontAwesomeIcon
@@ -158,7 +157,7 @@ function StatCard({ item }) {
             text-white
           "
           style={{
-            animationDelay: "0.8s",
+            animationDelay: '0.8s',
           }}
         />
         <FontAwesomeIcon
@@ -172,7 +171,7 @@ function StatCard({ item }) {
             text-white
           "
           style={{
-            animationDelay: "1.2s",
+            animationDelay: '1.2s',
           }}
         />
       </div>
@@ -186,14 +185,12 @@ function StatCard({ item }) {
           md:text-6xl
         "
         style={{
-          fontFamily: "Inter, sans-serif",
+          fontFamily: 'Inter, sans-serif',
         }}
       >
         {item.number}
       </h1>
-      <p className="mt-2 text-center text-lg font-medium text-gray-400">
-        {item.name}
-      </p>
+      <p className="mt-2 text-center text-lg font-medium text-gray-400">{item.name}</p>
     </div>
   );
 }
@@ -202,7 +199,7 @@ export default function Baner() {
   const animatedTags = [...tags, ...tags, ...tags];
 
   return (
-    <section className="w-full overflow-hidden bg-transparent px-4 py-10">
+    <section className="w-full overflow-hidden bg-transparent px-4">
       <div
         className="
           relative
@@ -213,7 +210,6 @@ export default function Baner() {
           border
           border-white/10
           bg-white/[0.02]
-          py-3
           shadow-[0_10px_40px_rgba(0,0,0,0.25)]
         "
       >
@@ -245,26 +241,17 @@ export default function Baner() {
         />
         <div className="tags-track flex w-max gap-3">
           {animatedTags.map((tag, index) => (
-            <Tag
-              key={`row1-${tag.name}-${index}`}
-              tag={tag}
-            />
+            <Tag key={`row1-${tag.name}-${index}`} tag={tag} />
           ))}
         </div>
         <div className="tags-track-reverse mt-2 flex w-max gap-3">
           {animatedTags.map((tag, index) => (
-            <Tag
-              key={`row2-${tag.name}-${index}`}
-              tag={tag}
-            />
+            <Tag key={`row2-${tag.name}-${index}`} tag={tag} />
           ))}
         </div>
         <div className="tags-track mt-2 flex w-max gap-3">
           {animatedTags.map((tag, index) => (
-            <Tag
-              key={`row3-${tag.name}-${index}`}
-              tag={tag}
-            />
+            <Tag key={`row3-${tag.name}-${index}`} tag={tag} />
           ))}
         </div>
       </div>
@@ -282,11 +269,8 @@ export default function Baner() {
           lg:gap-42
         "
       >
-        {userData.map((item) => (
-          <StatCard
-            key={item.name}
-            item={item}
-          />
+        {userData.map(item => (
+          <StatCard key={item.name} item={item} />
         ))}
       </div>
     </section>

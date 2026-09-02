@@ -1,6 +1,6 @@
-import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
-import { useTheme } from "../../context/usetheme";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
+import { useTheme } from '../../context/usetheme';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function Header({ onMenuClick, sidebarOpen }) {
   const { theme, toggleTheme } = useTheme();
@@ -58,7 +58,7 @@ function Header({ onMenuClick, sidebarOpen }) {
                 h-5 w-5
                 transition-transform
                 duration-300
-                ${sidebarOpen ? "rotate-90" : ""}
+                ${sidebarOpen ? 'rotate-90' : ''}
               `}
               fill="none"
               stroke="currentColor"
@@ -86,7 +86,11 @@ function Header({ onMenuClick, sidebarOpen }) {
                 dark:text-white
               "
             >
-              <span className="overline decoration-solid decoration-4"> <span className="underline decoration-solid decoration-4">Ma</span></span>riam Sefer
+              <span className="overline decoration-solid decoration-4">
+                {' '}
+                <span className="underline decoration-solid decoration-4">Ma</span>
+              </span>
+              riam Sefer
             </span>
           </div>
         </div>
@@ -213,16 +217,16 @@ function Header({ onMenuClick, sidebarOpen }) {
                 text-xs
               "
             >
-              <FontAwesomeIcon 
-                icon={faSun} 
+              <FontAwesomeIcon
+                icon={faSun}
                 className={`h-3.5 w-3.5 transition-colors duration-300 ${
-                  theme === "dark" ? "text-gray-500" : "text-yellow-500"
+                  theme === 'dark' ? 'text-gray-500' : 'text-yellow-500'
                 }`}
               />
-              <FontAwesomeIcon 
-                icon={faMoon} 
+              <FontAwesomeIcon
+                icon={faMoon}
                 className={`h-3.5 w-3.5 transition-colors duration-300 ${
-                  theme === "dark" ? "text-blue-300" : "text-gray-400"
+                  theme === 'dark' ? 'text-blue-300' : 'text-gray-400'
                 }`}
               />
             </div>
@@ -245,22 +249,18 @@ function Header({ onMenuClick, sidebarOpen }) {
                 ease-in-out
                 dark:bg-gray-800
 
-                ${
-                  theme === "dark"
-                    ? "translate-x-[30px]"
-                    : "translate-x-0"
-                }
+                ${theme === 'dark' ? 'translate-x-[30px]' : 'translate-x-0'}
               `}
             >
-              <FontAwesomeIcon 
-                icon={theme === "dark" ? faMoon : faSun} 
+              <FontAwesomeIcon
+                icon={theme === 'dark' ? faMoon : faSun}
                 className={`h-3.5 w-3.5 transition-colors duration-300 ${
-                  theme === "dark" ? "text-blue-400" : "text-yellow-500"
+                  theme === 'dark' ? 'text-blue-400' : 'text-yellow-500'
                 }`}
               />
             </span>
           </button>
-          
+
           {/* Profile Circle */}
           <button
             type="button"

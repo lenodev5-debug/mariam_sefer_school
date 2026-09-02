@@ -23,12 +23,12 @@
   font-size: 3rem;
   font-weight: 700;
   margin-bottom: 5px;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .about-main-subtitle {
-  color: rgba(255,255,255,0.8);
+  color: rgba(255, 255, 255, 0.8);
   font-size: 1.2rem;
   margin-bottom: 40px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -115,11 +115,11 @@
 
 .color-preview svg {
   font-size: 3rem;
-  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2));
 }
 
 .color-preview span {
-  background: rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.2);
   padding: 8px 20px;
   border-radius: 30px;
   backdrop-filter: blur(10px);
@@ -178,7 +178,7 @@
 
 .color-stats span {
   font-size: 0.95rem;
-  background: rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.2);
   padding: 6px 16px;
   border-radius: 30px;
   display: flex;
@@ -197,7 +197,7 @@
 
 .color-values span {
   font-size: 0.95rem;
-  background: rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.2);
   padding: 6px 16px;
   border-radius: 30px;
   display: flex;
@@ -209,7 +209,7 @@
 .contact-hours {
   margin-top: 15px;
   font-size: 0.95rem;
-  background: rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.1);
   padding: 15px;
   border-radius: 15px;
   backdrop-filter: blur(5px);
@@ -232,10 +232,10 @@
 
 /* Triangle positions - bigger */
 #color1 {
-  background: #CECE5A;
+  background: #cece5a;
   rotate: 45deg;
   translate: 494.97px 0;
-  outline: 0 solid #CECE5A;
+  outline: 0 solid #cece5a;
   z-index: 9;
 }
 
@@ -243,14 +243,14 @@
   translate: 0 0;
   rotate: 0deg;
   z-index: 99;
-  outline: 40px solid #CECE5A;
+  outline: 40px solid #cece5a;
 }
 
 #color2 {
-  background: #FFE17B;
+  background: #ffe17b;
   rotate: 45deg;
   translate: 0 494.97px;
-  outline: 0 solid #FFE17B;
+  outline: 0 solid #ffe17b;
   z-index: 9;
 }
 
@@ -258,30 +258,30 @@
   translate: 0 0;
   rotate: 0deg;
   z-index: 99;
-  outline: 40px solid #FFE17B;
+  outline: 40px solid #ffe17b;
 }
 
 #color2 .color-content {
-  color: #1A1A1A;
+  color: #1a1a1a;
 }
 
 #color2 .color-preview span {
-  background: rgba(0,0,0,0.15);
-  color: #1A1A1A;
+  background: rgba(0, 0, 0, 0.15);
+  color: #1a1a1a;
 }
 
 #color2 .color-stats span,
 #color2 .color-values span,
 #color2 .contact-hours {
-  background: rgba(0,0,0,0.1);
-  color: #1A1A1A;
+  background: rgba(0, 0, 0, 0.1);
+  color: #1a1a1a;
 }
 
 #color3 {
-  background: #FD8D14;
+  background: #fd8d14;
   rotate: 45deg;
   translate: -494.97px 0;
-  outline: 0 solid #FD8D14;
+  outline: 0 solid #fd8d14;
   z-index: 9;
 }
 
@@ -289,14 +289,14 @@
   translate: 0 0;
   rotate: 0deg;
   z-index: 99;
-  outline: 40px solid #FD8D14;
+  outline: 40px solid #fd8d14;
 }
 
 #color4 {
-  background: #C51605;
+  background: #c51605;
   rotate: 45deg;
   translate: 0 -494.97px;
-  outline: 0 solid #C51605;
+  outline: 0 solid #c51605;
   z-index: 9;
 }
 
@@ -304,7 +304,7 @@
   translate: 0 0;
   rotate: 0deg;
   z-index: 99;
-  outline: 40px solid #C51605;
+  outline: 40px solid #c51605;
 }
 
 #color-code {
@@ -340,7 +340,7 @@
 }
 
 #color-code-text::after {
-  content: "☰";
+  content: '☰';
   font-weight: 600;
   font-family: sans-serif;
   color: #1a1a1a;
@@ -353,60 +353,60 @@
     width: 500px;
     height: 500px;
   }
-  
+
   .color {
     width: 500px;
     height: 500px;
   }
-  
+
   #color1 {
     translate: 353.55px 0;
   }
-  
+
   #color2 {
     translate: 0 353.55px;
   }
-  
+
   #color3 {
     translate: -353.55px 0;
   }
-  
+
   #color4 {
     translate: 0 -353.55px;
   }
-  
+
   #color-code {
     width: 60px;
     height: 60px;
     translate: 220px 220px;
     border-radius: 30px;
   }
-  
+
   #color-code-text::after {
     font-size: 1.8rem;
   }
-  
+
   .about-main-title {
     font-size: 2.2rem;
   }
-  
+
   .color-content h3 {
     font-size: 1.5rem;
   }
-  
+
   .color-details {
     font-size: 0.85rem;
   }
-  
+
   .color-preview span {
     font-size: 0.85rem;
     padding: 6px 15px;
   }
-  
+
   .color-preview svg {
     font-size: 2.5rem;
   }
-  
+
   .color-stats span,
   .color-values span {
     font-size: 0.8rem;
@@ -419,70 +419,70 @@
     width: 350px;
     height: 350px;
   }
-  
+
   .color {
     width: 350px;
     height: 350px;
   }
-  
+
   #color1 {
     translate: 247.49px 0;
   }
-  
+
   #color2 {
     translate: 0 247.49px;
   }
-  
+
   #color3 {
     translate: -247.49px 0;
   }
-  
+
   #color4 {
     translate: 0 -247.49px;
   }
-  
+
   #color-code {
     width: 40px;
     height: 40px;
     translate: 155px 155px;
     border-radius: 20px;
   }
-  
+
   #color-code-text::after {
     font-size: 1.2rem;
   }
-  
+
   .about-main-title {
     font-size: 1.8rem;
   }
-  
+
   .about-main-subtitle {
     font-size: 1rem;
   }
-  
+
   .color-content h3 {
     font-size: 1.2rem;
   }
-  
+
   .color-details {
     font-size: 0.75rem;
   }
-  
+
   .color-preview span {
     font-size: 0.75rem;
     padding: 4px 12px;
   }
-  
+
   .color-preview svg {
     font-size: 2rem;
   }
-  
+
   .color-stats span,
   .color-values span {
     font-size: 0.7rem;
     padding: 3px 10px;
   }
-  
+
   .contact-hours {
     font-size: 0.75rem;
     padding: 10px;

@@ -1,6 +1,5 @@
 @import 'tailwindcss';
 
-
 @keyframes animStar {
   from {
     transform: translateY(0px);
@@ -21,7 +20,6 @@
 .animate-stars-slower {
   animation: animStar 150s linear infinite;
 }
-
 
 /* baner page animation */
 @keyframes slideTags {
