@@ -4,10 +4,11 @@ import { BrowserRouter } from 'react-router-dom';
 import Header from './components/shared/header';
 import Sidebar from './components/shared/sidebar';
 import CustomHome from './CustemHome';
+import Loading from './components/ui/Loading';
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const closeSidebar = () => setSidebarOpen(false);
     window.addEventListener('close-sidebar', closeSidebar);
@@ -15,6 +16,15 @@ function App() {
       window.removeEventListener('close-sidebar', closeSidebar);
     };
   }, []);
+
+  // loading state
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+  }, [])
+
+  if (loading) return <Loading />
 
   return (
     <BrowserRouter>
