@@ -2,6 +2,7 @@ import SectionTimeline from './components/shared/sectionTimeLine';
 import Home from './components/pages/Home';
 import Baner from './components/shared/Baner';
 import Platform from './components/pages/Platform';
+import StudentRating from './components/pages/StudentRaring'
 
 export default function CustomHome() {
   const sections = [
@@ -20,6 +21,11 @@ export default function CustomHome() {
       label: 'Platform',
       component: <Platform />,
     },
+    {
+      id: 'studentrating',
+      label: 'StudentRating',
+      component: <StudentRating />
+    }
   ];
 
   return (

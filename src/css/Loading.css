@@ -1,74 +1,469 @@
-.loader {
- position: relative;
- width: 2.5em;
- height: 2.5em;
- transform: rotate(165deg);
+/* =====================================================
+   LOADING CONTAINER
+===================================================== */
+
+.loading-container {
+  position: fixed;
+
+  inset: 0;
+
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  background: rgb(249 250 251);
+
+  z-index: 9999;
 }
 
-.loader:before, .loader:after {
- content: "";
- position: absolute;
- top: 50%;
- left: 50%;
- display: block;
- width: 0.5em;
- height: 0.5em;
- border-radius: 0.25em;
- transform: translate(-50%, -50%);
+
+/* DARK MODE */
+
+.dark .loading-container {
+  background: rgb(3 7 18);
 }
+
+
+/* =====================================================
+   WRAPPER
+===================================================== */
+
+.loading-wrapper {
+  position: relative;
+
+  width: 180px;
+  height: 180px;
+
+  flex: 0 0 180px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* =====================================================
+   ORIGINAL LOADER
+   DO NOT CHANGE THE ANIMATION
+===================================================== */
+
+.loader {
+  position: absolute;
+
+  width: 2.5em;
+  height: 2.5em;
+
+  top: calc(50% - 1.25em);
+  left: calc(50% - 1.25em);
+
+  transform: rotate(165deg);
+}
+
+
+/* =====================================================
+   LOADER PSEUDO ELEMENTS
+===================================================== */
+
+.loader:before,
+.loader:after {
+  content: "";
+
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  display: block;
+
+  width: 0.5em;
+  height: 0.5em;
+
+  border-radius: 0.25em;
+
+  transform: translate(-50%, -50%);
+}
+
+
+/* =====================================================
+   ANIMATION CONNECTION
+===================================================== */
 
 .loader:before {
- animation: before8 2s infinite;
+  animation: before8 2s infinite;
 }
 
 .loader:after {
- animation: after6 2s infinite;
+  animation: after6 2s infinite;
 }
+
+
+/* =====================================================
+   ORIGINAL RED + BLUE ANIMATION
+===================================================== */
 
 @keyframes before8 {
- 0% {
-  width: 0.5em;
-  box-shadow: 1em -0.5em rgba(225, 20, 98, 0.75), -1em 0.5em rgba(111, 202, 220, 0.75);
- }
 
- 35% {
-  width: 2.5em;
-  box-shadow: 0 -0.5em rgba(225, 20, 98, 0.75), 0 0.5em rgba(111, 202, 220, 0.75);
- }
+  0% {
+    width: 0.5em;
 
- 70% {
-  width: 0.5em;
-  box-shadow: -1em -0.5em rgba(225, 20, 98, 0.75), 1em 0.5em rgba(111, 202, 220, 0.75);
- }
+    box-shadow:
+      1em -0.5em rgba(225, 20, 98, 0.75),
+      -1em 0.5em rgba(111, 202, 220, 0.75);
+  }
 
- 100% {
-  box-shadow: 1em -0.5em rgba(225, 20, 98, 0.75), -1em 0.5em rgba(111, 202, 220, 0.75);
- }
+  35% {
+    width: 2.5em;
+
+    box-shadow:
+      0 -0.5em rgba(225, 20, 98, 0.75),
+      0 0.5em rgba(111, 202, 220, 0.75);
+  }
+
+  70% {
+    width: 0.5em;
+
+    box-shadow:
+      -1em -0.5em rgba(225, 20, 98, 0.75),
+      1em 0.5em rgba(111, 202, 220, 0.75);
+  }
+
+  100% {
+    box-shadow:
+      1em -0.5em rgba(225, 20, 98, 0.75),
+      -1em 0.5em rgba(111, 202, 220, 0.75);
+  }
 }
+
+
+/* =====================================================
+   ORIGINAL GREEN + YELLOW ANIMATION
+===================================================== */
 
 @keyframes after6 {
- 0% {
-  height: 0.5em;
-  box-shadow: 0.5em 1em rgba(61, 184, 143, 0.75), -0.5em -1em rgba(233, 169, 32, 0.75);
- }
 
- 35% {
-  height: 2.5em;
-  box-shadow: 0.5em 0 rgba(61, 184, 143, 0.75), -0.5em 0 rgba(233, 169, 32, 0.75);
- }
+  0% {
+    height: 0.5em;
 
- 70% {
-  height: 0.5em;
-  box-shadow: 0.5em -1em rgba(61, 184, 143, 0.75), -0.5em 1em rgba(233, 169, 32, 0.75);
- }
+    box-shadow:
+      0.5em 1em rgba(61, 184, 143, 0.75),
+      -0.5em -1em rgba(233, 169, 32, 0.75);
+  }
 
- 100% {
-  box-shadow: 0.5em 1em rgba(61, 184, 143, 0.75), -0.5em -1em rgba(233, 169, 32, 0.75);
- }
+  35% {
+    height: 2.5em;
+
+    box-shadow:
+      0.5em 0 rgba(61, 184, 143, 0.75),
+      -0.5em 0 rgba(233, 169, 32, 0.75);
+  }
+
+  70% {
+    height: 0.5em;
+
+    box-shadow:
+      0.5em -1em rgba(61, 184, 143, 0.75),
+      -0.5em 1em rgba(233, 169, 32, 0.75);
+  }
+
+  100% {
+    box-shadow:
+      0.5em 1em rgba(61, 184, 143, 0.75),
+      -0.5em -1em rgba(233, 169, 32, 0.75);
+  }
 }
 
-.loader {
- position: absolute;
- top: calc(50% - 1.25em);
- left: calc(50% - 1.25em);
+
+/* =====================================================
+   ICON LAYER
+===================================================== */
+
+.loader-icons {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  width: 0;
+  height: 0;
+
+  z-index: 10;
+
+  pointer-events: none;
+}
+
+
+/* =====================================================
+   COMMON ICON
+===================================================== */
+
+.follow-icon {
+  position: absolute;
+
+  width: 0;
+  height: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 16px;
+
+  transform-origin: center;
+
+  pointer-events: none;
+}
+
+
+/* =====================================================
+   RED → BOOK
+===================================================== */
+
+.red-icon {
+  color: rgba(225, 20, 98, 1);
+
+  animation: redFollow 2s infinite ease-in-out;
+}
+
+
+@keyframes redFollow {
+
+  0% {
+    transform:
+      translate(
+        calc(1em + 15px),
+        calc(-0.5em - 15px)
+      )
+      scale(0.7);
+
+    opacity: 0.5;
+  }
+
+  35% {
+    transform:
+      translate(
+        15px,
+        calc(-0.5em - 15px)
+      )
+      scale(1.1);
+
+    opacity: 1;
+  }
+
+  70% {
+    transform:
+      translate(
+        calc(-1em - 15px),
+        calc(-0.5em - 15px)
+      )
+      scale(0.7);
+
+    opacity: 0.5;
+  }
+
+  100% {
+    transform:
+      translate(
+        calc(1em + 15px),
+        calc(-0.5em - 15px)
+      )
+      scale(0.7);
+
+    opacity: 0.5;
+  }
+}
+
+
+/* =====================================================
+   BLUE → PENCIL
+===================================================== */
+
+.blue-icon {
+  color: rgba(111, 202, 220, 1);
+
+  animation: blueFollow 2s infinite ease-in-out;
+}
+
+
+@keyframes blueFollow {
+
+  0% {
+    transform:
+      translate(
+        calc(-1em - 15px),
+        calc(0.5em + 15px)
+      )
+      scale(0.7);
+
+    opacity: 0.5;
+  }
+
+  35% {
+    transform:
+      translate(
+        15px,
+        calc(0.5em + 15px)
+      )
+      scale(1.1);
+
+    opacity: 1;
+  }
+
+  70% {
+    transform:
+      translate(
+        calc(1em + 15px),
+        calc(0.5em + 15px)
+      )
+      scale(0.7);
+
+    opacity: 0.5;
+  }
+
+  100% {
+    transform:
+      translate(
+        calc(-1em - 15px),
+        calc(0.5em + 15px)
+      )
+      scale(0.7);
+
+    opacity: 0.5;
+  }
+}
+
+
+/* =====================================================
+   GREEN → GRADUATION CAP
+===================================================== */
+
+.green-icon {
+  color: rgba(61, 184, 143, 1);
+
+  animation: greenFollow 2s infinite ease-in-out;
+}
+
+
+@keyframes greenFollow {
+
+  0% {
+    transform:
+      translate(
+        calc(0.5em + 15px),
+        calc(1em + 15px)
+      )
+      scale(0.7);
+
+    opacity: 0.5;
+  }
+
+  35% {
+    transform:
+      translate(
+        calc(0.5em + 15px),
+        15px
+      )
+      scale(1.1);
+
+    opacity: 1;
+  }
+
+  70% {
+    transform:
+      translate(
+        calc(0.5em + 15px),
+        calc(-1em - 15px)
+      )
+      scale(0.7);
+
+    opacity: 0.5;
+  }
+
+  100% {
+    transform:
+      translate(
+        calc(0.5em + 15px),
+        calc(1em + 15px)
+      )
+      scale(0.7);
+
+    opacity: 0.5;
+  }
+}
+
+
+/* =====================================================
+   YELLOW → CLOCK
+===================================================== */
+
+.yellow-icon {
+  color: rgba(233, 169, 32, 1);
+
+  animation: yellowFollow 2s infinite ease-in-out;
+}
+
+
+@keyframes yellowFollow {
+
+  0% {
+    transform:
+      translate(
+        calc(-0.5em - 15px),
+        calc(-1em - 15px)
+      )
+      scale(0.7);
+
+    opacity: 0.5;
+  }
+
+  35% {
+    transform:
+      translate(
+        calc(-0.5em - 15px),
+        15px
+      )
+      scale(1.1);
+
+    opacity: 1;
+  }
+
+  70% {
+    transform:
+      translate(
+        calc(-0.5em - 15px),
+        calc(1em + 15px)
+      )
+      scale(0.7);
+
+    opacity: 0.5;
+  }
+
+  100% {
+    transform:
+      translate(
+        calc(-0.5em - 15px),
+        calc(-1em - 15px)
+      )
+      scale(0.7);
+
+    opacity: 0.5;
+  }
+}
+
+
+/* =====================================================
+   REDUCED MOTION
+===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .loader:before,
+  .loader:after,
+  .follow-icon {
+    animation: none !important;
+  }
 }

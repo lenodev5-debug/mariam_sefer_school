@@ -138,7 +138,7 @@ function StatCard({ item }) {
             stat-icon
             absolute
             right-3
-            top-8
+            top-6
             text-4xl
             text-white
           "
@@ -151,8 +151,8 @@ function StatCard({ item }) {
           className="
             stat-icon
             absolute
-            left-12
-            top-16
+            left-7
+            top-19
             text-4xl
             text-white
           "
@@ -165,7 +165,7 @@ function StatCard({ item }) {
           className="
             stat-icon
             absolute
-            right-12
+            right-8
             top-24
             text-4xl
             text-white
