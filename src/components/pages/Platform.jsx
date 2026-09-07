@@ -10,15 +10,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function Platform() {
   return (
-    <section className="relative w-full overflow-hidden pt-16">
-      {/* Background glow */}
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/4 top-1/4 h-72 w-72 rounded-full bg-[#040A17] blur-[120px]" />
-
-        <div className="absolute bottom-1/4 right-1/4 h-72 w-72 rounded-full bg-purple-500/10 blur-[120px]" />
-      </div>
-
-      {/* MAIN GRID */}
       <div
         className="
           relative
@@ -28,6 +19,8 @@ export default function Platform() {
           grid-cols-1
           gap-5
           md:grid-cols-2
+          bg-[#090909]
+          py-14
         "
       >
         {/* =================================================
@@ -457,7 +450,5 @@ export default function Platform() {
           </button>
         </div>
       </div>
-    </section>
   );
 }
-

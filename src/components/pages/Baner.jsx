@@ -77,7 +77,7 @@ function Tag({ tag }) {
         rounded-md
         border
         border-white/10
-        bg-white/[0.04]
+        bg-[#090909]
         px-5
         text-sm
         text-gray-300
@@ -116,7 +116,7 @@ function Tag({ tag }) {
 }
 function StatCard({ item }) {
   return (
-    <div className="flex w-56 flex-col items-center">
+    <div className="flex w-56 flex-col items-center ">
       <div className="relative mb-8 h-28 w-44">
         <FontAwesomeIcon
           icon={item.icon}
@@ -199,7 +199,7 @@ export default function Baner() {
   const animatedTags = [...tags, ...tags, ...tags];
 
   return (
-    <section className="w-full overflow-hidden bg-transparent px-4">
+    <div className="bg-[#090909] h-[80vh]">
       <div
         className="
           relative
@@ -209,7 +209,7 @@ export default function Baner() {
           rounded-2xl
           border
           border-white/10
-          bg-white/[0.02]
+          bg-[#090909]
           shadow-[0_10px_40px_rgba(0,0,0,0.25)]
         "
       >
@@ -221,9 +221,7 @@ export default function Baner() {
             left-0
             z-20
             w-32
-            bg-gradient-to-r
-            from-[#0a0a0a]
-            to-transparent
+            bg-[#090909]
           "
         />
         <div
@@ -234,9 +232,7 @@ export default function Baner() {
             right-0
             z-20
             w-32
-            bg-gradient-to-l
-            from-[#0a0a0a]
-            to-transparent
+            bg-[#090909]
           "
         />
         <div className="tags-track flex w-max gap-3">
@@ -273,6 +269,6 @@ export default function Baner() {
           <StatCard key={item.name} item={item} />
         ))}
       </div>
-    </section>
+    </div>
   );
 }

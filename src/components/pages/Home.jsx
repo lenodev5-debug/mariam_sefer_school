@@ -97,7 +97,7 @@ export default function Home() {
       </div>
 
       {/* Books section with proper spacing */}
-      <div className="relative z-20 bg-[#090a0f] -mt-20">
+      <div className="relative z-20 bg-[#090909] -mt-20">
         <div className="container mx-auto px-4 pb-12">
           <div className="mb-8 text-center"></div>
           <BookCard />

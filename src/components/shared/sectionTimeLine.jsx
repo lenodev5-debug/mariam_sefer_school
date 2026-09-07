@@ -91,8 +91,7 @@ function SectionTimeline({ sections }) {
             w-[2px]
             -translate-x-1/2
 
-            bg-gray-300/70
-            dark:bg-gray-700/70
+            bg-[#090909]
           "
         />
 

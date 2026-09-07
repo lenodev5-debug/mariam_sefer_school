@@ -214,7 +214,7 @@ function BookCard({ book }) {
       className="
         group relative w-[180px] 
         rounded-2xl border border-white/5 
-        bg-gradient-to-b from-white/5 to-white/[0.02]
+        bg-[#090909]
         backdrop-blur-sm
         shadow-[0_8px_32px_rgba(0,0,0,0.4)]
         transition-all duration-300 
