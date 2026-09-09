@@ -3,6 +3,8 @@ import Home from './components/pages/Home';
 import Baner from './components/pages/Baner';
 import Platform from './components/pages/Platform';
 import StudentRating from './components/pages/StudentRaring'
+import CoursesDisplay from './components/pages/courses';
+import News from './components/pages/new';
 
 export default function CustomHome() {
   const sections = [
@@ -25,6 +27,16 @@ export default function CustomHome() {
       id: 'studentrating',
       label: 'StudentRating',
       component: <StudentRating />
+    },
+    {
+      id: 'courses',
+      label: 'label',
+      component: <CoursesDisplay />
+    },
+     {
+      id: 'courses',
+      label: 'label',
+      component: <News />
     }
   ];
 
