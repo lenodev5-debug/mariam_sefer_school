@@ -86,10 +86,8 @@ export default function CoursesDisplay() {
           w-[1521px]
           h-[760px]
           max-w-[calc(100vw-32px)]
-          bg-[#111111]
-          border-2
-          border-[#212121]
-          rounded-[24px]
+          bg-[#090909]
+          rounded-3xl
           px-12
           py-10
         "

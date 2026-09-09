@@ -120,3 +120,69 @@
 .stat-icon {
   animation: statIconFloat 2.2s ease-in-out infinite;
 }
+
+
+
+/* ==================================================
+   STUDENT COMMENTS — LEFT
+   ================================================== */
+
+@keyframes commentsSlide {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-33.333%);
+  }
+}
+
+
+/* ==================================================
+   STUDENT COMMENTS — RIGHT
+   ================================================== */
+
+@keyframes commentsSlideReverse {
+  from {
+    transform: translateX(-33.333%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+
+/* ==================================================
+   COMMENT TRACK
+   ================================================== */
+
+.comments-track {
+  animation: commentsSlide 32s linear infinite;
+}
+
+.comments-track-reverse {
+  animation: commentsSlideReverse 36s linear infinite;
+}
+
+
+/* ==================================================
+   PAUSE ON HOVER
+   ================================================== */
+
+.comments-track:hover,
+.comments-track-reverse:hover {
+  animation-play-state: paused;
+}
+
+
+/* ==================================================
+   REDUCED MOTION
+   ================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .comments-track,
+  .comments-track-reverse {
+    animation: none;
+  }
+}

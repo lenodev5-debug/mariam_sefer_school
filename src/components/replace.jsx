@@ -39,52 +39,58 @@ export default function News() {
   ];
 
   return (
-    <div className="flex h-[75vh] w-full flex-col items-center bg-[#090909] px-8 py-8">
+    <>
 
       {/* =====================================================
-          HEADER
+          NEWS HEADER
       ====================================================== */}
 
-      <div className="flex w-full flex-col items-center justify-center">
+      <div className="mb-6">
         <h1
-          className="text-2xl text-white"
+          className="text-5xl font-semibold text-white"
           style={{ fontFamily: "news" }}
         >
           Latest News
         </h1>
 
-        <p className="mt-1 text-center text-sm text-white/50">
+        <p className="mt-2 text-white/50">
           Discover the latest achievements and events from our school.
         </p>
       </div>
 
 
       {/* =====================================================
-          NEWS CONTENT
+          MAIN NEWS CONTAINER
+
+          HEIGHT  = 30vh
+          LEFT    = 60%
+          RIGHT   = 40%
       ====================================================== */}
 
-      <div className="mt-6 flex min-h-0 w-full flex-1 gap-5">
+      <div className="grid h-[30vh] w-full grid-cols-[60%_40%] gap-5">
 
 
         {/* ===================================================
-            LEFT SIDE — FEATURED NEWS
+            LEFT — FEATURED NEWS
         ==================================================== */}
 
-        <div
+        <article
           className="
             group
             relative
             h-full
-            w-[45%]
             overflow-hidden
             rounded-2xl
-            border
-            border-white/10
-            bg-black
+            border-2
+            border-[#212121]
+            bg-[#171717]
+            transition-all
+            duration-300
+            hover:border-[#353535]
           "
         >
 
-          {/* IMAGE */}
+          {/* FEATURED IMAGE */}
 
           <img
             src={news[0].image}
@@ -102,7 +108,7 @@ export default function News() {
           />
 
 
-          {/* IMAGE OVERLAY */}
+          {/* DARK OVERLAY */}
 
           <div
             className="
@@ -110,7 +116,7 @@ export default function News() {
               inset-0
               bg-gradient-to-t
               from-black
-              via-black/40
+              via-black/50
               to-transparent
             "
           />
@@ -118,21 +124,22 @@ export default function News() {
 
           {/* FEATURED CONTENT */}
 
-          <div className="absolute bottom-0 left-0 w-full p-6">
+          <div className="absolute bottom-0 left-0 right-0 p-6">
+
+            {/* CATEGORY */}
 
             <span
               className="
-                inline-flex
+                mb-2
+                inline-block
                 rounded-full
                 border
                 border-white/10
                 bg-white/10
                 px-3
                 py-1
-                text-[10px]
-                uppercase
-                tracking-wider
-                text-white/70
+                text-xs
+                text-white/80
                 backdrop-blur-md
               "
             >
@@ -140,22 +147,33 @@ export default function News() {
             </span>
 
 
+            {/* TITLE */}
+
             <h2
-              className="mt-3 text-2xl font-semibold leading-tight text-white"
+              className="
+                text-3xl
+                font-semibold
+                leading-tight
+                text-white
+              "
               style={{ fontFamily: "news" }}
             >
               {news[0].title}
             </h2>
 
 
-            <p className="mt-2 max-w-lg text-sm leading-relaxed text-white/60">
+            {/* DESCRIPTION */}
+
+            <p className="mt-2 max-w-xl text-sm text-white/65">
               {news[0].description}
             </p>
 
 
             {/* ACTIONS */}
 
-            <div className="mt-4 flex items-center gap-2">
+            <div className="mt-3 flex items-center gap-2">
+
+              {/* FAVORITE */}
 
               <button
                 type="button"
@@ -182,6 +200,8 @@ export default function News() {
               </button>
 
 
+              {/* SHARE */}
+
               <button
                 type="button"
                 className="
@@ -206,6 +226,8 @@ export default function News() {
                 Share
               </button>
 
+
+              {/* MORE */}
 
               <button
                 type="button"
@@ -233,17 +255,17 @@ export default function News() {
 
           </div>
 
-        </div>
+        </article>
 
 
         {/* ===================================================
-            RIGHT SIDE — NEWS LIST
+            RIGHT — THREE SMALL NEWS
         ==================================================== */}
 
-        <div className="flex h-full min-w-0 flex-1 flex-col gap-3">
+        <div className="flex h-full flex-col gap-3">
 
-          {news.slice(1).map((item) => (
-            <div
+          {news.slice(1, 4).map((item) => (
+            <article
               key={item.title}
               className="
                 group
@@ -252,21 +274,29 @@ export default function News() {
                 flex-1
                 overflow-hidden
                 rounded-2xl
-                border
-                border-white/10
-                bg-[#111111]
+                border-2
+                border-[#212121]
+                bg-[#171717]
                 transition-all
                 duration-300
-                hover:border-white/20
-                hover:bg-[#151515]
+                hover:border-[#353535]
+                hover:bg-[#1a1a1a]
               "
             >
 
               {/* =================================================
-                  RIGHT CARD IMAGE — 25%
+                  IMAGE — 25% OF CARD WIDTH
               ================================================== */}
 
-              <div className="relative h-full w-[25%] shrink-0 overflow-hidden">
+              <div
+                className="
+                  relative
+                  h-full
+                  w-[25%]
+                  shrink-0
+                  overflow-hidden
+                "
+              >
 
                 <img
                   src={item.image}
@@ -285,18 +315,29 @@ export default function News() {
 
 
               {/* =================================================
-                  RIGHT CARD CONTENT — 75%
+                  CONTENT — 75% OF CARD WIDTH
               ================================================== */}
 
-              <div className="flex min-w-0 flex-1 flex-col justify-between p-4">
+              <div
+                className="
+                  flex
+                  min-w-0
+                  flex-1
+                  flex-col
+                  justify-between
+                  p-4
+                "
+              >
 
-                {/* NEWS INFORMATION */}
+                {/* TOP CONTENT */}
 
                 <div>
 
+                  {/* CATEGORY */}
+
                   <span
                     className="
-                      text-[9px]
+                      text-[10px]
                       uppercase
                       tracking-[0.15em]
                       text-white/30
@@ -305,6 +346,8 @@ export default function News() {
                     School News
                   </span>
 
+
+                  {/* TITLE */}
 
                   <h2
                     className="
@@ -321,16 +364,39 @@ export default function News() {
                   </h2>
 
 
-                  <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-white/45">
+                  {/* DESCRIPTION */}
+
+                  <p
+                    className="
+                      mt-1
+                      line-clamp-2
+                      text-xs
+                      leading-relaxed
+                      text-white/45
+                    "
+                  >
                     {item.description}
                   </p>
 
                 </div>
 
 
-                {/* ACTION BAR */}
+                {/* =================================================
+                    ACTION BAR
+                ================================================== */}
 
-                <div className="flex items-center gap-1 border-t border-white/5 pt-2">
+                <div
+                  className="
+                    mt-2
+                    flex
+                    items-center
+                    border-t
+                    border-white/5
+                    pt-2
+                  "
+                >
+
+                  {/* FAVORITE */}
 
                   <button
                     type="button"
@@ -341,7 +407,7 @@ export default function News() {
                       rounded-full
                       px-2
                       py-1
-                      text-[10px]
+                      text-[11px]
                       text-white/40
                       transition
                       hover:bg-white/5
@@ -353,6 +419,8 @@ export default function News() {
                   </button>
 
 
+                  {/* SHARE */}
+
                   <button
                     type="button"
                     className="
@@ -362,7 +430,7 @@ export default function News() {
                       rounded-full
                       px-2
                       py-1
-                      text-[10px]
+                      text-[11px]
                       text-white/40
                       transition
                       hover:bg-white/5
@@ -374,6 +442,8 @@ export default function News() {
                   </button>
 
 
+                  {/* MORE */}
+
                   <button
                     type="button"
                     className="
@@ -384,7 +454,7 @@ export default function News() {
                       items-center
                       justify-center
                       rounded-full
-                      text-white/30
+                      text-white/35
                       transition
                       hover:bg-white/5
                       hover:text-white
@@ -397,12 +467,13 @@ export default function News() {
 
               </div>
 
-            </div>
+            </article>
           ))}
 
         </div>
 
       </div>
-    </div>
+      </>
+
   );
 }

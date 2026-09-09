@@ -5,6 +5,8 @@ import Platform from './components/pages/Platform';
 import StudentRating from './components/pages/StudentRaring'
 import CoursesDisplay from './components/pages/courses';
 import News from './components/pages/new';
+import StudentComments from './components/pages/studentComment';
+import Footer from './components/pages/footer';
 
 export default function CustomHome() {
   const sections = [
@@ -37,6 +39,16 @@ export default function CustomHome() {
       id: 'courses',
       label: 'label',
       component: <News />
+    },
+    {
+      id: 'studentcomments',
+      label: 'comments',
+      component: <StudentComments />
+    },
+    {
+      id: 'footer',
+      label: 'footer',
+      component: <Footer />
     }
   ];
 
