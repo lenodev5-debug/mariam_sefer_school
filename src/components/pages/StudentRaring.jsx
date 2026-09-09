@@ -65,7 +65,7 @@ export default function StudentRating() {
           </div>
         </div>
         <div className="w-[95%] min-h-50 bg-linear-to-lr from-[#111111] via-[#374151] to-[#212121] flex flex-col justify-center items-center gap-6 px-8 border-2 border-[#212121] rounded-2xl relative z-10 m-4">
-          <h1 className="text-4xl text-white/90 mt-4">See more students</h1>
+          <h1 className="text-4xl text-white/90 mt-4" style={{fontFamily: 'news'}}>See more students</h1>
           <div 
               className="flex justify-center items-start"
               style={{

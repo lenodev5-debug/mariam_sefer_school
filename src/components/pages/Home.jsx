@@ -12,8 +12,8 @@ export default function Home() {
         <div className="absolute inset-0 top-32 flex flex-col items-center justify-center z-100 px-4">
           {/* Main heading */}
           <div className="text-center mt-8">
-            <h1 className="text-5xl md:text-8xl font-bold text-white">Building the Future</h1>
-            <h1 className="text-4xl md:text-7xl font-black text-white">Academic Excellence</h1>
+            <h1 className="text-5xl md:text-8xl font-bold text-white" style={{fontFamily: 'news'}}>Building the Future</h1>
+            <h1 className="text-4xl md:text-7xl font-black text-white" style={{fontFamily: 'news'}}>Academic Excellence</h1>
           </div>
 
           {/* Subtitle */}
