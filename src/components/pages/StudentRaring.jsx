@@ -52,7 +52,7 @@ export default function StudentRating() {
   ];
   return (
       <div className="flex bg-[#090909] w-full h-[65vh]">
-          <div className="w-86 min-h-0 bg-linear-to-tr from-[#151719] via-[#151718] to-[#090909] flex flex-col justify-center px-4 relative rounded-3xl my-4">
+          <div className="w-86 min-h-50 bg-linear-to-tr from-[##121212] via-[#151718] to-[#090909] flex flex-col justify-center px-4 relative border-2 border-[#212121] rounded-3xl my-4">
             <FontAwesomeIcon icon={faUser} size="6x" color="#fff" className="mb-4 ml-4"/>
             <h1 className="mt-1 text-3xl text-white">High Student rating</h1>
             <p className="text-white/55">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque veritatis perspiciatis recusandae sint soluta eum esse molestiae</p>
@@ -62,6 +62,26 @@ export default function StudentRating() {
               <FontAwesomeIcon icon={faStar} size="xl" />
               rate on here
             </button>
+          </div>
+        </div>
+        <div className="w-[95%] min-h-50 bg-linear-to-lr from-[#111111] via-[#374151] to-[#212121] flex flex-col justify-center items-center gap-6 px-8 border-2 border-[#212121] rounded-2xl relative z-10 m-4">
+          <h1 className="text-4xl text-white/90 mt-4">See more students</h1>
+          <div 
+              className="flex justify-center items-start"
+              style={{
+                width: "1078px",
+                height: "400px",
+                borderRadius: "8px",
+                fontFamily: "'Inter', sans-serif",
+                padding: "20px",
+                boxSizing: "border-box",
+                overflow:'hidden',
+                position: 'relative'
+              }}
+            >
+            <div className="w-58 h-84 border-amber-50 bg-white -rotate-6 absolute top-22 left-40 transition-all duration-300 hover:-translate-y-10 hover:scale-105 hover:shadow-xl hover:-rotate-1"></div>
+            <div className="w-58 h-84 border-amber-50 bg-white absolute top-15 transition-all duration-300 hover:-translate-y-10 hover:scale-105 hover:shadow-xl"></div>
+            <div className="w-58 h-84 border-amber-50 bg-white rotate-6 absolute top-22 right-40 transition-all duration-300 hover:-translate-y-10 hover:scale-105 hover:shadow-xl hover:rotate-1"></div>
           </div>
         </div>
       </div>
