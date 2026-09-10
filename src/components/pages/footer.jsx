@@ -453,7 +453,7 @@ export default function Footer() {
             flex
             flex-col
             items-start
-            justify-between
+            justify-betwaeen
             gap-5
             bg-transparent
             px-6
