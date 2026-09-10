@@ -6,6 +6,7 @@ import Sidebar from './components/shared/sidebar';
 import CustomHome from './CustemHome';
 import Loading from './components/ui/Loading';
 import Login from './components/auth/login';
+import About from './components/pages/About';
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -54,6 +55,16 @@ function App() {
           <Route path='/login' 
             element={
               <Login />
+            }
+          />
+
+          {/* about page */}
+          <Route path='/about'
+            element={
+              <>
+                <Header />
+                <About />
+              </>
             }
           />
     </Routes>

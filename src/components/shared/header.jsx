@@ -98,6 +98,26 @@ function Header({ onMenuClick, sidebarOpen }) {
         {/* Navigation */}
         <nav className="hidden items-center gap-1 md:flex">
           <a
+            href="/"
+            className="
+              rounded-lg
+              px-3
+              py-2
+              text-sm
+              font-medium
+              text-gray-600
+              transition
+              hover:bg-white/30
+              hover:text-blue-500
+              dark:text-gray-300
+              dark:hover:bg-gray-800/30
+              dark:hover:text-blue-400
+            "
+          >
+            Home
+          </a>
+
+                  <a
             href="/about"
             className="
               rounded-lg

@@ -380,7 +380,7 @@ export default function Footer() {
                 </p>
 
                 <p className="mt-1 text-sm text-white/50">
-                  Addis Ababa, Ethiopia
+                  Dire Dawa, Ethiopia
                 </p>
 
               </div>
@@ -453,7 +453,7 @@ export default function Footer() {
             flex
             flex-col
             items-start
-            justify-betwaeen
+            justify-between
             gap-5
             bg-transparent
             px-6
