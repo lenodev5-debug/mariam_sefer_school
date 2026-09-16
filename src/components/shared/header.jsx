@@ -1,33 +1,74 @@
+import { useEffect, useState } from 'react';
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 import { useTheme } from '../../context/usetheme';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useNavigate } from 'react-router-dom';
+
+import { getUser, hasToken } from '../../../lib/tokens/token';
 
 function Header({ onMenuClick, sidebarOpen }) {
   const { theme, toggleTheme } = useTheme();
+  const navigate = useNavigate();
+
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    if (hasToken()) {
+      setUser(getUser());
+    } else {
+      setUser(null);
+    }
+  }, []);
+
+  const handleProfileClick = () => {
+    if (!user) {
+      navigate('/login');
+      return;
+    }
+
+    switch (user.role) {
+      case 'Admin':
+        navigate('/user/admin/dashboard');
+        break;
+
+      case 'Teacher':
+        navigate('/user/teacher/dashboard');
+        break;
+
+      case 'Parent':
+        navigate('/user/parent/dashboard');
+        break;
+
+      case 'Student':
+        navigate('/user/student/dashboard');
+        break;
+
+      default:
+        break;
+    }
+  };
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 ">
+    <header className="fixed inset-x-0 top-0 z-50">
       <div
         className="
           flex
           h-16
           items-center
           justify-between
-
           border-b
           border-gray-200/20
-          
           px-4
-
           backdrop-blur-xl
           bg-white/10
-
           dark:border-gray-700/30
           dark:bg-gray-900/10
         "
       >
+
         {/* Left */}
         <div className="flex items-center gap-3">
+
           {/* Menu */}
           <button
             onClick={onMenuClick}
@@ -40,14 +81,11 @@ function Header({ onMenuClick, sidebarOpen }) {
               items-center
               justify-center
               rounded-xl
-
               text-gray-600
               transition-all
               duration-300
-
               hover:bg-white/30
               hover:text-blue-500
-
               dark:text-gray-300
               dark:hover:bg-gray-800/30
               dark:hover:text-blue-400
@@ -55,7 +93,8 @@ function Header({ onMenuClick, sidebarOpen }) {
           >
             <svg
               className={`
-                h-5 w-5
+                h-5
+                w-5
                 transition-transform
                 duration-300
                 ${sidebarOpen ? 'rotate-90' : ''}
@@ -88,7 +127,9 @@ function Header({ onMenuClick, sidebarOpen }) {
             >
               <span className="overline decoration-solid decoration-4">
                 {' '}
-                <span className="underline decoration-solid decoration-4">Ma</span>
+                <span className="underline decoration-solid decoration-4">
+                  Ma
+                </span>
               </span>
               riam Sefer
             </span>
@@ -97,6 +138,8 @@ function Header({ onMenuClick, sidebarOpen }) {
 
         {/* Navigation */}
         <nav className="hidden items-center gap-1 md:flex">
+
+          {/* Home */}
           <a
             href="/"
             className="
@@ -117,7 +160,8 @@ function Header({ onMenuClick, sidebarOpen }) {
             Home
           </a>
 
-                  <a
+          {/* About */}
+          <a
             href="/about"
             className="
               rounded-lg
@@ -137,6 +181,7 @@ function Header({ onMenuClick, sidebarOpen }) {
             About
           </a>
 
+          {/* News */}
           <a
             href="/news"
             className="
@@ -157,6 +202,7 @@ function Header({ onMenuClick, sidebarOpen }) {
             News
           </a>
 
+          {/* Books */}
           <a
             href="/books"
             className="
@@ -177,6 +223,7 @@ function Header({ onMenuClick, sidebarOpen }) {
             Books
           </a>
 
+          {/* Contact */}
           <a
             href="/contact"
             className="
@@ -200,6 +247,7 @@ function Header({ onMenuClick, sidebarOpen }) {
 
         {/* Right */}
         <div className="flex items-center gap-2">
+
           {/* Theme */}
           <button
             onClick={toggleTheme}
@@ -208,23 +256,22 @@ function Header({ onMenuClick, sidebarOpen }) {
             className="
               relative
               h-10
-              w-[70px]
+              w-17.5
               rounded-full
               border
               border-gray-200/30
               bg-white/20
               p-1
               shadow-inner
-
               transition-all
               duration-300
               hover:shadow-md
-
               dark:border-gray-700/30
               dark:bg-gray-800/20
             "
           >
-            {/* Static icons on the track */}
+
+            {/* Static icons */}
             <div
               className="
                 pointer-events-none
@@ -239,15 +286,32 @@ function Header({ onMenuClick, sidebarOpen }) {
             >
               <FontAwesomeIcon
                 icon={faSun}
-                className={`h-3.5 w-3.5 transition-colors duration-300 ${
-                  theme === 'dark' ? 'text-gray-500' : 'text-yellow-500'
-                }`}
+                className={`
+                  h-3.5
+                  w-3.5
+                  transition-colors
+                  duration-300
+                  ${
+                    theme === 'dark'
+                      ? 'text-gray-500'
+                      : 'text-yellow-500'
+                  }
+                `}
               />
+
               <FontAwesomeIcon
                 icon={faMoon}
-                className={`h-3.5 w-3.5 transition-colors duration-300 ${
-                  theme === 'dark' ? 'text-blue-300' : 'text-gray-400'
-                }`}
+                className={`
+                  h-3.5
+                  w-3.5
+                  transition-colors
+                  duration-300
+                  ${
+                    theme === 'dark'
+                      ? 'text-blue-300'
+                      : 'text-gray-400'
+                  }
+                `}
               />
             </div>
 
@@ -268,56 +332,88 @@ function Header({ onMenuClick, sidebarOpen }) {
                 duration-300
                 ease-in-out
                 dark:bg-gray-800
-
-                ${theme === 'dark' ? 'translate-x-[30px]' : 'translate-x-0'}
+                ${
+                  theme === 'dark'
+                    ? 'translate-x-[30px]'
+                    : 'translate-x-0'
+                }
               `}
             >
               <FontAwesomeIcon
                 icon={theme === 'dark' ? faMoon : faSun}
-                className={`h-3.5 w-3.5 transition-colors duration-300 ${
-                  theme === 'dark' ? 'text-blue-400' : 'text-yellow-500'
-                }`}
+                className={`
+                  h-3.5
+                  w-3.5
+                  transition-colors
+                  duration-300
+                  ${
+                    theme === 'dark'
+                      ? 'text-blue-400'
+                      : 'text-yellow-500'
+                  }
+                `}
               />
             </span>
           </button>
 
-          {/* Profile Circle */}
-          <button
-            type="button"
-            aria-label="Profile"
-            className="
-              flex
-              h-10
-              w-10
-              items-center
-              justify-center
-              rounded-full
+          {/* Dynamic Sign In / Profile */}
+          {user ? (
+            <button
+              onClick={handleProfileClick}
+              type="button"
+              aria-label="Profile"
+              title={`${user.name} - ${user.role}`}
+              className="
+                flex
+                h-10
+                w-10
+                items-center
+                justify-center
+                rounded-full
+                bg-linear-to-br
+                from-indigo-500
+                to-purple-600
+                text-sm
+                font-bold
+                text-white
+                ring-2
+                ring-indigo-500/20
+                ring-offset-2
+                ring-offset-white/10
+                transition-all
+                duration-300
+                hover:scale-105
+                hover:ring-indigo-500/50
+                dark:ring-indigo-400/20
+                dark:ring-offset-gray-950/10
+              "
+            >
+              {user.name?.charAt(0).toUpperCase()}
+            </button>
+          ) : (
+            <button
+              onClick={() => navigate('/login')}
+              type="button"
+              className="
+                rounded-xl
+                bg-gray-900
+                px-4
+                py-2
+                text-sm
+                font-medium
+                text-white
+                transition-all
+                duration-300
+                hover:bg-blue-500
+                dark:bg-white
+                dark:text-gray-900
+                dark:hover:bg-blue-400
+              "
+            >
+              Sign In
+            </button>
+          )}
 
-              bg-gradient-to-br
-              from-indigo-500
-              to-purple-600
-
-              text-sm
-              font-bold
-              text-white
-
-              ring-2
-              ring-indigo-500/20
-              ring-offset-2
-              ring-offset-white/10
-
-              transition-all
-              duration-300
-
-              hover:scale-105
-              hover:ring-indigo-500/50
-
-              dark:ring-indigo-400/20
-              dark:ring-offset-gray-950/10
-            "
-          >
-            A
-          </button>
         </div>
       </div>
     </header>
