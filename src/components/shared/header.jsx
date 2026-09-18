@@ -334,7 +334,7 @@ function Header({ onMenuClick, sidebarOpen }) {
                 dark:bg-gray-800
                 ${
                   theme === 'dark'
-                    ? 'translate-x-[30px]'
+                    ? 'translate-x-7.5'
                     : 'translate-x-0'
                 }
               `}

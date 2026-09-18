@@ -136,7 +136,22 @@ function App() {
           <ProtectedRoute
             allowedRoles={['Admin']}
           >
+          <div className="min-h-screen bg-gray-50 dark:bg-gray-950 relative">
+
+            <Header
+              onMenuClick={() =>
+                setSidebarOpen(
+                  (prev) => !prev
+                )
+              }
+              sidebarOpen={sidebarOpen}
+            />
+
+            <Sidebar
+              isOpen={sidebarOpen}
+            />
             <AdminDashboard />
+          </div>
           </ProtectedRoute>
         }
       />

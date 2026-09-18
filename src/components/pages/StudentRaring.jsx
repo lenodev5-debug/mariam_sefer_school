@@ -291,7 +291,7 @@ export default function StudentRating() {
                 absolute
                 -inset-4
                 rounded-2xl
-                bg-gradient-to-r
+                bg-linear-to-r
                 from-transparent
                 via-white/15
                 to-transparent
@@ -418,7 +418,7 @@ export default function StudentRating() {
                 absolute
                 -inset-3
                 rounded-2xl
-                bg-gradient-to-r
+                bg-linear-to-r
                 from-transparent
                 via-white/10
                 to-transparent
