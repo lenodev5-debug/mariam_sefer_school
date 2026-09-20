@@ -1,9 +1,10 @@
-import AttendanceCard from "../../shared/cards/attendance";
-import UserActiveCard from "../../shared/cards/chartsStatus";
-import VisitsCard from "../../shared/cards/gradeProgress";
-import UserList from "../../shared/cards/ListUser";
-import MeetingCard from "../../shared/cards/metting";
-import StudentsCard from "../../shared/cards/studentCard";
+import AttendanceCard from "../../shared/cards/users/attendance";
+import ReadingDashboard from "../../shared/cards/books/bookstroe";
+import UserActiveCard from "../../shared/cards/users/chartsStatus";
+import VisitsCard from "../../shared/cards/users/gradeProgress";
+import UserList from "../../shared/cards/users/ListUser";
+import MeetingCard from "../../shared/cards/users/metting";
+import StudentsCard from "../../shared/cards/users/studentCard";
 import MenuVer from "../../ui/menuVertical";
 
 export default function AdminDashboard() {
@@ -13,7 +14,7 @@ export default function AdminDashboard() {
             <div className="mx-auto w-full max-w-[1600px] space-y-4">
 
                 {/* Top cards */}
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+                <div className="flex justify-between items-center gap-2">
                     <UserActiveCard />
                     <VisitsCard />
                     <MeetingCard />
@@ -23,6 +24,10 @@ export default function AdminDashboard() {
                 <div className="grid grid-cols-1 gap-4 lg:grid-cols-[340px_1fr]">
                     <StudentsCard />
                     <AttendanceCard />
+                </div>
+
+                <div className="grid grid-cols-1">
+                    <ReadingDashboard />
                 </div>
 
                 {/* Top Performer */}
