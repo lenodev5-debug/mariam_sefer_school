@@ -1,5 +1,10 @@
 @import 'tailwindcss';
 
+@theme {
+  --color-mediumturquoise: #48d1cc;
+  --color-lightblue: #add8e6;
+}
+
 @keyframes animStar {
   from {
     transform: translateY(0px);

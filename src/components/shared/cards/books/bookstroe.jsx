@@ -193,7 +193,7 @@ function KeepReading() {
 
 function AverageTime() {
   return (
-    <div className="rounded-2xl bg-[#1B1A1A] p-5 shadow-sm">
+    <div className="rounded-2xl bg-[#0E0E0E] p-5 shadow-sm">
       <div className="flex items-start justify-between">
         <div>
           <h2 className="text-[16px] font-semibold text-gray-800">
@@ -277,7 +277,7 @@ function AverageTime() {
 
 export default function ReadingDashboard() {
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[#f7f6f5] p-5 md:p-7 dark:bg-[#0a0a0a]">
+    <div className="relative min-h-screen overflow-hidden bg-[#f7f6f5] p-5 md:p-7 dark:bg-[#0E0E0E]">
       {/* Ambient background layers */}
       <div
         aria-hidden="true"
