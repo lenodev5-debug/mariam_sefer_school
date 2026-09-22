@@ -8,10 +8,11 @@ import clock from "../../../assets/icon/clock.webp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoins, faMoneyBill1Wave } from "@fortawesome/free-solid-svg-icons";
 import StudentOverview from "./studentoverview";
+import AttendanceCard from "../../shared/cards/users/attendance";
 
 export default function StudentDashboard() {
   return (
-    <div className="min-h-screen w-full bg-[#f8f8fb] p-4 sm:p-6 lg:p-8">
+    <div className="min-h-screen w-full bg-[#f8f8fb] p-4 sm:p-6 lg:p-8 mt-10">
       
       {/* ================= HEADER ================= */}
       <UserIdCard>
@@ -42,7 +43,7 @@ export default function StudentDashboard() {
               h-20 w-20
               rotate-[-25deg]
               object-contain
-              sm:bottom-14 sm:left-[58%]
+              sm:bottom-14 sm:left-[63%]
               sm:h-28 sm:w-28
             "
           />
@@ -54,9 +55,9 @@ export default function StudentDashboard() {
               absolute z-10
               bottom-8 left-[62%]
               h-16 w-16
-              rotate-[20deg]
+              rotate-20
               object-contain
-              sm:bottom-10 sm:left-[67%]
+              sm:bottom-40 sm:left-[87%]
               sm:h-20 sm:w-20
             "
           />
@@ -66,9 +67,9 @@ export default function StudentDashboard() {
             alt=""
             className="
               absolute z-10
-              bottom-12 right-[17%]
+              bottom-40 right-[20%]
               h-20 w-20
-              rotate-[15deg]
+              rotate-15
               object-contain
               sm:h-28 sm:w-28
             "
@@ -79,7 +80,7 @@ export default function StudentDashboard() {
             alt="Student profile"
             className="
               absolute z-20
-              bottom-0 right-[7%]
+              top-24 right-[7%]
               h-44 w-44
               object-contain
               sm:right-[8%]
@@ -94,7 +95,7 @@ export default function StudentDashboard() {
               absolute z-10
               bottom-8 right-0
               h-20 w-20
-              rotate-[15deg]
+              rotate-15
               object-contain
               sm:h-28 sm:w-28
             "
@@ -247,6 +248,9 @@ export default function StudentDashboard() {
         </aside>
       </div>
       <StudentOverview />
+      <div className="grid grid-cols-1 mt-2">
+        <AttendanceCard />
+      </div>
     </div>
   );
 }
@@ -280,8 +284,8 @@ function FinanceCard({
       <div className="mb-3 flex h-12 items-end justify-center gap-1">
         {type === "payable" && (
           <>
-            <FontAwesomeIcon icon={faCoins} size="xl" className="text-[#a879ee]"/>
             <FontAwesomeIcon icon={faCoins} size="1xl" className="text-[#a879ee]"/>
+            <FontAwesomeIcon icon={faCoins} size="xl" className="text-[#a879ee]"/>
             <FontAwesomeIcon icon={faCoins} size="2xl" className="text-[#a879ee]"/>
           </>
         )}
@@ -339,7 +343,7 @@ function CourseCard({
       `}
     >
 
-      <p className="relative z-10 max-w-[180px] text-sm font-semibold leading-5 text-[#9258e8]">
+      <p className="relative z-10 max-w-45 text-sm font-semibold leading-5 text-[#9258e8]">
         {title}
       </p>
 
@@ -370,7 +374,7 @@ function CourseCard({
       {type === "database" && (
         <div className="absolute right-5 top-4 flex items-end gap-2 opacity-70">
 
-          <div className="h-12 w-12 rounded-full border-[10px] border-[#a879ee] border-r-transparent" />
+          <div className="h-12 w-12 rounded-full border-10 border-[#a879ee] border-r-transparent" />
 
           <div className="flex items-end gap-1">
             <div className="h-7 w-2 rounded-t bg-[#9258e8]" />

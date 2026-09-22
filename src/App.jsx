@@ -196,6 +196,19 @@ function App() {
           <ProtectedRoute
             allowedRoles={['Student']}
           >
+
+            <Header
+              onMenuClick={() =>
+                setSidebarOpen(
+                  (prev) => !prev
+                )
+              }
+              sidebarOpen={sidebarOpen}
+            />
+
+            <Sidebar
+              isOpen={sidebarOpen}
+            />           
             <StudentDashboard />
           </ProtectedRoute>
         }
