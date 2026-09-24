@@ -59,10 +59,10 @@ export default function ExpandableMenuVertical() {
                         absolute
                         opacity-0
                         group-hover:opacity-100
-                        group-hover:-translate-y-[150px]
+                        group-hover:-translate-y-37.5
                         transition-all duration-500
                         ease-[cubic-bezier(0.68,-0.55,0.27,1.55)]
-                        delay-[50ms]
+                        delay-50
                     "
                 >
                     <div
@@ -116,10 +116,10 @@ export default function ExpandableMenuVertical() {
                         absolute
                         opacity-0
                         group-hover:opacity-100
-                        group-hover:-translate-y-[75px]
+                        group-hover:-translate-y-18.75
                         transition-all duration-500
                         ease-[cubic-bezier(0.68,-0.55,0.27,1.55)]
-                        delay-[100ms]
+                        delay-100
                     "
                 >
                     <div
@@ -173,10 +173,10 @@ export default function ExpandableMenuVertical() {
                         absolute
                         opacity-0
                         group-hover:opacity-100
-                        group-hover:-translate-x-[75px]
+                        group-hover:-translate-x-18.75
                         transition-all duration-500
                         ease-[cubic-bezier(0.68,-0.55,0.27,1.55)]
-                        delay-[150ms]
+                        delay-150
                     "
                 >
                     <div
@@ -230,10 +230,10 @@ export default function ExpandableMenuVertical() {
                         absolute
                         opacity-0
                         group-hover:opacity-100
-                        group-hover:-translate-x-[150px]
+                        group-hover:-translate-x-37.5
                         transition-all duration-500
                         ease-[cubic-bezier(0.68,-0.55,0.27,1.55)]
-                        delay-[200ms]
+                        delay-200
                     "
                 >
                     <div
