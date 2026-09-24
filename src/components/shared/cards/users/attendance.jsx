@@ -1,5 +1,3 @@
-import React from "react";
-
 const attendanceData = [
     { day: "Mon", present: 65, absent: 59 },
     { day: "Tue", present: 75, absent: 65 },
@@ -20,7 +18,7 @@ const AttendanceCard = () => {
                     <button className="relative py-5 text-[16px] font-medium text-[#50A2FF]">
                         Attendance
 
-                        <span className="absolute bottom-0 left-0 h-[3px] w-full rounded-t-full bg-[#50A2FF]" />
+                        <span className="absolute bottom-0 left-0 h-0.75 w-full rounded-t-full bg-[#50A2FF]" />
                     </button>
 
                     <button className="py-5 text-[16px] text-gray-500 dark:text-gray-400">
@@ -70,7 +68,7 @@ const AttendanceCard = () => {
                     <div className="flex">
 
                         {/* Y axis */}
-                        <div className="flex h-[300px] w-10 flex-col justify-between pb-8 text-xs text-gray-500 dark:text-gray-400">
+                        <div className="flex h-75 w-10 flex-col justify-between pb-8 text-xs text-gray-500 dark:text-gray-400">
                             <span>100</span>
                             <span>75</span>
                             <span>50</span>
@@ -93,7 +91,7 @@ const AttendanceCard = () => {
                             <div className="absolute bottom-8 left-0 right-0 border-t border-gray-300 dark:border-gray-600" />
 
                             {/* Bars */}
-                            <div className="relative z-10 flex h-[300px] items-end justify-around px-5 pb-8">
+                            <div className="relative z-10 flex h-75 items-end justify-around px-5 pb-8">
 
                                 {attendanceData.map((item) => (
                                     <div
