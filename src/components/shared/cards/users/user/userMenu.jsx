@@ -1,4 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import {
+    useEffect,
+    useRef,
+    useState,
+} from "react";
 
 import {
     faEllipsisVertical,
@@ -34,6 +38,10 @@ const UserMenu = ({
     const menuRef = useRef(null);
 
 
+    // ============================================================
+    // CLOSE WHEN CLICKING OUTSIDE
+    // ============================================================
+
     useEffect(() => {
 
         const handleClickOutside = (event) => {
@@ -47,25 +55,37 @@ const UserMenu = ({
 
         };
 
+
         document.addEventListener(
             "mousedown",
             handleClickOutside
         );
 
+
         return () => {
+
             document.removeEventListener(
                 "mousedown",
                 handleClickOutside
             );
+
         };
 
     }, []);
 
 
+    // ============================================================
+    // CLOSE MENU
+    // ============================================================
+
     const closeMenu = () => {
         setOpen(false);
     };
 
+
+    // ============================================================
+    // HANDLE ACTION
+    // ============================================================
 
     const handleAction = (callback) => {
 
@@ -82,6 +102,8 @@ const UserMenu = ({
             className="relative inline-block"
         >
 
+            {/* MENU BUTTON */}
+
             <button
                 type="button"
                 onClick={() => setOpen((value) => !value)}
@@ -95,12 +117,16 @@ const UserMenu = ({
             </button>
 
 
+            {/* MENU */}
+
             {open && (
 
                 <div className="absolute right-0 z-50 mt-2 w-52 overflow-hidden rounded-xl border border-gray-200 bg-white py-1 shadow-xl dark:border-gray-700 dark:bg-[#1b1b1b]">
 
 
-                    {/* VIEW */}
+                    {/* ==================================================
+                        VIEW
+                    ================================================== */}
 
                     {canView && (
 
@@ -115,7 +141,9 @@ const UserMenu = ({
                     )}
 
 
-                    {/* EDIT */}
+                    {/* ==================================================
+                        EDIT
+                    ================================================== */}
 
                     {canEdit && (
 
@@ -130,7 +158,9 @@ const UserMenu = ({
                     )}
 
 
-                    {/* ROLE */}
+                    {/* ==================================================
+                        CHANGE ROLE
+                    ================================================== */}
 
                     {canChangeRole && (
 
@@ -145,7 +175,9 @@ const UserMenu = ({
                     )}
 
 
-                    {/* STATUS */}
+                    {/* ==================================================
+                        CHANGE STATUS
+                    ================================================== */}
 
                     {canChangeStatus && (
 
@@ -170,7 +202,9 @@ const UserMenu = ({
                     )}
 
 
-                    {/* DELETE */}
+                    {/* ==================================================
+                        DELETE
+                    ================================================== */}
 
                     {canDelete && (
 
@@ -180,7 +214,7 @@ const UserMenu = ({
 
                             <MenuButton
                                 icon={faTrash}
-                                label="Deactivate user"
+                                label="Delete user"
                                 danger
                                 onClick={() =>
                                     handleAction(onDelete)
@@ -227,7 +261,9 @@ const MenuButton = ({
                 className="w-4"
             />
 
-            <span>{label}</span>
+            <span>
+                {label}
+            </span>
 
         </button>
     );

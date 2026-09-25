@@ -31,7 +31,7 @@ const books = [
       "https://images.unsplash.com/photo-1495446815901-a7297e633e8d?auto=format&fit=crop&w=300&q=80",
   },
   {
-    title: "Mothers: Stories",
+    title: "Mothers: Storie",
     author: "Chris Power",
     reviews: 87,
     ratings: 449,

@@ -13,11 +13,13 @@ const UserRow = ({
     user,
     onClick,
 
+    onView,
     onEdit,
     onChangeRole,
     onChangeStatus,
     onDelete,
 
+    canView = true,
     canEdit = false,
     canChangeRole = false,
     canChangeStatus = false,
@@ -29,15 +31,10 @@ const UserRow = ({
     const userId = user?._id || user?.id;
 
     const name = user?.name || "Unnamed User";
-
     const email = user?.email || "No email";
-
     const phone = user?.phone || "No phone";
-
     const image = user?.image;
-
     const role = user?.role || "User";
-
     const status = user?.status || "inactive";
 
 
@@ -50,12 +47,14 @@ const UserRow = ({
     };
 
 
+    // ============================================================
+    // MOBILE
+    // ============================================================
+
     if (mobile) {
 
         return (
-            <div
-                className="rounded-2xl bg-white p-4 shadow-sm dark:bg-[#171717]"
-            >
+            <div className="rounded-2xl bg-white p-4 shadow-sm dark:bg-[#171717]">
 
                 <div className="flex items-start gap-3">
 
@@ -88,7 +87,7 @@ const UserRow = ({
                     </button>
 
 
-                    {/* USER */}
+                    {/* USER INFORMATION */}
 
                     <button
                         type="button"
@@ -119,12 +118,16 @@ const UserRow = ({
                     </button>
 
 
+                    {/* MENU */}
+
                     <UserMenu
                         user={user}
+                        onView={onView}
                         onEdit={onEdit}
                         onChangeRole={onChangeRole}
                         onChangeStatus={onChangeStatus}
                         onDelete={onDelete}
+                        canView={canView}
                         canEdit={canEdit}
                         canChangeRole={canChangeRole}
                         canChangeStatus={canChangeStatus}
@@ -133,6 +136,8 @@ const UserRow = ({
 
                 </div>
 
+
+                {/* ROLE + STATUS */}
 
                 <div className="mt-4 flex items-center justify-between border-t border-gray-100 pt-3 dark:border-gray-800">
 
@@ -146,6 +151,10 @@ const UserRow = ({
         );
     }
 
+
+    // ============================================================
+    // DESKTOP
+    // ============================================================
 
     return (
         <tr className="border-b border-gray-100 last:border-0 dark:border-gray-800">
@@ -231,10 +240,12 @@ const UserRow = ({
 
                 <UserMenu
                     user={user}
+                    onView={onView}
                     onEdit={onEdit}
                     onChangeRole={onChangeRole}
                     onChangeStatus={onChangeStatus}
                     onDelete={onDelete}
+                    canView={canView}
                     canEdit={canEdit}
                     canChangeRole={canChangeRole}
                     canChangeStatus={canChangeStatus}
