@@ -1,6 +1,6 @@
 import { faBookOpen, faChevronRight, faClock, faFileText } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import BookLoader from "../../../ui/readpage";
+import BookLoader from "../../ui/readpage";
 
 const books = [
   {

@@ -15,6 +15,11 @@ import AdminDashboard from './components/components/admin/adminDashboard';
 import TeacherDashboard from './components/components/teacher/TeacherDashboard';
 import ParentDashboard from './components/components/parent/parentDashboard';
 import StudentDashboard from './components/components/student/StudentDashboard';
+import AdminUserDashboard from './components/components/admin/AdminUserDashboard';
+import AdminStudentsDashboard from './components/components/admin/AdminStudentsDashboard';
+import AdminTeachersDashboard from './components/components/admin/AdminTeachersDashboard';
+import AdminDepartmentsDashboard from './components/components/admin/AdminDepartmentsDashboard';
+import AdminFormDashboard from './components/components/admin/adminFormDashboard';
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -131,7 +136,7 @@ function App() {
       {/* ========================================= */}
 
       <Route
-        path="/user/admin/dashboard"
+        path="/admin/dashboard"
         element={
           <ProtectedRoute
             allowedRoles={['Admin']}
@@ -151,6 +156,136 @@ function App() {
               isOpen={sidebarOpen}
             />
             <AdminDashboard />
+          </div>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/admin/users/manage"
+        element={
+          <ProtectedRoute
+            allowedRoles={['Admin']}
+          >
+          <div className="min-h-screen bg-gray-50 dark:bg-gray-950 relative">
+
+            <Header
+              onMenuClick={() =>
+                setSidebarOpen(
+                  (prev) => !prev
+                )
+              }
+              sidebarOpen={sidebarOpen}
+            />
+
+            <Sidebar
+              isOpen={sidebarOpen}
+            />
+            <AdminUserDashboard />
+          </div>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/admin/students/manage"
+        element={
+          <ProtectedRoute
+            allowedRoles={['Admin']}
+          >
+          <div className="min-h-screen bg-gray-50 dark:bg-gray-950 relative">
+
+            <Header
+              onMenuClick={() =>
+                setSidebarOpen(
+                  (prev) => !prev
+                )
+              }
+              sidebarOpen={sidebarOpen}
+            />
+
+            <Sidebar
+              isOpen={sidebarOpen}
+            />
+            <AdminStudentsDashboard />
+          </div>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/admin/teachers/manage"
+        element={
+          <ProtectedRoute
+            allowedRoles={['Admin']}
+          >
+          <div className="min-h-screen bg-gray-50 dark:bg-gray-950 relative">
+
+            <Header
+              onMenuClick={() =>
+                setSidebarOpen(
+                  (prev) => !prev
+                )
+              }
+              sidebarOpen={sidebarOpen}
+            />
+
+            <Sidebar
+              isOpen={sidebarOpen}
+            />
+            <AdminTeachersDashboard />
+          </div>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/admin/departments/manage"
+        element={
+          <ProtectedRoute
+            allowedRoles={['Admin']}
+          >
+          <div className="min-h-screen bg-gray-50 dark:bg-gray-950 relative">
+
+            <Header
+              onMenuClick={() =>
+                setSidebarOpen(
+                  (prev) => !prev
+                )
+              }
+              sidebarOpen={sidebarOpen}
+            />
+
+            <Sidebar
+              isOpen={sidebarOpen}
+            />
+            <AdminDepartmentsDashboard />
+          </div>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/admin/forms/manage"
+        element={
+          <ProtectedRoute
+            allowedRoles={['Admin']}
+          >
+          <div className="min-h-screen bg-gray-50 dark:bg-gray-950 relative">
+
+            <Header
+              onMenuClick={() =>
+                setSidebarOpen(
+                  (prev) => !prev
+                )
+              }
+              sidebarOpen={sidebarOpen}
+            />
+
+            <Sidebar
+              isOpen={sidebarOpen}
+            />
+            <AdminFormDashboard />
           </div>
           </ProtectedRoute>
         }

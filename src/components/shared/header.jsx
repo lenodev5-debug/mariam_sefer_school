@@ -28,19 +28,19 @@ function Header({ onMenuClick, sidebarOpen }) {
 
     switch (user.role) {
       case 'Admin':
-        navigate('/user/admin/dashboard');
+        navigate('/admin/dashboard');
         break;
 
       case 'Teacher':
-        navigate('/user/teacher/dashboard');
+        navigate('/teacher/dashboard');
         break;
 
       case 'Parent':
-        navigate('/user/parent/dashboard');
+        navigate('/parent/dashboard');
         break;
 
       case 'Student':
-        navigate('/user/student/dashboard');
+        navigate('/student/dashboard');
         break;
 
       default:

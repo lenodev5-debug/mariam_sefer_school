@@ -7,7 +7,7 @@ import {
     faIdCard,
 } from '@fortawesome/free-solid-svg-icons';
 
-import Card from '../ui/spaceCard';
+import Card from '../shared/ui/spaceCard';
 import authService from '../../../lib/auth/authLogin';
 
 import { useAuth } from '../../context/AuthContext';
