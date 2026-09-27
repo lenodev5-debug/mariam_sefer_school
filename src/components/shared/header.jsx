@@ -68,49 +68,62 @@ function Header({ onMenuClick, sidebarOpen }) {
 
         {/* Left */}
         <div className="flex items-center gap-3">
-
-          {/* Menu */}
-          <button
-            onClick={onMenuClick}
-            type="button"
-            aria-label="Toggle sidebar"
-            className="
-              flex
-              h-10
-              w-10
-              items-center
-              justify-center
-              rounded-xl
-              text-gray-600
-              transition-all
-              duration-300
-              hover:bg-white/30
-              hover:text-blue-500
-              dark:text-gray-300
-              dark:hover:bg-gray-800/30
-              dark:hover:text-blue-400
-            "
-          >
-            <svg
-              className={`
-                h-5
-                w-5
-                transition-transform
-                duration-300
-                ${sidebarOpen ? 'rotate-90' : ''}
-              `}
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-          </button>
+<div className="flex items-center gap-3">
+  {/* Menu */}
+  <button
+    onClick={onMenuClick}
+    type="button"
+    aria-label="Toggle sidebar"
+    className="
+      flex
+      h-10
+      w-10
+      items-center
+      justify-center
+      rounded-xl
+      text-gray-600
+      transition-all
+      duration-300
+      hover:bg-white/30
+      hover:text-blue-500
+      dark:text-gray-300
+      dark:hover:bg-gray-800/30
+      dark:hover:text-blue-400
+    "
+  >
+    <svg
+      className={`
+        h-5
+        w-5
+        transition-transform
+        duration-300
+        ease-in-out
+        ${sidebarOpen ? 'rotate-90' : 'rotate-0'}
+      `}
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      {sidebarOpen ? (
+        // X icon
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M6 18L18 6M6 6l12 12"
+        />
+      ) : (
+        // Hamburger icon
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M4 6h16M4 12h16M4 18h16"
+        />
+      )}
+    </svg>
+  </button>
+</div>
 
           {/* SchoolHub */}
           <div className="flex items-center gap-2">

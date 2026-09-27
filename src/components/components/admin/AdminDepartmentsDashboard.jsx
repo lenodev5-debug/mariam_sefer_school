@@ -13,7 +13,6 @@ import {
     faBook,
     faLayerGroup,
     faChartLine,
-    faUserGraduate,
 } from '@fortawesome/free-solid-svg-icons';
 
 import departmentService from '../../../../lib/service/admin/departmentService';

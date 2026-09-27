@@ -1,5 +1,5 @@
 import BookCard from '../pages/Books';
-import Card from '../ui/spaceCard';
+import Card from '../shared/ui/spaceCard';
 
 export default function Home() {
   return (

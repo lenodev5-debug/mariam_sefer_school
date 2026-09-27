@@ -7,7 +7,7 @@ import {
   faClock,
 } from "@fortawesome/free-solid-svg-icons";
 
-import "../../css/Loading.css";
+import "../../../css/Loading.css"
 
 export default function Loading({ fullScreen = true }) {
   return (

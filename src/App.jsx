@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import Header from './components/shared/header';
 import Sidebar from './components/shared/sidebar';
 import CustomHome from './CustemHome';
-import Loading from './components/ui/Loading';
+import Loading from './components/shared/ui/Loading';
 
 import Login from './components/auth/login';
 import ProtectedRoute from './components/auth/ProtectedRoute';
@@ -20,6 +20,12 @@ import AdminStudentsDashboard from './components/components/admin/AdminStudentsD
 import AdminTeachersDashboard from './components/components/admin/AdminTeachersDashboard';
 import AdminDepartmentsDashboard from './components/components/admin/AdminDepartmentsDashboard';
 import AdminFormDashboard from './components/components/admin/adminFormDashboard';
+import AboutHome from './components/pages/about/aboutHome';
+import AboutUs from './components/pages/about/aboutUs';
+import AboutFuture from './components/pages/about/aboutFuture';
+import AboutInspire from './components/pages/about/aboutInspire';
+import AboutVideo from './components/pages/about/aboutVideo';
+import StartFuture from './components/pages/about/startFuture';
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -126,7 +132,12 @@ function App() {
         element={
           <>
             <Header />
-            <About />
+            <AboutHome />
+            <AboutUs />
+            <AboutFuture />
+            <AboutInspire />
+            <AboutVideo />
+            <StartFuture />
           </>
         }
       />
@@ -326,7 +337,7 @@ function App() {
       {/* ========================================= */}
 
       <Route
-        path="/user/student/dashboard"
+        path="/student/dashboard"
         element={
           <ProtectedRoute
             allowedRoles={['Student']}
