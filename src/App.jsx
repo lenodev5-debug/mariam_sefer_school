@@ -9,15 +9,12 @@ import Loading from './components/shared/ui/Loading';
 import Login from './components/auth/login';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 
-import About from './components/pages/About';
 
 import AdminDashboard from './components/components/admin/adminDashboard';
 import TeacherDashboard from './components/components/teacher/TeacherDashboard';
 import ParentDashboard from './components/components/parent/parentDashboard';
 import StudentDashboard from './components/components/student/StudentDashboard';
 import AdminUserDashboard from './components/components/admin/AdminUserDashboard';
-import AdminStudentsDashboard from './components/components/admin/AdminStudentsDashboard';
-import AdminTeachersDashboard from './components/components/admin/AdminTeachersDashboard';
 import AdminDepartmentsDashboard from './components/components/admin/AdminDepartmentsDashboard';
 import AdminFormDashboard from './components/components/admin/adminFormDashboard';
 import AboutHome from './components/pages/about/aboutHome';
@@ -26,6 +23,7 @@ import AboutFuture from './components/pages/about/aboutFuture';
 import AboutInspire from './components/pages/about/aboutInspire';
 import AboutVideo from './components/pages/about/aboutVideo';
 import StartFuture from './components/pages/about/startFuture';
+import NotFound from './components/pages/notFound/pageNotFound';
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -58,7 +56,7 @@ function App() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 3000);
+    }, 1000);
 
     return () => {
       clearTimeout(timer);
@@ -199,58 +197,6 @@ function App() {
       />
 
       <Route
-        path="/admin/students/manage"
-        element={
-          <ProtectedRoute
-            allowedRoles={['Admin']}
-          >
-          <div className="min-h-screen bg-gray-50 dark:bg-gray-950 relative">
-
-            <Header
-              onMenuClick={() =>
-                setSidebarOpen(
-                  (prev) => !prev
-                )
-              }
-              sidebarOpen={sidebarOpen}
-            />
-
-            <Sidebar
-              isOpen={sidebarOpen}
-            />
-            <AdminStudentsDashboard />
-          </div>
-          </ProtectedRoute>
-        }
-      />
-
-      <Route
-        path="/admin/teachers/manage"
-        element={
-          <ProtectedRoute
-            allowedRoles={['Admin']}
-          >
-          <div className="min-h-screen bg-gray-50 dark:bg-gray-950 relative">
-
-            <Header
-              onMenuClick={() =>
-                setSidebarOpen(
-                  (prev) => !prev
-                )
-              }
-              sidebarOpen={sidebarOpen}
-            />
-
-            <Sidebar
-              isOpen={sidebarOpen}
-            />
-            <AdminTeachersDashboard />
-          </div>
-          </ProtectedRoute>
-        }
-      />
-
-      <Route
         path="/admin/departments/manage"
         element={
           <ProtectedRoute
@@ -359,6 +305,8 @@ function App() {
           </ProtectedRoute>
         }
       />
+      {/* page doesn;t exist */}
+      <Route path='*' element={<NotFound />} />
 
     </Routes>
   );

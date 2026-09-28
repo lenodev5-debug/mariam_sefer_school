@@ -12,7 +12,7 @@ const AboutUs = () => {
             <img
               src={clock}
               alt="Students jumping in hallway"
-              className="w-full h-105 md:h-130 object-cover bg-top"
+              className="w-full h-105 md:h-200 object-cover bg-top"
             />
           </div>
 
@@ -82,7 +82,7 @@ const AboutUs = () => {
             <img
               src={clock1}
               alt="Students in classroom"
-              className="w-full h-80 md:h-100 object-cover"
+              className="w-full h-80 md:h-200 object-cover bg-bottom-right"
             />
           </div>
         </div>

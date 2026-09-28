@@ -4,8 +4,7 @@ import UserActiveCard from "../../shared/cards/users/chartsStatus";
 import VisitsCard from "../../shared/cards/users/gradeProgress";
 import MeetingCard from "../../shared/cards/users/metting";
 import StudentsCard from "../../shared/cards/users/student/studentCard";
-
-import ExpandableMenuVertical from "../../shared/ui/menuVertical";
+import FloatingMenu from "../../shared/ui/FloatingMenu";
 
 export default function AdminDashboard() {
     return (
@@ -28,9 +27,8 @@ export default function AdminDashboard() {
                     <ReadingDashboard />
                 </div>
             </div>
-
-            <ExpandableMenuVertical />
-
+            {/* floating menu */}
+            <FloatingMenu />
         </div>
     );
 }

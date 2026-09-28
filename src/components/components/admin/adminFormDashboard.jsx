@@ -1,4 +1,3 @@
-// src/pages/admin/AdminFormDashboard.jsx
 
 import { useEffect, useMemo, useState } from "react";
 
@@ -13,6 +12,8 @@ import academicYearService from "../../../../lib/service/admin/academicYearServi
 import timetableService from "../../../../lib/service/admin/timetable";
 import departmentService from "../../../../lib/service/admin/departmentService";
 import subjectService from "../../../../lib/service/admin/subjectService";
+
+import FloatingMenu from "../../shared/ui/FloatingMenu";
 
 /* ============================================================
    FORM REGISTRY
@@ -1080,38 +1081,12 @@ export default function AdminFormDashboard() {
             </div>
 
             {/* ================================================= */}
-            {/* FLOATING CREATE BUTTON */}
+            {/* FLOATING MENU (one-line, handles nav + form modal) */}
             {/* ================================================= */}
-            <button
-                type="button"
-                onClick={() => setModalOpen(true)}
-                aria-label={`Create ${activeTab.label}`}
-                className="
-                    fixed bottom-6 right-6 z-40
-                    flex items-center gap-2
-                    rounded-full bg-black px-5 py-3.5
-                    text-sm font-semibold text-white
-                    shadow-lg shadow-black/20
-                    transition hover:bg-gray-800 hover:scale-105
-                    active:scale-95
-                    dark:bg-white dark:text-black dark:hover:bg-gray-200
-                "
-            >
-                <svg
-                    className="h-5 w-5"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.2"
-                    strokeLinecap="round"
-                >
-                    <path d="M12 5v14M5 12h14" />
-                </svg>
-                <span>Create {activeTab.label}</span>
-            </button>
+            <FloatingMenu />
 
             {/* ================================================= */}
-            {/* FORM MODAL */}
+            {/* LOCAL FORM MODAL (opened by the active tab's Create button) */}
             {/* ================================================= */}
             <FormModal
                 open={modalOpen}

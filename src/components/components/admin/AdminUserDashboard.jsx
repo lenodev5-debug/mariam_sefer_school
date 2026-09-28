@@ -5,6 +5,7 @@ import userService from "../../../../lib/service/admin/userService";
 
 import UserList from "../../shared/cards/users/user/userlist";
 import UserDetail from "../../shared/cards/users/user/userDetail";
+import FloatingMenu from "../../shared/ui/FloatingMenu";
 
 export default function AdminUserDashboard() {
     /* ---------- state ---------- */
@@ -243,6 +244,7 @@ export default function AdminUserDashboard() {
                     onPageChange={handlePageChange}
                 />
             </div>
+            <FloatingMenu />
         </div>
     );
 }

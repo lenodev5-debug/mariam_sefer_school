@@ -137,14 +137,15 @@ function Header({ onMenuClick, sidebarOpen }) {
                 sm:block
                 dark:text-white
               "
+              style={{fontFamily: 'news'}}
             >
               <span className="overline decoration-solid decoration-4">
                 {' '}
-                <span className="underline decoration-solid decoration-4">
-                  Ma
+                <span className="underline decoration-solid decoration-4" style={{fontFamily: 'news'}}>
+                  K
                 </span>
               </span>
-              riam Sefer
+              idist tereza
             </span>
           </div>
         </div>

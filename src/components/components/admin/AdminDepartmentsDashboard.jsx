@@ -17,7 +17,8 @@ import {
 
 import departmentService from '../../../../lib/service/admin/departmentService';
 import subjectService from '../../../../lib/service/admin/subjectService';
-import ExpandableMenuVertical from '../../shared/ui/menuVertical';
+import FloatingMenu from '../../shared/ui/FloatingMenu';
+
 
 /* ============================================================
  * HELPERS
@@ -751,7 +752,7 @@ export default function AdminDepartmentsDashboard() {
                 </div>
 
             </div>
-            <ExpandableMenuVertical />
+            <FloatingMenu />
         </div>
     );
 }

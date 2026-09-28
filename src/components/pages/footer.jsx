@@ -19,10 +19,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 
-// ============================================================
-// SOCIAL BUTTON
-// ============================================================
-
 function SocialButton({ icon, name }) {
   return (
     <button
@@ -404,7 +400,7 @@ export default function Footer() {
                 </p>
 
                 <p className="mt-1 text-sm text-white/50">
-                  info@ourschool.edu
+                  Saint Treza@gmail.com
                 </p>
 
               </div>
