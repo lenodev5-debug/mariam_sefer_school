@@ -9,7 +9,6 @@ import Loading from './components/shared/ui/Loading';
 import Login from './components/auth/login';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 
-
 import AdminDashboard from './components/components/admin/adminDashboard';
 import TeacherDashboard from './components/components/teacher/TeacherDashboard';
 import ParentDashboard from './components/components/parent/parentDashboard';
@@ -24,10 +23,21 @@ import AboutInspire from './components/pages/about/aboutInspire';
 import AboutVideo from './components/pages/about/aboutVideo';
 import StartFuture from './components/pages/about/startFuture';
 import NotFound from './components/pages/notFound/pageNotFound';
+import NewsHome from './components/pages/news/NewHome';
+import BookHome from './components/pages/books/bookHome';
+import BookstoreSections from './components/pages/books/BookstoreSections';
+import BookstoreServices from './components/pages/books/BookService';
+import Footer from './components/pages/footer';
+
+// ✅ Visit tracking hook
+import useTrackVisit from './hooks/useTrackingVisit';
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  // ✅ Track every route visit (fires once per path change)
+  useTrackVisit();
 
   /*
    * Close sidebar
@@ -37,16 +47,10 @@ function App() {
       setSidebarOpen(false);
     };
 
-    window.addEventListener(
-      'close-sidebar',
-      closeSidebar
-    );
+    window.addEventListener('close-sidebar', closeSidebar);
 
     return () => {
-      window.removeEventListener(
-        'close-sidebar',
-        closeSidebar
-      );
+      window.removeEventListener('close-sidebar', closeSidebar);
     };
   }, []);
 
@@ -72,7 +76,6 @@ function App() {
 
   return (
     <Routes>
-
       {/* ========================================= */}
       {/* HOME PAGE */}
       {/* ========================================= */}
@@ -81,31 +84,14 @@ function App() {
         path="/"
         element={
           <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
-
             <Header
-              onMenuClick={() =>
-                setSidebarOpen(
-                  (prev) => !prev
-                )
-              }
+              onMenuClick={() => setSidebarOpen((prev) => !prev)}
               sidebarOpen={sidebarOpen}
             />
-
-            <Sidebar
-              isOpen={sidebarOpen}
-            />
-
-            <main
-              className="
-                min-h-screen
-                pl-0
-                transition-all
-                duration-300
-              "
-            >
+            <Sidebar isOpen={sidebarOpen} />
+            <main className="min-h-screen pl-0 transition-all duration-300">
               <CustomHome />
             </main>
-
           </div>
         }
       />
@@ -114,12 +100,7 @@ function App() {
       {/* LOGIN */}
       {/* ========================================= */}
 
-      <Route
-        path="/login"
-        element={
-          <Login />
-        }
-      />
+      <Route path="/login" element={<Login />} />
 
       {/* ========================================= */}
       {/* ABOUT */}
@@ -141,31 +122,53 @@ function App() {
       />
 
       {/* ========================================= */}
+      {/* News */}
+      {/* ========================================= */}
+
+      <Route
+        path="/news"
+        element={
+          <>
+            <Header />
+            <NewsHome />
+            <Footer />
+          </>
+        }
+      />
+
+      {/* ========================================= */}
+      {/* books store */}
+      {/* ========================================= */}
+
+      <Route
+        path="/books"
+        element={
+          <>
+            <Header />
+            <BookHome />
+            <BookstoreSections />
+            <BookstoreServices />
+            <Footer />
+          </>
+        }
+      />
+
+      {/* ========================================= */}
       {/* ADMIN DASHBOARD */}
       {/* ========================================= */}
 
       <Route
         path="/admin/dashboard"
         element={
-          <ProtectedRoute
-            allowedRoles={['Admin']}
-          >
-          <div className="min-h-screen bg-gray-50 dark:bg-gray-950 relative">
-
-            <Header
-              onMenuClick={() =>
-                setSidebarOpen(
-                  (prev) => !prev
-                )
-              }
-              sidebarOpen={sidebarOpen}
-            />
-
-            <Sidebar
-              isOpen={sidebarOpen}
-            />
-            <AdminDashboard />
-          </div>
+          <ProtectedRoute allowedRoles={['Admin']}>
+            <div className="min-h-screen bg-gray-50 dark:bg-gray-950 relative">
+              <Header
+                onMenuClick={() => setSidebarOpen((prev) => !prev)}
+                sidebarOpen={sidebarOpen}
+              />
+              <Sidebar isOpen={sidebarOpen} />
+              <AdminDashboard />
+            </div>
           </ProtectedRoute>
         }
       />
@@ -173,25 +176,15 @@ function App() {
       <Route
         path="/admin/users/manage"
         element={
-          <ProtectedRoute
-            allowedRoles={['Admin']}
-          >
-          <div className="min-h-screen bg-gray-50 dark:bg-gray-950 relative">
-
-            <Header
-              onMenuClick={() =>
-                setSidebarOpen(
-                  (prev) => !prev
-                )
-              }
-              sidebarOpen={sidebarOpen}
-            />
-
-            <Sidebar
-              isOpen={sidebarOpen}
-            />
-            <AdminUserDashboard />
-          </div>
+          <ProtectedRoute allowedRoles={['Admin']}>
+            <div className="min-h-screen bg-gray-50 dark:bg-gray-950 relative">
+              <Header
+                onMenuClick={() => setSidebarOpen((prev) => !prev)}
+                sidebarOpen={sidebarOpen}
+              />
+              <Sidebar isOpen={sidebarOpen} />
+              <AdminUserDashboard />
+            </div>
           </ProtectedRoute>
         }
       />
@@ -199,25 +192,15 @@ function App() {
       <Route
         path="/admin/departments/manage"
         element={
-          <ProtectedRoute
-            allowedRoles={['Admin']}
-          >
-          <div className="min-h-screen bg-gray-50 dark:bg-gray-950 relative">
-
-            <Header
-              onMenuClick={() =>
-                setSidebarOpen(
-                  (prev) => !prev
-                )
-              }
-              sidebarOpen={sidebarOpen}
-            />
-
-            <Sidebar
-              isOpen={sidebarOpen}
-            />
-            <AdminDepartmentsDashboard />
-          </div>
+          <ProtectedRoute allowedRoles={['Admin']}>
+            <div className="min-h-screen bg-gray-50 dark:bg-gray-950 relative">
+              <Header
+                onMenuClick={() => setSidebarOpen((prev) => !prev)}
+                sidebarOpen={sidebarOpen}
+              />
+              <Sidebar isOpen={sidebarOpen} />
+              <AdminDepartmentsDashboard />
+            </div>
           </ProtectedRoute>
         }
       />
@@ -225,25 +208,15 @@ function App() {
       <Route
         path="/admin/forms/manage"
         element={
-          <ProtectedRoute
-            allowedRoles={['Admin']}
-          >
-          <div className="min-h-screen bg-gray-50 dark:bg-gray-950 relative">
-
-            <Header
-              onMenuClick={() =>
-                setSidebarOpen(
-                  (prev) => !prev
-                )
-              }
-              sidebarOpen={sidebarOpen}
-            />
-
-            <Sidebar
-              isOpen={sidebarOpen}
-            />
-            <AdminFormDashboard />
-          </div>
+          <ProtectedRoute allowedRoles={['Admin']}>
+            <div className="min-h-screen bg-gray-50 dark:bg-gray-950 relative">
+              <Header
+                onMenuClick={() => setSidebarOpen((prev) => !prev)}
+                sidebarOpen={sidebarOpen}
+              />
+              <Sidebar isOpen={sidebarOpen} />
+              <AdminFormDashboard />
+            </div>
           </ProtectedRoute>
         }
       />
@@ -255,9 +228,7 @@ function App() {
       <Route
         path="/user/teacher/dashboard"
         element={
-          <ProtectedRoute
-            allowedRoles={['Teacher']}
-          >
+          <ProtectedRoute allowedRoles={['Teacher']}>
             <TeacherDashboard />
           </ProtectedRoute>
         }
@@ -270,9 +241,7 @@ function App() {
       <Route
         path="/user/parent/dashboard"
         element={
-          <ProtectedRoute
-            allowedRoles={['Parent']}
-          >
+          <ProtectedRoute allowedRoles={['Parent']}>
             <ParentDashboard />
           </ProtectedRoute>
         }
@@ -285,29 +254,19 @@ function App() {
       <Route
         path="/student/dashboard"
         element={
-          <ProtectedRoute
-            allowedRoles={['Student']}
-          >
-
+          <ProtectedRoute allowedRoles={['Student']}>
             <Header
-              onMenuClick={() =>
-                setSidebarOpen(
-                  (prev) => !prev
-                )
-              }
+              onMenuClick={() => setSidebarOpen((prev) => !prev)}
               sidebarOpen={sidebarOpen}
             />
-
-            <Sidebar
-              isOpen={sidebarOpen}
-            />           
+            <Sidebar isOpen={sidebarOpen} />
             <StudentDashboard />
           </ProtectedRoute>
         }
       />
-      {/* page doesn;t exist */}
-      <Route path='*' element={<NotFound />} />
 
+      {/* page doesn't exist */}
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }

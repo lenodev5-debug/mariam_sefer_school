@@ -4,7 +4,7 @@ import Baner from './components/pages/Baner';
 import Platform from './components/pages/Platform';
 import StudentRating from './components/pages/StudentRaring'
 import CoursesDisplay from './components/pages/courses';
-import News from './components/pages/new';
+import News from './components/pages/news/new';
 import StudentComments from './components/pages/studentComment';
 import Footer from './components/pages/footer';
 

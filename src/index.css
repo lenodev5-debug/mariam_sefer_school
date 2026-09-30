@@ -5,6 +5,21 @@
   --color-lightblue: #add8e6;
 }
 
+/* Hide scrollbar — Chrome, Safari, Edge */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar — Firefox */
+.no-scrollbar {
+    scrollbar-width: none;
+}
+
+/* Hide scrollbar — IE / old Edge */
+.no-scrollbar {
+    -ms-overflow-style: none;
+}
+
 @keyframes animStar {
   from {
     transform: translateY(0px);

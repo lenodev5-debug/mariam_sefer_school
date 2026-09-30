@@ -6,7 +6,8 @@ import {
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import UserMenu from "./userMenu";
+import UserMenu from './userMenu'
+import UserActionsInline from "./userActions";
 
 
 const UserRow = ({
@@ -39,87 +40,60 @@ const UserRow = ({
 
 
     const handleRowClick = () => {
-
         if (!userId) return;
-
         onClick?.(user);
-
     };
 
 
     // ============================================================
-    // MOBILE
+    // MOBILE  →  keep the ⋮ menu
     // ============================================================
 
     if (mobile) {
-
         return (
             <div className="rounded-2xl bg-white p-4 shadow-sm dark:bg-[#171717]">
 
                 <div className="flex items-start gap-3">
-
-                    {/* AVATAR */}
 
                     <button
                         type="button"
                         onClick={handleRowClick}
                         className="shrink-0"
                     >
-
                         {image ? (
-
                             <img
                                 src={image}
                                 alt={name}
                                 className="h-12 w-12 rounded-full object-cover"
                             />
-
                         ) : (
-
                             <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-100 text-gray-500 dark:bg-[#252525]">
-
                                 <FontAwesomeIcon icon={faUser} />
-
                             </div>
-
                         )}
-
                     </button>
-
-
-                    {/* USER INFORMATION */}
 
                     <button
                         type="button"
                         onClick={handleRowClick}
                         className="min-w-0 flex-1 text-left"
                     >
-
                         <p className="truncate font-medium text-gray-900 dark:text-white">
                             {name}
                         </p>
 
                         <p className="mt-1 flex items-center gap-2 truncate text-xs text-gray-500">
-
                             <FontAwesomeIcon icon={faEnvelope} />
-
                             {email}
-
                         </p>
 
                         <p className="mt-1 flex items-center gap-2 text-xs text-gray-500">
-
                             <FontAwesomeIcon icon={faPhone} />
-
                             {phone}
-
                         </p>
-
                     </button>
 
-
-                    {/* MENU */}
-
+                    {/* MOBILE MENU (unchanged) */}
                     <UserMenu
                         user={user}
                         onView={onView}
@@ -133,112 +107,74 @@ const UserRow = ({
                         canChangeStatus={canChangeStatus}
                         canDelete={canDelete}
                     />
-
                 </div>
-
-
-                {/* ROLE + STATUS */}
 
                 <div className="mt-4 flex items-center justify-between border-t border-gray-100 pt-3 dark:border-gray-800">
-
                     <RoleBadge role={role} />
-
                     <StatusBadge status={status} />
-
                 </div>
-
             </div>
         );
     }
 
 
     // ============================================================
-    // DESKTOP
+    // DESKTOP  →  inline icon buttons
     // ============================================================
 
     return (
         <tr className="border-b border-gray-100 last:border-0 dark:border-gray-800">
 
             {/* USER */}
-
             <td className="px-5 py-4">
-
                 <button
                     type="button"
                     onClick={handleRowClick}
                     className="flex items-center gap-3 text-left"
                 >
-
                     {image ? (
-
                         <img
                             src={image}
                             alt={name}
                             className="h-11 w-11 rounded-full object-cover"
                         />
-
                     ) : (
-
                         <div className="flex h-11 w-11 items-center justify-center rounded-full bg-gray-100 text-gray-500 dark:bg-[#252525]">
-
                             <FontAwesomeIcon icon={faUser} />
-
                         </div>
-
                     )}
 
-
                     <div className="min-w-0">
-
                         <p className="truncate font-medium text-gray-900 dark:text-white">
                             {name}
                         </p>
-
                         <p className="mt-1 truncate text-xs text-gray-500">
                             {email}
                         </p>
-
                     </div>
-
                 </button>
-
             </td>
-
 
             {/* ROLE */}
-
             <td className="px-5 py-4">
-
                 <RoleBadge role={role} />
-
             </td>
 
-
             {/* PHONE */}
-
             <td className="px-5 py-4">
-
                 <span className="text-sm text-gray-600 dark:text-gray-400">
                     {phone}
                 </span>
-
             </td>
-
 
             {/* STATUS */}
-
             <td className="px-5 py-4">
-
                 <StatusBadge status={status} />
-
             </td>
 
-
-            {/* MENU */}
-
+            {/* INLINE ACTIONS (desktop) */}
             <td className="px-5 py-4 text-right">
-
-                <UserMenu
+                <UserActionsInline
                     user={user}
                     onView={onView}
                     onEdit={onEdit}
@@ -251,7 +187,6 @@ const UserRow = ({
                     canChangeStatus={canChangeStatus}
                     canDelete={canDelete}
                 />
-
             </td>
 
         </tr>
@@ -259,31 +194,25 @@ const UserRow = ({
 };
 
 
-// ============================================================
-// ROLE BADGE
-// ============================================================
+/* ============================================================
+   ROLE BADGE
+   ============================================================ */
 
-const RoleBadge = ({ role }) => {
-
-    return (
-        <span className="inline-flex rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700 dark:bg-[#252525] dark:text-gray-300">
-            {role}
-        </span>
-    );
-};
+const RoleBadge = ({ role }) => (
+    <span className="inline-flex rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700 dark:bg-[#252525] dark:text-gray-300">
+        {role}
+    </span>
+);
 
 
-// ============================================================
-// STATUS BADGE
-// ============================================================
+/* ============================================================
+   STATUS BADGE
+   ============================================================ */
 
 const StatusBadge = ({ status }) => {
-
-    const label =
-        status
-            ? status.charAt(0).toUpperCase() +
-              status.slice(1)
-            : "Unknown";
+    const label = status
+        ? status.charAt(0).toUpperCase() + status.slice(1)
+        : "Unknown";
 
     return (
         <span className="inline-flex rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700 dark:bg-[#252525] dark:text-gray-300">

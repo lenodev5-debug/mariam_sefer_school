@@ -141,11 +141,11 @@ function Header({ onMenuClick, sidebarOpen }) {
             >
               <span className="overline decoration-solid decoration-4">
                 {' '}
-                <span className="underline decoration-solid decoration-4" style={{fontFamily: 'news'}}>
-                  K
+                <span className="underline decoration-solid decoration-4 mr-2" style={{fontFamily: 'news'}}>
+                  St 
                 </span>
               </span>
-              idist tereza
+               Theresa
             </span>
           </div>
         </div>

@@ -1,4 +1,64 @@
+import { useEffect, useState } from 'react';
+import { getVisitStats } from '../../../../../lib/service/visiterSerivce';
+
 const VisitsCard = () => {
+    const [stats, setStats] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
+
+    /* ---------- Fetch stats ---------- */
+    useEffect(() => {
+        let cancelled = false;
+
+        const load = async () => {
+            try {
+                setLoading(true);
+                setError('');
+
+                const res = await getVisitStats();
+
+                if (cancelled) return;
+
+                if (!res?.success) {
+                    throw new Error(
+                        res?.message || 'Failed to load visit stats'
+                    );
+                }
+
+                setStats(res.data);
+            } catch (err) {
+                if (cancelled) return;
+                setError(
+                    err?.response?.data?.message ||
+                        err?.message ||
+                        'Failed to load visit stats'
+                );
+            } finally {
+                if (!cancelled) setLoading(false);
+            }
+        };
+
+        load();
+        return () => {
+            cancelled = true;
+        };
+    }, []);
+
+    /* ---------- Derived values ---------- */
+    const total = stats?.totalVisits ?? 0;
+    const today = stats?.todayVisits ?? 0;
+    const yesterday = stats?.yesterdayVisits ?? 0;
+    const uniqueToday = stats?.uniqueToday ?? 0;
+
+    // % change vs yesterday
+    const diff =
+        yesterday === 0
+            ? today > 0
+                ? 100
+                : 0
+            : Math.round(((today - yesterday) / yesterday) * 100);
+
+    /* ---------- Render ---------- */
     return (
         <div className="w-full rounded-[20px] bg-white p-5 shadow-sm dark:bg-[#1a1a1a]">
             {/* Header */}
@@ -8,6 +68,8 @@ const VisitsCard = () => {
                 </h2>
 
                 <button
+                    type="button"
+                    title="Total visits to the platform"
                     className="
                         flex h-5 w-5
                         items-center justify-center
@@ -27,11 +89,11 @@ const VisitsCard = () => {
             {/* Total */}
             <div className="mb-2">
                 <h1 className="text-[30px] font-bold tracking-tight text-[#1a1a1a] dark:text-white">
-                    6,480
+                    {loading ? '—' : total.toLocaleString()}
                 </h1>
             </div>
 
-            {/* Area chart */}
+            {/* Area chart (static for now) */}
             <div className="relative mt-2 h-32.5 w-full overflow-hidden">
                 <svg
                     viewBox="0 0 300 100"
@@ -101,14 +163,33 @@ const VisitsCard = () => {
             <div className="my-4 border-t border-gray-200 dark:border-gray-700" />
 
             {/* Bottom */}
-            <div className="text-center">
+            <div className="flex items-center justify-between">
                 <span className="text-[15px] text-gray-700 dark:text-gray-300">
-                    Day visits{" "}
+                    Day visits{' '}
                     <span className="font-semibold text-gray-900 dark:text-white">
-                        4,280
+                        {loading ? '—' : today.toLocaleString()}
                     </span>
                 </span>
+
+                {!loading && yesterday > 0 && (
+                    <span
+                        className={`text-xs font-medium ${
+                            diff >= 0
+                                ? 'text-emerald-600 dark:text-emerald-400'
+                                : 'text-red-600 dark:text-red-400'
+                        }`}
+                    >
+                        {diff >= 0 ? '▲' : '▼'} {Math.abs(diff)}%
+                    </span>
+                )}
             </div>
+
+            {/* Error state (subtle) */}
+            {!loading && error && (
+                <p className="mt-3 text-xs text-red-500 dark:text-red-400">
+                    {error}
+                </p>
+            )}
         </div>
     );
 };

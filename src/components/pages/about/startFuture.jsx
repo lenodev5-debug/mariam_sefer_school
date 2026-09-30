@@ -78,7 +78,7 @@ const StartFuture = () => {
                   </svg>
                 </div>
                 <div className="leading-tight">
-                  <p className="text-lg font-bold">Alteora</p>
+                  <p className="text-lg font-bold">Sn Treza</p>
                   <p className="text-xs tracking-widest text-gray-300 uppercase">
                     Academy
                   </p>

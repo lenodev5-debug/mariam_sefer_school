@@ -4,12 +4,14 @@ import TimetableForm from "../../Forms/TimetableFrom";
 import AcademicYearForm from "../../Forms/AcademicYear";
 import DepartmentForm from "../../Forms/DepartmentForm";
 import SubjectForm from "../../Forms/SubjectForm";
+import UserForm from "../userForm";
 
 import gradeService from "../../../../../../lib/service/admin/gradeService";
 import academicYearService from "../../../../../../lib/service/admin/academicYearService";
 import timetableService from "../../../../../../lib/service/admin/timetable";
 import departmentService from "../../../../../../lib/service/admin/departmentService";
 import subjectService from "../../../../../../lib/service/admin/subjectService";
+import userService from "../../../../../../lib/service/admin/userService";
 
 export const FORM_TABS = [
     {
@@ -57,4 +59,13 @@ export const FORM_TABS = [
         listKey: "getAllSubjects",
         chart: "bar",
     },
+    {
+        key: 'User Form',
+        label: 'User Form',
+        description: 'Create User with Role',
+        Component: UserForm,
+        service: userService,
+        listKey: 'createUser',
+        chart: "bar"
+    }
 ];

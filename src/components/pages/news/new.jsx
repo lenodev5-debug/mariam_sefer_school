@@ -5,10 +5,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import StudentFiromsa from "../../assets/images/student2.jpg";
-import StudentMulualem from "../../assets/images/stundent.avif";
-import StudentSurafel from "../../assets/images/stundet1.jpg";
-import StudentHanna from "../../assets/images/stundet3.jpeg";
+import StudentFiromsa from "../../../assets/images/student2.jpg";
+import StudentMulualem from "../../../assets/images/stundent.avif";
+import StudentSurafel from "../../../assets/images/stundet1.jpg";
+import StudentHanna from "../../../assets/images/stundet3.jpeg";
 
 export default function News() {
   const news = [
