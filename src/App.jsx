@@ -29,14 +29,14 @@ import BookstoreSections from './components/pages/books/BookstoreSections';
 import BookstoreServices from './components/pages/books/BookService';
 import Footer from './components/pages/footer';
 
-// ✅ Visit tracking hook
+// Visit tracking hook
 import useTrackVisit from './hooks/useTrackingVisit';
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // ✅ Track every route visit (fires once per path change)
+  // Track every route visit (fires once per path change)
   useTrackVisit();
 
   /*
@@ -226,7 +226,7 @@ function App() {
       {/* ========================================= */}
 
       <Route
-        path="/user/teacher/dashboard"
+        path="/teacher/dashboard"
         element={
           <ProtectedRoute allowedRoles={['Teacher']}>
             <TeacherDashboard />

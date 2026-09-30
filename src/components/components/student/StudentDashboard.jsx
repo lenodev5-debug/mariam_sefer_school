@@ -1,3 +1,4 @@
+
 import UserIdCard from "../../shared/cards/users/userIdCards";
 
 import user from "../../../assets/icon/student1.png";
@@ -5,35 +6,55 @@ import hat from "../../../assets/icon/hait.webp";
 import bag from "../../../assets/icon/bag.png";
 import graduaitonpaper from "../../../assets/icon/paper1.png";
 import clock from "../../../assets/icon/clock.webp";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCoins, faMoneyBill1Wave } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCoins,
+  faMoneyBill1Wave,
+} from "@fortawesome/free-solid-svg-icons";
+
 import StudentOverview from "./studentoverview";
 import AttendanceCard from "../../shared/cards/users/attendance";
 
+import { useAuth } from "../../../context/AuthContext";
+
 export default function StudentDashboard() {
+  const { user: loggedInUser } = useAuth();
+
+  const studentName = loggedInUser?.name || "Student";
+
+  const currentDate = new Date().toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+
   return (
     <div className="min-h-screen w-full bg-[#f8f8fb] p-4 sm:p-6 lg:p-8 mt-10">
-      
+
       {/* ================= HEADER ================= */}
       <UserIdCard>
         <div className="relative h-full w-full overflow-hidden rounded-[15px]">
-          
+
           {/* Header text */}
           <div className="absolute left-6 top-8 z-30 sm:left-10 sm:top-10">
+
             <p className="text-sm text-white/70">
-              September 4, 2023
+              {currentDate}
             </p>
 
             <h1 className="mt-10 text-2xl font-bold text-white sm:text-3xl">
-              Welcome back, John!
+              Welcome back, {studentName}!
             </h1>
 
             <p className="mt-1 text-sm text-white/70">
               Always stay updated in your student portal
             </p>
+
           </div>
 
           {/* Decorative objects */}
+
           <img
             src={hat}
             alt=""
@@ -100,23 +121,32 @@ export default function StudentDashboard() {
               sm:h-28 sm:w-28
             "
           />
+
         </div>
       </UserIdCard>
 
+
       {/* ================= MAIN CONTENT ================= */}
+
       <div className="mt-8 grid grid-cols-1 gap-8 xl:grid-cols-[minmax(0,1fr)_215px]">
 
         {/* ================= LEFT SIDE ================= */}
+
         <div className="min-w-0">
 
           {/* Finance title */}
+
           <div className="mb-3 flex items-center justify-between">
+
             <h2 className="text-lg font-bold text-gray-900">
               Finance
             </h2>
+
           </div>
 
+
           {/* Finance cards */}
+
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
 
             <FinanceCard
@@ -142,9 +172,11 @@ export default function StudentDashboard() {
 
 
           {/* ================= COURSES ================= */}
+
           <div className="mt-10">
 
             <div className="mb-3 flex items-center justify-between">
+
               <h2 className="text-lg font-bold text-gray-900">
                 Enrolled Courses
               </h2>
@@ -152,7 +184,9 @@ export default function StudentDashboard() {
               <button className="text-sm font-semibold text-[#9258e8] hover:underline">
                 See all
               </button>
+
             </div>
+
 
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
 
@@ -180,15 +214,20 @@ export default function StudentDashboard() {
               />
 
             </div>
+
           </div>
+
         </div>
 
 
         {/* ================= RIGHT SIDE ================= */}
+
         <aside className="min-w-0">
 
           {/* ================= INSTRUCTORS ================= */}
+
           <div>
+
             <h2 className="mb-4 text-lg font-bold text-gray-900">
               Course instructors
             </h2>
@@ -214,13 +253,16 @@ export default function StudentDashboard() {
               />
 
             </div>
+
           </div>
 
 
           {/* ================= NOTICE ================= */}
+
           <div className="mt-7">
 
             <div className="mb-3 flex items-center justify-between">
+
               <h2 className="text-lg font-bold text-gray-900">
                 Daily notice
               </h2>
@@ -228,7 +270,9 @@ export default function StudentDashboard() {
               <button className="text-sm font-semibold text-[#9258e8] hover:underline">
                 See all
               </button>
+
             </div>
+
 
             <div className="rounded-2xl bg-white p-5 shadow-sm">
 
@@ -243,14 +287,25 @@ export default function StudentDashboard() {
               />
 
             </div>
+
           </div>
 
         </aside>
+
       </div>
+
+
+      {/* ================= STUDENT OVERVIEW ================= */}
+
       <StudentOverview />
+
+
+      {/* ================= ATTENDANCE ================= */}
+
       <div className="grid grid-cols-1 mt-2">
         <AttendanceCard />
       </div>
+
     </div>
   );
 }
@@ -281,36 +336,71 @@ function FinanceCard({
     >
 
       {/* Icon */}
+
       <div className="mb-3 flex h-12 items-end justify-center gap-1">
+
         {type === "payable" && (
           <>
-            <FontAwesomeIcon icon={faCoins} size="1xl" className="text-[#a879ee]"/>
-            <FontAwesomeIcon icon={faCoins} size="xl" className="text-[#a879ee]"/>
-            <FontAwesomeIcon icon={faCoins} size="2xl" className="text-[#a879ee]"/>
+            <FontAwesomeIcon
+              icon={faCoins}
+              size="1xl"
+              className="text-[#a879ee]"
+            />
+
+            <FontAwesomeIcon
+              icon={faCoins}
+              size="xl"
+              className="text-[#a879ee]"
+            />
+
+            <FontAwesomeIcon
+              icon={faCoins}
+              size="2xl"
+              className="text-[#a879ee]"
+            />
           </>
         )}
+
 
         {type === "paid" && (
           <>
             <div className="relative h-8 w-10 rounded-sm bg-transparent">
-              <FontAwesomeIcon icon={faMoneyBill1Wave} size="2xl" className="absolute left-3 top-1 text-[#a879ee]"/>
+
+              <FontAwesomeIcon
+                icon={faMoneyBill1Wave}
+                size="2xl"
+                className="absolute left-3 top-1 text-[#a879ee]"
+              />
+
             </div>
 
             <div className="flex items-end gap-1">
-              <FontAwesomeIcon icon={faCoins} size="2xl" className="text-[#a879ee]"/>
+
+              <FontAwesomeIcon
+                icon={faCoins}
+                size="2xl"
+                className="text-[#a879ee]"
+              />
+
             </div>
           </>
         )}
+
 
         {type === "other" && (
           <>
             <div className="h-5 w-2 rounded-t bg-[#c09cf1]" />
+
             <div className="h-8 w-2 rounded-t bg-[#a879ee]" />
+
             <div className="h-11 w-2 rounded-t bg-[#9258e8]" />
+
             <div className="h-14 w-2 rounded-t bg-[#9d6bea]" />
           </>
         )}
+
       </div>
+
 
       <p className="text-sm font-bold text-gray-900">
         {amount}
@@ -319,6 +409,7 @@ function FinanceCard({
       <p className="mt-1 text-xs text-gray-400">
         {label}
       </p>
+
     </div>
   );
 }
@@ -347,6 +438,7 @@ function CourseCard({
         {title}
       </p>
 
+
       <button
         className="
           absolute bottom-3 left-5
@@ -361,15 +453,21 @@ function CourseCard({
 
 
       {/* Course illustration */}
+
       {type === "computer" && (
         <div className="absolute right-5 top-5 opacity-70">
+
           <div className="h-10 w-14 rounded-md border-4 border-white bg-[#a878eb] shadow-sm">
+
             <div className="h-full w-full bg-[#9258e8]/30" />
+
           </div>
 
           <div className="mx-auto h-2 w-8 bg-white" />
+
         </div>
       )}
+
 
       {type === "database" && (
         <div className="absolute right-5 top-4 flex items-end gap-2 opacity-70">
@@ -377,9 +475,13 @@ function CourseCard({
           <div className="h-12 w-12 rounded-full border-10 border-[#a879ee] border-r-transparent" />
 
           <div className="flex items-end gap-1">
+
             <div className="h-7 w-2 rounded-t bg-[#9258e8]" />
+
             <div className="h-10 w-2 rounded-t bg-[#9d6bea]" />
+
             <div className="h-14 w-2 rounded-t bg-[#a879ee]" />
+
           </div>
 
         </div>
@@ -411,9 +513,11 @@ function Instructor({
           ${avatar}
         `}
       >
+
         <span className="text-xl font-bold text-white">
           {initials}
         </span>
+
       </div>
 
       <span className="mt-1 text-[10px] text-gray-400">
