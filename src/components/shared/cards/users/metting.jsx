@@ -1,18 +1,64 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faPhone } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faPhone, faPlus } from '@fortawesome/free-solid-svg-icons';
 
-const days = [
-  { num: 8,  name: 'Mon' },
-  { num: 9,  name: 'Tue' },
-  { num: 10, name: 'Wed' },
-  { num: 11, name: 'Thu' },
-  { num: 12, name: 'Fri' },
-  { num: 13, name: 'Sat' },
-];
+// Mock data to simulate events on specific days of the month
+const MOCK_EVENTS = {
+  8: 2,   // 2 events on the 8th
+  9: 1,   // 1 event on the 9th
+  10: 0,  // No events on the 10th
+  11: 3,  // 3 events on the 11th
+  12: 0,  // No events on the 12th
+  13: 0,  // No events on the 13th
+};
 
 export default function MeetingCard() {
+  const [currentDate, setCurrentDate] = useState(new Date());
   const [activeDay, setActiveDay] = useState(11);
+  const [isMonthDropdownOpen, setIsMonthDropdownOpen] = useState(false);
+
+  const months = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
+
+  // Generate the week days based on the currently selected month
+  const days = useMemo(() => {
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+    
+    // Find the first Monday of the month
+    const firstDay = new Date(year, month, 1);
+    const dayOfWeek = firstDay.getDay(); // 0 = Sun, 1 = Mon...
+    const diffToMonday = firstDay.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1);
+    const monday = new Date(year, month, diffToMonday);
+
+    const daysArray = [];
+    const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+    for (let i = 0; i < 6; i++) {
+      const d = new Date(monday);
+      d.setDate(monday.getDate() + i);
+      daysArray.push({
+        num: d.getDate(),
+        name: dayNames[i],
+        fullDate: d
+      });
+    }
+    return daysArray;
+  }, [currentDate]);
+
+  // Check if the active day has events
+  const activeDayEvents = MOCK_EVENTS[activeDay] || 0;
+  const hasEvents = activeDayEvents > 0;
+  const activeDayObj = days.find(d => d.num === activeDay) || days[0];
+
+  const handleMonthSelect = (monthIndex) => {
+    const newDate = new Date(currentDate);
+    newDate.setMonth(monthIndex);
+    setCurrentDate(newDate);
+    setIsMonthDropdownOpen(false);
+  };
 
   return (
     <div
@@ -40,39 +86,70 @@ export default function MeetingCard() {
           Meetings
         </div>
 
-        {/* Month selector */}
-        <button
-          type="button"
-          className="
-            flex items-center gap-2
-            bg-[#e9eeea] dark:bg-[#2a2a2a]
-            rounded-full
-            py-[0.7rem] px-[1.2rem]
-            border border-[#d0d0ce] dark:border-[#3a3a3a]
-            shadow-[0_1px_3px_rgba(0,0,0,0.05)]
-            cursor-pointer
-            transition-colors duration-200
-            hover:bg-[#dededd] dark:hover:bg-[#333]
-            max-[480px]:py-2 max-[480px]:px-3
-            max-[350px]:mt-2
-          "
-        >
-          <span className="text-base font-medium text-[#1a1a1a] dark:text-white max-[480px]:text-sm">
-            September
-          </span>
-          <FontAwesomeIcon
-            icon={faChevronDown}
-            className="text-sm text-[#1a1a1a] dark:text-white"
-          />
-        </button>
+        {/* Month selector with Dropdown */}
+        <div className="relative">
+          <button
+            type="button"
+            onClick={() => setIsMonthDropdownOpen(!isMonthDropdownOpen)}
+            className="
+              flex items-center gap-2
+              bg-[#e9eeea] dark:bg-[#2a2a2a]
+              rounded-full
+              py-[0.7rem] px-[1.2rem]
+              border border-[#d0d0ce] dark:border-[#3a3a3a]
+              shadow-[0_1px_3px_rgba(0,0,0,0.05)]
+              cursor-pointer
+              transition-colors duration-200
+              hover:bg-[#dededd] dark:hover:bg-[#333]
+              max-[480px]:py-2 max-[480px]:px-3
+              max-[350px]:mt-2
+            "
+          >
+            <span className="text-base font-medium text-[#1a1a1a] dark:text-white max-[480px]:text-sm">
+              {months[currentDate.getMonth()]}
+            </span>
+            <FontAwesomeIcon
+              icon={faChevronDown}
+              className={`text-sm text-[#1a1a1a] dark:text-white transition-transform duration-200 ${isMonthDropdownOpen ? 'rotate-180' : ''}`}
+            />
+          </button>
+
+          {/* Dropdown Menu */}
+          {isMonthDropdownOpen && (
+            <div className="absolute right-0 top-full mt-2 w-40 bg-white dark:bg-[#2a2a2a] rounded-xl shadow-lg border border-[#d0d0ce] dark:border-[#3a3a3a] z-50 max-h-60 overflow-y-auto custom-scrollbar">
+              {months.map((month, index) => (
+                <button
+                  key={month}
+                  onClick={() => handleMonthSelect(index)}
+                  className={`w-full text-left px-4 py-2 text-sm transition-colors
+                    ${currentDate.getMonth() === index 
+                      ? 'bg-[#f0ff7a] text-[#1a1a1a] font-bold' 
+                      : 'text-[#1a1a1a] dark:text-white hover:bg-[#f0f0f0] dark:hover:bg-[#333]'
+                    }`}
+                >
+                  {month}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
-      {/* Calls info */}
+      {/* Dynamic Info Section: Calls vs Add Event */}
       <div className="flex items-center mb-8 gap-2 text-[#1a1a1a] dark:text-white">
-        <FontAwesomeIcon icon={faPhone} className="text-base" />
-        <span className="text-sm text-[#1a1a1a] dark:text-gray-300 max-[480px]:text-xs">
-          3 calls • Thu, 11
-        </span>
+        {hasEvents ? (
+          <>
+            <FontAwesomeIcon icon={faPhone} className="text-base" />
+            <span className="text-sm text-[#1a1a1a] dark:text-gray-300 max-[480px]:text-xs">
+              {activeDayEvents} calls • {activeDayObj.name}, {activeDay}
+            </span>
+          </>
+        ) : (
+          <button className="flex items-center gap-2 text-sm text-[#1a1a1a] dark:text-gray-300 max-[480px]:text-xs hover:opacity-70 transition-opacity">
+            <FontAwesomeIcon icon={faPlus} className="text-base" />
+            <span>Add Event or Schedule</span>
+          </button>
+        )}
       </div>
 
       {/* Date navigation */}
@@ -147,6 +224,23 @@ export default function MeetingCard() {
           })}
         </div>
       </div>
+
+      {/* Custom Scrollbar for Dropdown */}
+      <style>{`
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: #cbd5e1;
+          border-radius: 4px;
+        }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: #475569;
+        }
+      `}</style>
     </div>
   );
 }
