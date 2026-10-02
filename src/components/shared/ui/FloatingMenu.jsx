@@ -1,9 +1,9 @@
-
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import ExpandableMenuVertical from "./menuVertical";
 import { FORM_TABS } from "../cards/Forms/config/forms";
+import { useAuth } from "../../../context/AuthContext";
 
 import {
     faPlus,
@@ -76,22 +76,39 @@ function FormModal({ open, onClose, title, children }) {
     );
 }
 
-/* ---------- The one component you drop in ---------- */
+/* ---------- Floating Menu ---------- */
 export default function FloatingMenu({
     directions = ["up", "left"],
     spacing = 75,
     showNav = true,
 }) {
     const navigate = useNavigate();
+    const { user } = useAuth();
     const [modalKey, setModalKey] = useState(null);
 
-    const activeTab = useMemo(
-        () => FORM_TABS.find((t) => t.key === modalKey),
-        [modalKey]
-    );
+    const role = user?.role;
 
-    const menuItems = useMemo(() => {
-        const navItems = showNav
+    /* ---- role check, inline, nothing fancy ---- */
+    let allowedTabs = [];
+
+    if (role === "Admin") {
+        // Admin sees every tab
+        allowedTabs = FORM_TABS;
+    } else if (role === "Librarian") {
+        // Librarian sees only library-related tabs
+        allowedTabs = FORM_TABS.filter((t) =>
+            ["book", "issue", "category"].includes(t.key)
+        );
+    } else {
+        // Anything else: no form tabs
+        allowedTabs = [];
+    }
+
+    const activeTab = allowedTabs.find((t) => t.key === modalKey);
+
+    /* Nav items — only for logged-in users who have something to see */
+    const navItems =
+        showNav && user
             ? [
                   { id: "home",    label: "Home",    icon: faHome,            onClick: () => navigate("/admin") },
                   { id: "search",  label: "Search",  icon: faMagnifyingGlass, onClick: () => console.log("search") },
@@ -100,15 +117,18 @@ export default function FloatingMenu({
               ]
             : [];
 
-        const formItems = FORM_TABS.map((tab) => ({
-            id: `create-${tab.key}`,
-            label: tab.label,
-            icon: TAB_ICONS[tab.key] ?? faPlus,
-            onClick: () => setModalKey(tab.key),
-        }));
+    /* Build the create-item list from allowed tabs */
+    const formItems = allowedTabs.map((tab) => ({
+        id: `create-${tab.key}`,
+        label: tab.label,
+        icon: TAB_ICONS[tab.key] ?? faPlus,
+        onClick: () => setModalKey(tab.key),
+    }));
 
-        return [...navItems, ...formItems];
-    }, [navigate, showNav]);
+    const menuItems = [...navItems, ...formItems];
+
+    /* Hide the FAB if there's nothing to show */
+    if (!user || menuItems.length === 0) return null;
 
     const ActiveForm = activeTab?.Component;
 

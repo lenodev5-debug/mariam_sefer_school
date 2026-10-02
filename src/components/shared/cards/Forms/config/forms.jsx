@@ -5,6 +5,7 @@ import AcademicYearForm from "../../Forms/AcademicYear";
 import DepartmentForm from "../../Forms/DepartmentForm";
 import SubjectForm from "../../Forms/SubjectForm";
 import UserForm from "../userForm";
+import BookForm from "../BookForm";
 
 import gradeService from "../../../../../../lib/service/admin/gradeService";
 import academicYearService from "../../../../../../lib/service/admin/academicYearService";
@@ -12,6 +13,7 @@ import timetableService from "../../../../../../lib/service/admin/timetable";
 import departmentService from "../../../../../../lib/service/admin/departmentService";
 import subjectService from "../../../../../../lib/service/admin/subjectService";
 import userService from "../../../../../../lib/service/admin/userService";
+import bookstoreService from "../../../../../../lib/service/books/bookstoreService";
 
 export const FORM_TABS = [
     {
@@ -67,5 +69,14 @@ export const FORM_TABS = [
         service: userService,
         listKey: 'createUser',
         chart: "bar"
-    }
+    },
+    {
+        key: "book",
+        label: "Book",
+        description: "Add a new book to the library",
+        Component: BookForm,
+        service: bookstoreService,
+        listKey: "createBook",
+        chart: "bar",
+    },
 ];

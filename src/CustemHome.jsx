@@ -36,7 +36,7 @@ export default function CustomHome() {
       component: <CoursesDisplay />
     },
      {
-      id: 'courses',
+      id: 'News',
       label: 'label',
       component: <News />
     },

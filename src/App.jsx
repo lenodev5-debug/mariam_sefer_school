@@ -31,6 +31,8 @@ import Footer from './components/pages/footer';
 
 // Visit tracking hook
 import useTrackVisit from './hooks/useTrackingVisit';
+import LibrarianDashboard from './components/components/librarian/LibrarianDashboard';
+import LibrarianBookStore from './components/components/librarian/LibrarianBookStore'
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -258,11 +260,40 @@ function App() {
             <Header
               onMenuClick={() => setSidebarOpen((prev) => !prev)}
               sidebarOpen={sidebarOpen}
-            />
+              />
             <Sidebar isOpen={sidebarOpen} />
             <StudentDashboard />
           </ProtectedRoute>
         }
+        />
+
+        {/* ========================================= */}
+        {/* LIBRARIAN DASHBOARD */}
+        {/* ========================================= */}
+      <Route path="/librarian/dashboard"
+             element={
+              <ProtectedRoute allowedRoles={['Librarian']}>
+                <Header
+                  onMenuClick={() => setSidebarOpen((prev) => !prev)}
+                  sidebarOpen={sidebarOpen}
+                  />
+                <Sidebar isOpen={sidebarOpen} />
+                <LibrarianDashboard />
+              </ProtectedRoute>
+             }
+      />
+
+      <Route path="/librarian/books"
+             element={
+              <ProtectedRoute allowedRoles={['Librarian']}>
+                <Header
+                  onMenuClick={() => setSidebarOpen((prev) => !prev)}
+                  sidebarOpen={sidebarOpen}
+                  />
+                <Sidebar isOpen={sidebarOpen} />
+                <LibrarianBookStore />
+              </ProtectedRoute>
+             }
       />
 
       {/* page doesn't exist */}

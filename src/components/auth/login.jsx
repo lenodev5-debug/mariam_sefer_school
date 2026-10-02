@@ -68,6 +68,10 @@ const Login = () => {
                     navigate('/student/dashboard');
                     break;
 
+                case 'Librarian':
+                    navigate('/librarian/dashboard');
+                    break;
+
                 default:
                     setError(
                         'This account does not have a dashboard.'

@@ -43,6 +43,10 @@ function Header({ onMenuClick, sidebarOpen }) {
         navigate('/student/dashboard');
         break;
 
+      case 'Librarian':
+        navigate('/librarian/dashboard');
+        break;
+        
       default:
         break;
     }

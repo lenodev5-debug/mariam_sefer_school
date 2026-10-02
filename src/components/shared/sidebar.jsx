@@ -196,6 +196,47 @@ const Sidebar = ({ isOpen }) => {
         ),
       },
     ],
+        Librarian: [
+      {
+        name: 'Dashboard',
+        path: '/librarian/dashboard',
+        icon: (
+          <svg viewBox="0 0 24 24" fill="#3A82F6">
+            <path d="M4 13h6a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1zm-1 7a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v4zm10 0a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-7a1 1 0 0 0-1-1h-6a1 1 0 0 0-1 1v7zm1-10h6a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1h-6a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1z" />
+          </svg>
+        ),
+      },
+
+      {
+        name: 'Books',
+        path: '/librarian/books',
+        icon: (
+          <svg viewBox="0 0 24 24" fill="#3A82F6">
+            <path d="M18 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zM6 4h5v16H6V4zm7 0h5v16h-5V4z" />
+          </svg>
+        ),
+      },
+
+      {
+        name: 'Borrowed',
+        path: '/librarian/borrowed',
+        icon: (
+          <svg viewBox="0 0 24 24" fill="#3A82F6">
+            <path d="M20 6h-8l-2-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2zm-6 3h6v2h-6V9zm0 4h6v2h-6v-2z" />
+          </svg>
+        ),
+      },
+
+      {
+        name: 'Members',
+        path: '/librarian/members',
+        icon: (
+          <svg viewBox="0 0 24 24" fill="#3A82F6">
+            <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zM8 11c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5C15 14.17 10.33 13 8 13zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.93 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
+          </svg>
+        ),
+      },
+    ],
   };
 
   /*
