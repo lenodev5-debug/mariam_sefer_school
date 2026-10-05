@@ -33,6 +33,7 @@ import Footer from './components/pages/footer';
 import useTrackVisit from './hooks/useTrackingVisit';
 import LibrarianDashboard from './components/components/librarian/LibrarianDashboard';
 import LibrarianBookStore from './components/components/librarian/LibrarianBookStore'
+import BorrowedBookDashboard from './components/components/librarian/BorrowedBookDashboard';
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -294,6 +295,18 @@ function App() {
                 <LibrarianBookStore />
               </ProtectedRoute>
              }
+      />
+
+      <Route path="/librarian/borrowed"
+            element={
+              <ProtectedRoute allowedRoles={['Librarian']}>
+                <Header
+                  onMenuClick={() => setSidebarOpen((pre) => !pre)}
+                  sidebarOpen={sidebarOpen} />
+                  <Sidebar isOpen={sidebarOpen} />
+                  <BorrowedBookDashboard />
+              </ProtectedRoute>
+            }
       />
 
       {/* page doesn't exist */}

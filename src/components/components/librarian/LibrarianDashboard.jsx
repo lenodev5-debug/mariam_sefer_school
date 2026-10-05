@@ -46,24 +46,38 @@ const buildLast7Days = () => {
 
 const DAY_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-const DEMO_CREATED  = [3, 6, 2, 8, 5, 11, 4];
+const DEMO_CREATED = [3, 6, 2, 8, 5, 11, 4];
 const DEMO_BORROWED = [5, 9, 7, 14, 10, 17, 8];
+
+/* ============================================================
+ * Theme tokens (match LibrarianBookStore)
+ * ============================================================ */
+const THEME = {
+  teal: "#55b6b6",
+  tealHover: "#43a6a6",
+  tealSoft: "#eefafa",
+  orange: "#ed7950",
+  orangeSoft: "#fff4ef",
+  amber: "#c78f2c",
+  amberSoft: "#fdf4e3",
+  warmBarBg: "#f8d8cc",
+};
 
 /* ============================================================
  * Welcome Header
  * ============================================================ */
 const ROLE_STYLES = {
-  Admin:     { bg: "bg-violet-500/10", text: "text-violet-500", ring: "ring-violet-500/20" },
-  Librarian: { bg: "bg-indigo-500/10", text: "text-indigo-500", ring: "ring-indigo-500/20" },
-  Teacher:   { bg: "bg-sky-500/10",    text: "text-sky-500",    ring: "ring-sky-500/20" },
-  Student:   { bg: "bg-emerald-500/10",text: "text-emerald-500",ring: "ring-emerald-500/20" },
-  Parent:    { bg: "bg-amber-500/10",  text: "text-amber-500",  ring: "ring-amber-500/20" },
-  User:      { bg: "bg-slate-500/10",  text: "text-slate-500",  ring: "ring-slate-500/20" },
+  Admin: { bg: "bg-violet-500/10", text: "text-violet-500" },
+  Librarian: { bg: "bg-[#eefafa]", text: "text-[#0f2424] dark:bg-[#0f2424] dark:text-[#7adcdc]" },
+  Teacher: { bg: "bg-sky-500/10", text: "text-sky-500" },
+  Student: { bg: "bg-emerald-500/10", text: "text-emerald-500" },
+  Parent: { bg: "bg-amber-500/10", text: "text-amber-500" },
+  User: { bg: "bg-slate-500/10", text: "text-slate-500" },
 };
 
 const STATUS_STYLES = {
-  active:    "bg-emerald-500/10 text-emerald-500",
-  inactive:  "bg-gray-500/10 text-gray-500",
+  active: "bg-emerald-500/10 text-emerald-500",
+  inactive: "bg-gray-500/10 text-gray-500",
   suspended: "bg-red-500/10 text-red-500",
 };
 
@@ -95,28 +109,25 @@ const WelcomeHeader = ({ user, totalBooks }) => {
   const joined = formatJoined(user.createdAt);
 
   return (
-    <div className="mb-8 overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
+    <div className="mb-6 overflow-hidden rounded-2xl bg-white shadow-sm dark:bg-[#1B1A1A]">
       <div className="relative flex flex-col gap-6 p-6 md:flex-row md:items-center md:justify-between">
-
         {/* Left — avatar + greeting */}
         <div className="flex items-center gap-4">
-          {/* Avatar */}
           <div className="relative">
             {user.image ? (
               <img
                 src={user.image}
                 alt={user.name || "user"}
-                className="h-16 w-16 rounded-2xl object-cover ring-2 ring-blue-500/20 ring-offset-2 ring-offset-white dark:ring-offset-gray-900"
+                className="h-16 w-16 rounded-2xl object-cover ring-2 ring-[#55b6b6]/30 ring-offset-2 ring-offset-white dark:ring-offset-[#1B1A1A]"
               />
             ) : (
-              <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 text-2xl font-bold text-white shadow-md">
+              <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[#55b6b6] to-[#3a8a8a] text-2xl font-bold text-white shadow-md">
                 {initial}
               </div>
             )}
 
-            {/* Status dot */}
             <span
-              className={`absolute -bottom-0.5 -right-0.5 h-4 w-4 rounded-full border-2 border-white dark:border-gray-900 ${
+              className={`absolute -bottom-0.5 -right-0.5 h-4 w-4 rounded-full border-2 border-white dark:border-[#1B1A1A] ${
                 user.status === "active"
                   ? "bg-emerald-500"
                   : user.status === "suspended"
@@ -126,16 +137,14 @@ const WelcomeHeader = ({ user, totalBooks }) => {
             />
           </div>
 
-          {/* Text */}
           <div className="min-w-0">
-            <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+            <p className="text-xs font-semibold uppercase tracking-wider text-gray-400">
               {getGreeting()},
             </p>
-            <h2 className="mt-0.5 truncate text-2xl font-bold text-slate-900 dark:text-white">
+            <h2 className="mt-0.5 truncate text-2xl font-bold text-gray-800 dark:text-gray-100">
               {user.name || "Unnamed user"}
             </h2>
 
-            {/* Badges */}
             <div className="mt-2 flex flex-wrap items-center gap-2">
               <span
                 className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${roleStyle.bg} ${roleStyle.text}`}
@@ -152,50 +161,39 @@ const WelcomeHeader = ({ user, totalBooks }) => {
         </div>
 
         {/* Right — contact info + joined */}
-        <div className="flex flex-col gap-2 text-xs text-slate-500 dark:text-slate-400 md:items-end">
-
+        <div className="flex flex-col gap-2 text-xs text-gray-500 md:items-end">
           {user.email && (
             <div className="flex items-center gap-2">
-              <FontAwesomeIcon
-                icon={faEnvelope}
-                className="text-[10px] text-slate-400"
-              />
+              <FontAwesomeIcon icon={faEnvelope} className="text-[10px] text-gray-400" />
               <span className="truncate">{user.email}</span>
             </div>
           )}
 
           {user.phone && (
             <div className="flex items-center gap-2">
-              <FontAwesomeIcon
-                icon={faPhone}
-                className="text-[10px] text-slate-400"
-              />
+              <FontAwesomeIcon icon={faPhone} className="text-[10px] text-gray-400" />
               <span>{user.phone}</span>
             </div>
           )}
 
           {joined && (
             <div className="flex items-center gap-2">
-              <FontAwesomeIcon
-                icon={faCalendarDays}
-                className="text-[10px] text-slate-400"
-              />
+              <FontAwesomeIcon icon={faCalendarDays} className="text-[10px] text-gray-400" />
               <span>Joined {joined}</span>
             </div>
           )}
 
-          {/* Quick stat */}
           <div className="mt-1 flex items-center gap-2">
-            <span className="text-slate-400">Managing</span>
-            <span className="rounded-md bg-slate-100 px-2 py-0.5 text-xs font-bold text-slate-700 dark:bg-white/10 dark:text-slate-200">
+            <span className="text-gray-400">Managing</span>
+            <span className="rounded-md bg-[#eefafa] px-2 py-0.5 text-xs font-bold text-[#0f2424] dark:bg-[#0f2424] dark:text-[#7adcdc]">
               {totalBooks} {totalBooks === 1 ? "title" : "titles"}
             </span>
           </div>
         </div>
       </div>
 
-      {/* Bottom accent bar — subtle gradient */}
-      <div className="h-1 w-full bg-gradient-to-r from-blue-500 via-indigo-500 to-violet-500" />
+      {/* Bottom accent bar — teal → orange (matches bookstore palette) */}
+      <div className="h-1 w-full bg-gradient-to-r from-[#55b6b6] via-[#7adcdc] to-[#ed7950]" />
     </div>
   );
 };
@@ -203,7 +201,7 @@ const WelcomeHeader = ({ user, totalBooks }) => {
 /* ============================================================
  * Inline SVG: Progress Ring
  * ============================================================ */
-const ProgressRing = ({ percent = 0, color = "#3A82F6", label, value }) => {
+const ProgressRing = ({ percent = 0, color = THEME.teal, label, value }) => {
   const safePercent = Number.isFinite(Number(percent))
     ? Math.max(0, Math.min(100, Number(percent)))
     : 0;
@@ -218,7 +216,7 @@ const ProgressRing = ({ percent = 0, color = "#3A82F6", label, value }) => {
     <div className="flex flex-col items-center gap-2">
       <div className="relative w-28 h-28">
         <svg viewBox="0 0 100 100" className="w-full h-full -rotate-90">
-          <circle cx="50" cy="50" r={radius} fill="none" stroke="#EEF1F6" strokeWidth={stroke} />
+          <circle cx="50" cy="50" r={radius} fill="none" stroke={THEME.warmBarBg} strokeWidth={stroke} />
           <circle
             cx="50" cy="50" r={radius}
             fill="none" stroke={color} strokeWidth={stroke}
@@ -229,12 +227,12 @@ const ProgressRing = ({ percent = 0, color = "#3A82F6", label, value }) => {
           />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-lg font-bold text-slate-800 dark:text-white">
+          <span className="text-lg font-bold text-gray-800 dark:text-gray-100">
             {display}
           </span>
         </div>
       </div>
-      <p className="text-sm font-medium text-slate-600 dark:text-slate-400 text-center max-w-[120px]">
+      <p className="text-sm font-medium text-gray-600 dark:text-gray-400 text-center max-w-[120px]">
         {label}
       </p>
     </div>
@@ -244,10 +242,10 @@ const ProgressRing = ({ percent = 0, color = "#3A82F6", label, value }) => {
 /* ============================================================
  * Inline SVG: Area Chart
  * ============================================================ */
-const InlineAreaChart = ({ data = [], height = 192, color = "#7C3AED" }) => {
+const InlineAreaChart = ({ data = [], height = 192, color = THEME.orange }) => {
   if (!Array.isArray(data) || data.length === 0) {
     return (
-      <div className="h-full flex items-center justify-center text-xs text-slate-400">
+      <div className="h-full flex items-center justify-center text-xs text-gray-400">
         No data
       </div>
     );
@@ -330,7 +328,7 @@ const InlineAreaChart = ({ data = [], height = 192, color = "#7C3AED" }) => {
           x={p.x}
           y={height - 6}
           textAnchor="middle"
-          className="fill-slate-400"
+          className="fill-gray-400"
           fontSize="10"
         >
           {p.label}
@@ -343,10 +341,10 @@ const InlineAreaChart = ({ data = [], height = 192, color = "#7C3AED" }) => {
 /* ============================================================
  * Inline SVG: Bar Chart
  * ============================================================ */
-const InlineBarChart = ({ data = [], height = 192, color = "#6366F1" }) => {
+const InlineBarChart = ({ data = [], height = 192, color = THEME.teal }) => {
   if (!Array.isArray(data) || data.length === 0) {
     return (
-      <div className="h-full flex items-center justify-center text-xs text-slate-400">
+      <div className="h-full flex items-center justify-center text-xs text-gray-400">
         No data
       </div>
     );
@@ -391,7 +389,7 @@ const InlineBarChart = ({ data = [], height = 192, color = "#6366F1" }) => {
               x={x + barW / 2}
               y={height - 6}
               textAnchor="middle"
-              className="fill-slate-400"
+              className="fill-gray-400"
               fontSize="10"
             >
               {d.label}
@@ -421,23 +419,29 @@ const InlineDonutChart = ({ active = 0, inactive = 0, size = 200 }) => {
       <svg viewBox="0 0 160 160" className="w-full h-full -rotate-90">
         <circle
           cx="80" cy="80" r={radius}
-          fill="none" stroke="#E5E7EB" strokeWidth={stroke}
+          fill="none" stroke={THEME.warmBarBg} strokeWidth={stroke}
         />
         <circle
           cx="80" cy="80" r={radius}
-          fill="none" stroke="#6366F1" strokeWidth={stroke}
+          fill="none" stroke={THEME.teal} strokeWidth={stroke}
           strokeLinecap="round"
           strokeDasharray={`${dash} ${circumference}`}
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="text-2xl font-extrabold text-slate-800 dark:text-white">
+        <span className="text-2xl font-extrabold text-gray-800 dark:text-gray-100">
           {activePct}%
         </span>
       </div>
     </div>
   );
 };
+
+/* ============================================================
+ * Reusable card class
+ * ============================================================ */
+const CARD =
+  "rounded-2xl bg-white p-6 shadow-sm dark:bg-[#1B1A1A]";
 
 /* ============================================================
  * Main
@@ -467,10 +471,10 @@ export default function LibrarianDashboard() {
   }, []);
 
   /* ---------- Derived ---------- */
-  const safeBooks      = Array.isArray(books) ? books : [];
-  const totalBooks     = safeBooks.length;
+  const safeBooks = Array.isArray(books) ? books : [];
+  const totalBooks = safeBooks.length;
   const availableBooks = safeBooks.filter((b) => b?.isAvailable === true).length;
-  const borrowedBooks  = safeBooks.filter((b) => safeNum(b?.borrowedOut) > 0).length;
+  const borrowedBooks = safeBooks.filter((b) => safeNum(b?.borrowedOut) > 0).length;
 
   const last7 = buildLast7Days();
 
@@ -485,12 +489,13 @@ export default function LibrarianDashboard() {
 
   const realCreatedSum = realCreated.reduce((s, d) => s + d.value, 0);
 
-  const createdActivity = realCreatedSum > 0
-    ? realCreated
-    : last7.map((d, i) => ({
-        label: DAY_LABELS[d.getDay()],
-        value: DEMO_CREATED[i],
-      }));
+  const createdActivity =
+    realCreatedSum > 0
+      ? realCreated
+      : last7.map((d, i) => ({
+          label: DAY_LABELS[d.getDay()],
+          value: DEMO_CREATED[i],
+        }));
 
   const realBorrow = last7.map((date) => {
     const key = localDayKey(date);
@@ -503,22 +508,23 @@ export default function LibrarianDashboard() {
 
   const realBorrowSum = realBorrow.reduce((s, d) => s + d.value, 0);
 
-  const borrowActivity = realBorrowSum > 0
-    ? realBorrow
-    : last7.map((d, i) => ({
-        label: DAY_LABELS[d.getDay()],
-        value: DEMO_BORROWED[i],
-      }));
+  const borrowActivity =
+    realBorrowSum > 0
+      ? realBorrow
+      : last7.map((d, i) => ({
+          label: DAY_LABELS[d.getDay()],
+          value: DEMO_BORROWED[i],
+        }));
 
-  const totalCreatedThisWeek  = createdActivity.reduce((s, d) => s + d.value, 0);
+  const totalCreatedThisWeek = createdActivity.reduce((s, d) => s + d.value, 0);
   const totalBorrowedThisWeek = borrowActivity.reduce((s, d) => s + d.value, 0);
 
   const pct = (n) => (totalBooks > 0 ? Math.round((n / totalBooks) * 100) : 0);
 
   const goals = [
-    { label: "Books in library",   percent: 72,                 color: "#3A82F6", value: String(totalBooks) },
-    { label: "Available copies",   percent: pct(availableBooks), color: "#7DD3FC" },
-    { label: "Currently borrowed", percent: pct(borrowedBooks),  color: "#1E293B" },
+    { label: "Books in library", percent: 72, color: THEME.teal, value: String(totalBooks) },
+    { label: "Available copies", percent: pct(availableBooks), color: "#7adcdc" },
+    { label: "Currently borrowed", percent: pct(borrowedBooks), color: THEME.orange },
   ];
 
   const recentBooks = safeBooks.slice(0, 4);
@@ -553,9 +559,9 @@ export default function LibrarianDashboard() {
     .map(([name]) => name);
 
   const activities = [
-    { id: 1, icon: faPlus,     text: "Added Atomic Habits to the library", time: "2 hours ago",  color: "#3A82F6" },
-    { id: 2, icon: faBookOpen, text: "Test Teacher borrowed Ikigai",       time: "18 hours ago", color: "#7DD3FC" },
-    { id: 3, icon: faUndo,     text: "The Psychology of Money returned",   time: "1 day ago",    color: "#1E293B" },
+    { id: 1, icon: faPlus, text: "Added Atomic Habits to the library", time: "2 hours ago", color: THEME.teal },
+    { id: 2, icon: faBookOpen, text: "Test Teacher borrowed Ikigai", time: "18 hours ago", color: "#7adcdc" },
+    { id: 3, icon: faUndo, text: "The Psychology of Money returned", time: "1 day ago", color: THEME.orange },
   ];
 
   /* ============================================================
@@ -563,12 +569,15 @@ export default function LibrarianDashboard() {
    * ============================================================ */
   if (loading) {
     return (
-      <div className="pt-24 px-4 md:px-8 pb-16 bg-slate-50 dark:bg-gray-950 min-h-screen">
-        <div className="max-w-7xl mx-auto">
+      <div className="min-h-screen overflow-hidden bg-[#f7f6f5] px-5 pb-10 pt-24 md:px-7 md:pt-28 dark:bg-[#0E0E0E]">
+        <div className="relative mx-auto max-w-[1200px]">
           <div className="mb-8 h-32 animate-pulse rounded-2xl bg-gray-200 dark:bg-gray-800" />
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="h-64 rounded-2xl bg-gray-200 dark:bg-gray-800 animate-pulse" />
+              <div
+                key={i}
+                className="h-64 animate-pulse rounded-2xl bg-gray-200 dark:bg-gray-800"
+              />
             ))}
           </div>
         </div>
@@ -580,39 +589,50 @@ export default function LibrarianDashboard() {
    * DASHBOARD
    * ============================================================ */
   return (
-    <div className="pt-24 px-4 md:px-8 pb-16 bg-slate-50 dark:bg-gray-950 min-h-screen">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen overflow-hidden bg-[#f7f6f5] px-5 pb-10 pt-24 md:px-7 md:pt-28 dark:bg-[#0E0E0E]">
+      {/* Ambient background — same as LibrarianBookStore */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-0 bg-[radial-gradient(60%_50%_at_15%_0%,#e8f5f5_0%,transparent_60%),radial-gradient(50%_45%_at_100%_10%,#fdeee4_0%,transparent_60%)] dark:bg-[radial-gradient(60%_50%_at_15%_0%,#0f2424_0%,transparent_60%),radial-gradient(50%_45%_at_100%_10%,#2a1710_0%,transparent_60%)]"
+      />
 
+      <div className="relative mx-auto max-w-[1200px]">
         {/* Welcome header */}
         <WelcomeHeader user={user} totalBooks={totalBooks} />
 
         {/* Page title */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-serif text-slate-900 dark:text-white">
+        <div className="mb-6">
+          <h1 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
             Librarian Dashboard
           </h1>
-          <p className="text-sm text-slate-500 mt-1">
+          <p className="mt-1 text-sm text-gray-500">
             Overview of your library activity and inventory.
           </p>
         </div>
 
         {/* ROW 1 */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm border border-slate-100 dark:border-gray-800">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-lg font-bold text-slate-900 dark:text-white">Library goals</h2>
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+          <div className={CARD}>
+            <div className="mb-6 flex items-center justify-between">
+              <h2 className="text-[16px] font-semibold text-gray-800 dark:text-gray-100">
+                Library goals
+              </h2>
               <button className="text-gray-400 hover:text-gray-600">
                 <FontAwesomeIcon icon={faEllipsisVertical} />
               </button>
             </div>
             <div className="flex justify-around">
-              {goals.map((g, i) => <ProgressRing key={i} {...g} />)}
+              {goals.map((g, i) => (
+                <ProgressRing key={i} {...g} />
+              ))}
             </div>
           </div>
 
-          <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm border border-slate-100 dark:border-gray-800">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-lg font-bold text-slate-900 dark:text-white">Recent activity</h2>
+          <div className={CARD}>
+            <div className="mb-6 flex items-center justify-between">
+              <h2 className="text-[16px] font-semibold text-gray-800 dark:text-gray-100">
+                Recent activity
+              </h2>
               <button className="text-gray-400 hover:text-gray-600">
                 <FontAwesomeIcon icon={faEllipsisVertical} />
               </button>
@@ -621,14 +641,16 @@ export default function LibrarianDashboard() {
               {activities.map((a) => (
                 <li key={a.id} className="flex items-start gap-3">
                   <div
-                    className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs shrink-0"
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs text-white"
                     style={{ backgroundColor: a.color }}
                   >
                     <FontAwesomeIcon icon={a.icon} />
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm text-slate-700 dark:text-slate-300 truncate">{a.text}</p>
-                    <span className="text-xs text-slate-400">{a.time}</span>
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-sm text-gray-700 dark:text-gray-300">
+                      {a.text}
+                    </p>
+                    <span className="text-xs text-gray-400">{a.time}</span>
                   </div>
                 </li>
               ))}
@@ -637,53 +659,57 @@ export default function LibrarianDashboard() {
         </div>
 
         {/* ROW 2 */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
-          <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm border border-slate-100 dark:border-gray-800">
-            <div className="flex justify-between items-center mb-4">
+        <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-2">
+          <div className={CARD}>
+            <div className="mb-4 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <FontAwesomeIcon icon={faChartLine} className="text-indigo-400" />
-                <h2 className="text-lg font-bold text-slate-900 dark:text-white">Books added</h2>
+                <FontAwesomeIcon icon={faChartLine} style={{ color: THEME.teal }} />
+                <h2 className="text-[16px] font-semibold text-gray-800 dark:text-gray-100">
+                  Books added
+                </h2>
               </div>
-              <div className="flex items-center gap-2 rounded-lg border border-slate-200 dark:border-gray-700 px-3 py-1.5 text-xs text-slate-500 dark:text-slate-400">
+              <div className="flex items-center gap-2 rounded-lg border border-gray-200 px-3 py-1.5 text-xs text-gray-500 dark:border-gray-700">
                 Last 7 days
                 <FontAwesomeIcon icon={faLayerGroup} className="text-[10px]" />
               </div>
             </div>
-            <p className="text-xs text-slate-500 mb-3">
+            <p className="mb-3 text-xs text-gray-500">
               {totalCreatedThisWeek} book{totalCreatedThisWeek === 1 ? "" : "s"} this week
             </p>
             <div className="h-48">
-              <InlineBarChart data={createdActivity} color="#6366F1" />
+              <InlineBarChart data={createdActivity} color={THEME.teal} />
             </div>
           </div>
 
-          <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm border border-slate-100 dark:border-gray-800">
-            <div className="flex justify-between items-center mb-5">
-              <h2 className="text-lg font-bold text-slate-900 dark:text-white">Recently added</h2>
+          <div className={CARD}>
+            <div className="mb-5 flex items-center justify-between">
+              <h2 className="text-[16px] font-semibold text-gray-800 dark:text-gray-100">
+                Recently added
+              </h2>
               <a
                 href="/librarian/books"
-                className="text-xs text-slate-500 hover:text-slate-900 dark:hover:text-white flex items-center gap-1"
+                className="flex items-center gap-1 text-xs font-medium text-[#55b6b6] hover:underline"
               >
                 See more <FontAwesomeIcon icon={faChevronRight} className="text-[8px]" />
               </a>
             </div>
             {recentBooks.length === 0 ? (
-              <p className="text-sm text-slate-500">No books yet.</p>
+              <p className="text-sm text-gray-500">No books yet.</p>
             ) : (
               <div className="grid grid-cols-4 gap-3">
                 {recentBooks.map((book) => (
                   <div key={book._id} className="flex flex-col">
-                    <div className="aspect-[2/3] bg-slate-100 dark:bg-gray-800 rounded-md overflow-hidden mb-2">
+                    <div className="mb-2 aspect-[2/3] overflow-hidden rounded-md bg-gray-100 dark:bg-gray-800">
                       <img
                         src={book.coverImage || ""}
                         alt={book.title || "book"}
-                        className="w-full h-full object-cover"
+                        className="h-full w-full object-cover"
                       />
                     </div>
-                    <p className="text-[11px] font-semibold text-slate-800 dark:text-white line-clamp-2 leading-tight">
+                    <p className="line-clamp-2 text-[11px] font-semibold leading-tight text-gray-800 dark:text-gray-100">
                       {book.title}
                     </p>
-                    <p className="text-[10px] text-slate-500 line-clamp-1">{book.author}</p>
+                    <p className="line-clamp-1 text-[10px] text-gray-500">{book.author}</p>
                   </div>
                 ))}
               </div>
@@ -692,34 +718,38 @@ export default function LibrarianDashboard() {
         </div>
 
         {/* ROW 3 */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
-          <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm border border-slate-100 dark:border-gray-800">
-            <div className="flex justify-between items-center mb-4">
+        <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-2">
+          <div className={CARD}>
+            <div className="mb-4 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <FontAwesomeIcon icon={faChartLine} className="text-cyan-400" />
-                <h2 className="text-lg font-bold text-slate-900 dark:text-white">Borrow activity</h2>
+                <FontAwesomeIcon icon={faChartLine} style={{ color: THEME.orange }} />
+                <h2 className="text-[16px] font-semibold text-gray-800 dark:text-gray-100">
+                  Borrow activity
+                </h2>
               </div>
-              <div className="flex items-center gap-2 rounded-lg border border-slate-200 dark:border-gray-700 px-3 py-1.5 text-xs text-slate-500 dark:text-slate-400">
+              <div className="flex items-center gap-2 rounded-lg border border-gray-200 px-3 py-1.5 text-xs text-gray-500 dark:border-gray-700">
                 Last 7 days
                 <FontAwesomeIcon icon={faLayerGroup} className="text-[10px]" />
               </div>
             </div>
-            <p className="text-xs text-slate-500 mb-3">
+            <p className="mb-3 text-xs text-gray-500">
               {totalBorrowedThisWeek} borrow{totalBorrowedThisWeek === 1 ? "" : "s"} this week
             </p>
             <div className="h-48">
-              <InlineAreaChart data={borrowActivity} color="#06B6D4" />
+              <InlineAreaChart data={borrowActivity} color={THEME.orange} />
             </div>
           </div>
 
-          <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm border border-slate-100 dark:border-gray-800">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-lg font-bold text-slate-900 dark:text-white">Availability</h2>
+          <div className={CARD}>
+            <div className="mb-6 flex items-center justify-between">
+              <h2 className="text-[16px] font-semibold text-gray-800 dark:text-gray-100">
+                Availability
+              </h2>
               <button className="text-gray-400 hover:text-gray-600">
                 <FontAwesomeIcon icon={faEllipsisVertical} />
               </button>
             </div>
-            <div className="flex flex-col md:flex-row items-center gap-8">
+            <div className="flex flex-col items-center gap-8 md:flex-row">
               <div className="shrink-0">
                 <InlineDonutChart
                   active={availableBooks}
@@ -727,29 +757,29 @@ export default function LibrarianDashboard() {
                   size={200}
                 />
               </div>
-              <div className="flex flex-col gap-3 flex-1">
+              <div className="flex flex-1 flex-col gap-3">
                 <div className="flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-sm bg-indigo-500" />
-                  <span className="text-xs text-slate-600 dark:text-slate-400">
+                  <span className="h-3 w-3 rounded-sm bg-[#55b6b6]" />
+                  <span className="text-xs text-gray-600 dark:text-gray-400">
                     Available — {availableBooks}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-sm bg-slate-300" />
-                  <span className="text-xs text-slate-600 dark:text-slate-400">
+                  <span className="h-3 w-3 rounded-sm bg-[#f8d8cc]" />
+                  <span className="text-xs text-gray-600 dark:text-gray-400">
                     Borrowed — {borrowedBooks}
                   </span>
                 </div>
                 {topGenres.length > 0 && (
-                  <div className="mt-3 pt-3 border-t border-slate-100 dark:border-gray-800">
-                    <p className="text-[11px] uppercase tracking-wide text-slate-400 mb-2">
+                  <div className="mt-3 border-t border-gray-100 pt-3 dark:border-gray-800">
+                    <p className="mb-2 text-[11px] uppercase tracking-wide text-gray-400">
                       Top genres
                     </p>
                     <div className="flex flex-wrap gap-2">
                       {topGenres.map((g) => (
                         <span
                           key={g}
-                          className="px-2 py-1 text-[11px] rounded bg-slate-100 dark:bg-gray-800 text-slate-600 dark:text-slate-300"
+                          className="rounded bg-[#eefafa] px-2 py-1 text-[11px] text-[#0f2424] dark:bg-[#0f2424] dark:text-[#7adcdc]"
                         >
                           {g}
                         </span>
@@ -759,29 +789,31 @@ export default function LibrarianDashboard() {
                 )}
               </div>
             </div>
-            <p className="text-xs text-slate-400 mt-6">
+            <p className="mt-6 text-xs text-gray-400">
               Diagram based on books you've added and marked as available.
             </p>
           </div>
         </div>
 
         {/* ROW 4 */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
-          <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm border border-slate-100 dark:border-gray-800">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-lg font-bold text-slate-900 dark:text-white">Top authors</h2>
+        <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-2">
+          <div className={CARD}>
+            <div className="mb-6 flex items-center justify-between">
+              <h2 className="text-[16px] font-semibold text-gray-800 dark:text-gray-100">
+                Top authors
+              </h2>
               <button className="text-gray-400 hover:text-gray-600">
                 <FontAwesomeIcon icon={faEllipsisVertical} />
               </button>
             </div>
             {topAuthors.length === 0 ? (
-              <p className="text-sm text-slate-500">No authors yet.</p>
+              <p className="text-sm text-gray-500">No authors yet.</p>
             ) : (
               <div className="flex flex-wrap gap-2">
                 {topAuthors.map((name) => (
                   <span
                     key={name}
-                    className="px-3 py-1.5 text-xs font-medium text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-gray-800 rounded-md hover:bg-slate-200 dark:hover:bg-gray-700 transition-colors cursor-pointer"
+                    className="cursor-pointer rounded-md bg-[#eefafa] px-3 py-1.5 text-xs font-medium text-[#0f2424] transition-colors hover:bg-[#d8f0f0] dark:bg-[#0f2424] dark:text-[#7adcdc] dark:hover:bg-[#143232]"
                   >
                     {name}
                   </span>
@@ -790,34 +822,36 @@ export default function LibrarianDashboard() {
             )}
           </div>
 
-          <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm border border-slate-100 dark:border-gray-800">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-lg font-bold text-slate-900 dark:text-white">Inventory snapshot</h2>
+          <div className={CARD}>
+            <div className="mb-6 flex items-center justify-between">
+              <h2 className="text-[16px] font-semibold text-gray-800 dark:text-gray-100">
+                Inventory snapshot
+              </h2>
             </div>
             <ul className="flex flex-col gap-4">
               <li className="flex justify-between text-sm">
-                <span className="text-slate-500">Total titles</span>
-                <span className="font-bold text-slate-900 dark:text-white">{totalBooks}</span>
+                <span className="text-gray-500">Total titles</span>
+                <span className="font-bold text-gray-800 dark:text-gray-100">{totalBooks}</span>
               </li>
               <li className="flex justify-between text-sm">
-                <span className="text-slate-500">Available copies</span>
-                <span className="font-bold text-slate-900 dark:text-white">{availableBooks}</span>
+                <span className="text-gray-500">Available copies</span>
+                <span className="font-bold text-[#55b6b6]">{availableBooks}</span>
               </li>
               <li className="flex justify-between text-sm">
-                <span className="text-slate-500">Borrowed out</span>
-                <span className="font-bold text-slate-900 dark:text-white">{borrowedBooks}</span>
+                <span className="text-gray-500">Borrowed out</span>
+                <span className="font-bold" style={{ color: THEME.orange }}>{borrowedBooks}</span>
               </li>
               <li className="flex justify-between text-sm">
-                <span className="text-slate-500">Genres tracked</span>
-                <span className="font-bold text-slate-900 dark:text-white">
+                <span className="text-gray-500">Genres tracked</span>
+                <span className="font-bold text-gray-800 dark:text-gray-100">
                   {Object.keys(genreCounts).length}
                 </span>
               </li>
             </ul>
           </div>
         </div>
-
       </div>
+
       <FloatingMenu />
     </div>
   );

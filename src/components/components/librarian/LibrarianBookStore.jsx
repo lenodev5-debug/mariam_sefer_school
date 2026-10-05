@@ -7,6 +7,7 @@ import {
   faFileText,
 } from "@fortawesome/free-solid-svg-icons";
 
+import FloatingMenu from "../../shared/ui/FloatingMenu";
 import bookstoreService from "../../../../lib/service/books/bookstoreService";
 
 /* ============================================================
@@ -314,10 +315,10 @@ export default function LibrarianBookStore() {
       .finally(() => setLoading(false));
   }, []);
 
-  const safeBooks      = Array.isArray(books) ? books : [];
-  const totalBooks     = safeBooks.length;
+  const safeBooks = Array.isArray(books) ? books : [];
+  const totalBooks = safeBooks.length;
   const availableBooks = safeBooks.filter((b) => b?.isAvailable === true).length;
-  const borrowedBooks  = safeBooks.filter((b) => safeNum(b?.borrowedOut) > 0).length;
+  const borrowedBooks = safeBooks.filter((b) => safeNum(b?.borrowedOut) > 0).length;
 
   const lowStockBooks = safeBooks
     .filter((b) => safeNum(b?.availableCopies) <= 1)
@@ -327,12 +328,18 @@ export default function LibrarianBookStore() {
   const recentBooks = safeBooks.slice(0, 4);
 
   /* ============================================================
+   * Shared page wrapper — same top offset for all 3 states
+   * ============================================================ */
+  const pageClass =
+    "min-h-screen overflow-hidden bg-[#f7f6f5] px-5 pb-10 pt-24 md:px-7 md:pt-28 dark:bg-[#0E0E0E]";
+
+  /* ============================================================
    * LOADING
    * ============================================================ */
   if (loading) {
     return (
-    <div className="relative top-16 min-h-screen overflow-hidden bg-[#f7f6f5] p-5 md:p-7 dark:bg-[#0E0E0E]">
-            <div className="relative mx-auto max-w-[1200px]">
+      <div className={pageClass}>
+        <div className="relative mx-auto max-w-[1200px]">
           <div className="grid gap-5 lg:grid-cols-[1fr_300px]">
             <div className="space-y-2">
               {[1, 2, 3, 4].map((i) => (
@@ -358,7 +365,7 @@ export default function LibrarianBookStore() {
    * ============================================================ */
   if (error) {
     return (
-      <div className="relative top-4 min-h-screen bg-[#f7f6f5] p-6 dark:bg-[#0E0E0E]">
+      <div className={pageClass}>
         <div className="mx-auto max-w-[1200px] rounded-2xl border border-red-200 bg-red-50 p-6 dark:border-red-900/40 dark:bg-red-950/20">
           <h2 className="font-semibold text-red-700 dark:text-red-400">
             Could not load library
@@ -373,7 +380,7 @@ export default function LibrarianBookStore() {
    * MAIN
    * ============================================================ */
   return (
-    <div className="relative top-4 min-h-screen overflow-hidden bg-[#f7f6f5] p-5 md:p-7 dark:bg-[#0E0E0E]">
+    <div className={pageClass}>
       {/* Ambient background */}
       <div
         aria-hidden="true"
@@ -420,6 +427,7 @@ export default function LibrarianBookStore() {
           <ActivityCard books={safeBooks} />
         </div>
       </div>
+      <FloatingMenu />
     </div>
   );
 }
