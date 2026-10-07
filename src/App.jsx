@@ -34,6 +34,7 @@ import useTrackVisit from './hooks/useTrackingVisit';
 import LibrarianDashboard from './components/components/librarian/LibrarianDashboard';
 import LibrarianBookStore from './components/components/librarian/LibrarianBookStore'
 import BorrowedBookDashboard from './components/components/librarian/BorrowedBookDashboard';
+import LibrarianMembers from './components/components/librarian/librarianMembers';
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -232,6 +233,11 @@ function App() {
         path="/teacher/dashboard"
         element={
           <ProtectedRoute allowedRoles={['Teacher']}>
+            <Header
+              onMenuClick={() => setSidebarOpen((prev) => !prev)}
+              sidebarOpen={sidebarOpen}
+              />
+            <Sidebar isOpen={sidebarOpen} />
             <TeacherDashboard />
           </ProtectedRoute>
         }
@@ -308,6 +314,20 @@ function App() {
               </ProtectedRoute>
             }
       />
+
+      <Route path="/librarian/members"
+            element={
+              <ProtectedRoute allowedRoles={['Librarian']}>
+                <Header
+                  onMenuClick={() => setSidebarOpen((pre) => !pre)}
+                  sidebarOpen={sidebarOpen} />
+                  <Sidebar isOpen={sidebarOpen} />
+                  <LibrarianMembers />
+              </ProtectedRoute>
+            }
+      />
+
+
 
       {/* page doesn't exist */}
       <Route path="*" element={<NotFound />} />
