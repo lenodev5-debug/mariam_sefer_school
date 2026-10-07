@@ -363,14 +363,14 @@ export default function BorrowedBookDashboard() {
      * RENDER
      * ============================================================ */
     return (
-        <div className="min-h-screen overflow-hidden bg-[#f7f6f5] px-5 pb-10 pt-24 md:px-7 md:pt-28 dark:bg-[#0E0E0E]">
+        <div className="min-h-screen w-full overflow-hidden bg-[#f7f6f5] px-5 pb-10 pt-24 md:px-7 md:pt-28 dark:bg-[#0E0E0E]">
             {/* Ambient background — matches other librarian pages */}
             <div
                 aria-hidden="true"
                 className="pointer-events-none fixed inset-0 bg-[radial-gradient(60%_50%_at_15%_0%,#e8f5f5_0%,transparent_60%),radial-gradient(50%_45%_at_100%_10%,#fdeee4_0%,transparent_60%)] dark:bg-[radial-gradient(60%_50%_at_15%_0%,#0f2424_0%,transparent_60%),radial-gradient(50%_45%_at_100%_10%,#2a1710_0%,transparent_60%)]"
             />
 
-            <div className="relative mx-auto max-w-[1200px]">
+            <div className="relative w-full">
                 {/* Header */}
                 <div className="mb-6">
                     <div className="flex flex-col justify-between gap-4 lg:flex-row lg:items-center">

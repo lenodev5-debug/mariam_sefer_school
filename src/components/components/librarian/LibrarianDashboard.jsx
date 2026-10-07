@@ -569,8 +569,8 @@ export default function LibrarianDashboard() {
    * ============================================================ */
   if (loading) {
     return (
-      <div className="min-h-screen overflow-hidden bg-[#f7f6f5] px-5 pb-10 pt-24 md:px-7 md:pt-28 dark:bg-[#0E0E0E]">
-        <div className="relative mx-auto max-w-[1200px]">
+      <div className="min-h-screen w-full overflow-hidden bg-[#f7f6f5] px-5 pb-10 pt-24 md:px-7 md:pt-28 dark:bg-[#0E0E0E]">
+        <div className="relative w-full">
           <div className="mb-8 h-32 animate-pulse rounded-2xl bg-gray-200 dark:bg-gray-800" />
           <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
             {[1, 2, 3, 4].map((i) => (
@@ -589,14 +589,15 @@ export default function LibrarianDashboard() {
    * DASHBOARD
    * ============================================================ */
   return (
-    <div className="min-h-screen overflow-hidden bg-[#f7f6f5] px-5 pb-10 pt-24 md:px-7 md:pt-28 dark:bg-[#0E0E0E]">
+    <div className="min-h-screen w-full overflow-hidden bg-[#f7f6f5] px-5 pb-10 pt-24 md:px-7 md:pt-28 dark:bg-[#0E0E0E]">
       {/* Ambient background — same as LibrarianBookStore */}
       <div
         aria-hidden="true"
         className="pointer-events-none fixed inset-0 bg-[radial-gradient(60%_50%_at_15%_0%,#e8f5f5_0%,transparent_60%),radial-gradient(50%_45%_at_100%_10%,#fdeee4_0%,transparent_60%)] dark:bg-[radial-gradient(60%_50%_at_15%_0%,#0f2424_0%,transparent_60%),radial-gradient(50%_45%_at_100%_10%,#2a1710_0%,transparent_60%)]"
       />
 
-      <div className="relative mx-auto max-w-[1200px]">
+      {/* Full-width container */}
+      <div className="relative w-full">
         {/* Welcome header */}
         <WelcomeHeader user={user} totalBooks={totalBooks} />
 
@@ -610,8 +611,57 @@ export default function LibrarianDashboard() {
           </p>
         </div>
 
-        {/* ROW 1 */}
+        {/* ============================================================
+         * ROW 1 — CHARTS (moved to top)
+         * ============================================================ */}
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+          <div className={CARD}>
+            <div className="mb-4 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <FontAwesomeIcon icon={faChartLine} style={{ color: THEME.teal }} />
+                <h2 className="text-[16px] font-semibold text-gray-800 dark:text-gray-100">
+                  Books added
+                </h2>
+              </div>
+              <div className="flex items-center gap-2 rounded-lg border border-gray-200 px-3 py-1.5 text-xs text-gray-500 dark:border-gray-700">
+                Last 7 days
+                <FontAwesomeIcon icon={faLayerGroup} className="text-[10px]" />
+              </div>
+            </div>
+            <p className="mb-3 text-xs text-gray-500">
+              {totalCreatedThisWeek} book{totalCreatedThisWeek === 1 ? "" : "s"} this week
+            </p>
+            <div className="h-48">
+              <InlineBarChart data={createdActivity} color={THEME.teal} />
+            </div>
+          </div>
+
+          <div className={CARD}>
+            <div className="mb-4 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <FontAwesomeIcon icon={faChartLine} style={{ color: THEME.orange }} />
+                <h2 className="text-[16px] font-semibold text-gray-800 dark:text-gray-100">
+                  Borrow activity
+                </h2>
+              </div>
+              <div className="flex items-center gap-2 rounded-lg border border-gray-200 px-3 py-1.5 text-xs text-gray-500 dark:border-gray-700">
+                Last 7 days
+                <FontAwesomeIcon icon={faLayerGroup} className="text-[10px]" />
+              </div>
+            </div>
+            <p className="mb-3 text-xs text-gray-500">
+              {totalBorrowedThisWeek} borrow{totalBorrowedThisWeek === 1 ? "" : "s"} this week
+            </p>
+            <div className="h-48">
+              <InlineAreaChart data={borrowActivity} color={THEME.orange} />
+            </div>
+          </div>
+        </div>
+
+        {/* ============================================================
+         * ROW 2 — Goals + Recent activity
+         * ============================================================ */}
+        <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-2">
           <div className={CARD}>
             <div className="mb-6 flex items-center justify-between">
               <h2 className="text-[16px] font-semibold text-gray-800 dark:text-gray-100">
@@ -658,29 +708,10 @@ export default function LibrarianDashboard() {
           </div>
         </div>
 
-        {/* ROW 2 */}
+        {/* ============================================================
+         * ROW 3 — Recently added + Availability
+         * ============================================================ */}
         <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-2">
-          <div className={CARD}>
-            <div className="mb-4 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <FontAwesomeIcon icon={faChartLine} style={{ color: THEME.teal }} />
-                <h2 className="text-[16px] font-semibold text-gray-800 dark:text-gray-100">
-                  Books added
-                </h2>
-              </div>
-              <div className="flex items-center gap-2 rounded-lg border border-gray-200 px-3 py-1.5 text-xs text-gray-500 dark:border-gray-700">
-                Last 7 days
-                <FontAwesomeIcon icon={faLayerGroup} className="text-[10px]" />
-              </div>
-            </div>
-            <p className="mb-3 text-xs text-gray-500">
-              {totalCreatedThisWeek} book{totalCreatedThisWeek === 1 ? "" : "s"} this week
-            </p>
-            <div className="h-48">
-              <InlineBarChart data={createdActivity} color={THEME.teal} />
-            </div>
-          </div>
-
           <div className={CARD}>
             <div className="mb-5 flex items-center justify-between">
               <h2 className="text-[16px] font-semibold text-gray-800 dark:text-gray-100">
@@ -714,30 +745,6 @@ export default function LibrarianDashboard() {
                 ))}
               </div>
             )}
-          </div>
-        </div>
-
-        {/* ROW 3 */}
-        <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-2">
-          <div className={CARD}>
-            <div className="mb-4 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <FontAwesomeIcon icon={faChartLine} style={{ color: THEME.orange }} />
-                <h2 className="text-[16px] font-semibold text-gray-800 dark:text-gray-100">
-                  Borrow activity
-                </h2>
-              </div>
-              <div className="flex items-center gap-2 rounded-lg border border-gray-200 px-3 py-1.5 text-xs text-gray-500 dark:border-gray-700">
-                Last 7 days
-                <FontAwesomeIcon icon={faLayerGroup} className="text-[10px]" />
-              </div>
-            </div>
-            <p className="mb-3 text-xs text-gray-500">
-              {totalBorrowedThisWeek} borrow{totalBorrowedThisWeek === 1 ? "" : "s"} this week
-            </p>
-            <div className="h-48">
-              <InlineAreaChart data={borrowActivity} color={THEME.orange} />
-            </div>
           </div>
 
           <div className={CARD}>
@@ -795,7 +802,9 @@ export default function LibrarianDashboard() {
           </div>
         </div>
 
-        {/* ROW 4 */}
+        {/* ============================================================
+         * ROW 4 — Top authors + Inventory snapshot
+         * ============================================================ */}
         <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-2">
           <div className={CARD}>
             <div className="mb-6 flex items-center justify-between">

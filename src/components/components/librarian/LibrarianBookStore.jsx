@@ -331,7 +331,7 @@ export default function LibrarianBookStore() {
    * Shared page wrapper — same top offset for all 3 states
    * ============================================================ */
   const pageClass =
-    "min-h-screen overflow-hidden bg-[#f7f6f5] px-5 pb-10 pt-24 md:px-7 md:pt-28 dark:bg-[#0E0E0E]";
+    "min-h-screen w-full overflow-hidden bg-[#f7f6f5] px-5 pb-10 pt-24 md:px-7 md:pt-28 dark:bg-[#0E0E0E]";
 
   /* ============================================================
    * LOADING
@@ -339,8 +339,8 @@ export default function LibrarianBookStore() {
   if (loading) {
     return (
       <div className={pageClass}>
-        <div className="relative mx-auto max-w-[1200px]">
-          <div className="grid gap-5 lg:grid-cols-[1fr_300px]">
+        <div className="relative w-full">
+          <div className="grid gap-5 lg:grid-cols-[1fr_360px]">
             <div className="space-y-2">
               {[1, 2, 3, 4].map((i) => (
                 <div
@@ -366,7 +366,7 @@ export default function LibrarianBookStore() {
   if (error) {
     return (
       <div className={pageClass}>
-        <div className="mx-auto max-w-[1200px] rounded-2xl border border-red-200 bg-red-50 p-6 dark:border-red-900/40 dark:bg-red-950/20">
+        <div className="w-full rounded-2xl border border-red-200 bg-red-50 p-6 dark:border-red-900/40 dark:bg-red-950/20">
           <h2 className="font-semibold text-red-700 dark:text-red-400">
             Could not load library
           </h2>
@@ -387,9 +387,9 @@ export default function LibrarianBookStore() {
         className="pointer-events-none fixed inset-0 bg-[radial-gradient(60%_50%_at_15%_0%,#e8f5f5_0%,transparent_60%),radial-gradient(50%_45%_at_100%_10%,#fdeee4_0%,transparent_60%)] dark:bg-[radial-gradient(60%_50%_at_15%_0%,#0f2424_0%,transparent_60%),radial-gradient(50%_45%_at_100%_10%,#2a1710_0%,transparent_60%)]"
       />
 
-      <div className="relative mx-auto max-w-[1200px]">
+      <div className="relative w-full">
         {/* TOP */}
-        <div className="grid gap-5 lg:grid-cols-[1fr_300px]">
+        <div className="grid gap-5 lg:grid-cols-[1fr_360px]">
           <section>
             <div className="mb-4 flex items-center justify-between">
               <h1 className="text-[17px] font-semibold text-gray-800 dark:text-gray-100">
