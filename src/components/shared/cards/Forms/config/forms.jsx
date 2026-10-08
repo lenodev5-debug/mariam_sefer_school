@@ -6,6 +6,7 @@ import DepartmentForm from "../../Forms/DepartmentForm";
 import SubjectForm from "../../Forms/SubjectForm";
 import UserForm from "../userForm";
 import BookForm from "../BookForm";
+import TeacherAssignmentForm from "../teacherAssignment";
 
 import gradeService from "../../../../../../lib/service/admin/gradeService";
 import academicYearService from "../../../../../../lib/service/admin/academicYearService";
@@ -14,6 +15,8 @@ import departmentService from "../../../../../../lib/service/admin/departmentSer
 import subjectService from "../../../../../../lib/service/admin/subjectService";
 import userService from "../../../../../../lib/service/admin/userService";
 import bookstoreService from "../../../../../../lib/service/books/bookstoreService";
+import teacherAssignmentService from "../../../../../../lib/service/admin/teacherAssignmentService";
+
 
 export const FORM_TABS = [
     {
@@ -62,13 +65,13 @@ export const FORM_TABS = [
         chart: "bar",
     },
     {
-        key: 'User Form',
-        label: 'User Form',
-        description: 'Create User with Role',
+        key: "user",
+        label: "User",
+        description: "Create user with role",
         Component: UserForm,
         service: userService,
-        listKey: 'createUser',
-        chart: "bar"
+        listKey: "getAllUsers",
+        chart: "bar",
     },
     {
         key: "book",
@@ -76,7 +79,16 @@ export const FORM_TABS = [
         description: "Add a new book to the library",
         Component: BookForm,
         service: bookstoreService,
-        listKey: "createBook",
+        listKey: "getAllBooks",
+        chart: "bar",
+    },
+    {
+        key: "teacherAssignment",
+        label: "Teacher Assi",
+        description: "Add teacher assignment",
+        Component: TeacherAssignmentForm,
+        service: teacherAssignmentService,
+        listKey: "getAllTeacherAssignments",
         chart: "bar",
     },
 ];
