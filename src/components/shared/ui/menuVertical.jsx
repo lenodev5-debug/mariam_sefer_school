@@ -5,7 +5,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 export default function ExpandableMenuVertical({
     items = [],
     directions = ["up", "left"],
-    spacing = 75,
+    spacing = 53,
     className = "",
     buttonClassName = "",
     iconClassName = "",

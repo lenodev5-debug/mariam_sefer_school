@@ -19,8 +19,11 @@ export default function Platform() {
           grid-cols-1
           gap-5
           md:grid-cols-2
-          bg-[#090909]
+          bg-[#f5f5f5]
           py-14
+          transition-colors
+          duration-300
+          dark:bg-[#0f0f0f]
         "
       >
         {/* =================================================
@@ -36,13 +39,18 @@ export default function Platform() {
             rounded-2xl
             rounded-l-none
             border
-            border-white/20
+            border-[#e0e0e0]
+            bg-white
             p-10
+            transition-colors
+            duration-300
             md:p-14
+            dark:border-[#3a3a3a]
+            dark:bg-[#1a1a1a]
           "
         >
           {/* Online count */}
-          <div className="mb-4 flex items-center gap-2 text-sm text-white/50">
+          <div className="mb-4 flex items-center gap-2 text-sm text-[#999] dark:text-[#888]">
             <span className="h-2 w-2 rounded-full bg-green-400 shadow-[0_0_10px_rgba(74,222,128,0.8)]" />
 
             <span>598 Users</span>
@@ -56,20 +64,21 @@ export default function Platform() {
               font-bold
               leading-[1.05]
               tracking-tight
-              text-white
+              text-[#1a1a1a]
               md:text-6xl
+              dark:text-white
             "
           >
             Join the
             <br />
 
-            <span className="text-white/50">
+            <span className="text-[#b0b0b0] dark:text-[#666]">
               Other student!
             </span>
           </h1>
 
           {/* Description */}
-          <p className="mt-5 max-w-lg text-lg leading-relaxed text-white/50">
+          <p className="mt-5 max-w-lg text-lg leading-relaxed text-[#999] dark:text-[#888]">
             use our mobile device to more futures.
           </p>
 
@@ -131,14 +140,19 @@ export default function Platform() {
             rounded-2xl
             rounded-r-none
             border
-            border-white/20
+            border-[#e0e0e0]
+            bg-white
             p-10
+            transition-colors
+            duration-300
             md:p-14
             scrollbar-none
+            dark:border-[#3a3a3a]
+            dark:bg-[#1a1a1a]
           "
         >
           {/* Label */}
-          <div className="mb-4 flex items-center gap-2 text-sm text-white/50">
+          <div className="mb-4 flex items-center gap-2 text-sm text-[#999] dark:text-[#888]">
             <span className="h-2 w-2 rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.8)]" />
 
             <span>Mobile Platform</span>
@@ -152,20 +166,21 @@ export default function Platform() {
               font-bold
               leading-[1.05]
               tracking-tight
-              text-white
+              text-[#1a1a1a]
               md:text-6xl
+              dark:text-white
             "
           >
             Learn
             <br />
 
-            <span className="text-white/50">
+            <span className="text-[#b0b0b0] dark:text-[#666]">
               Everywhere!
             </span>
           </h1>
 
           {/* Description */}
-          <p className="mt-5 max-w-lg text-lg leading-relaxed text-white/50">
+          <p className="mt-5 max-w-lg text-lg leading-relaxed text-[#999] dark:text-[#888]">
             Take your learning experience with you wherever you go. Access
             your courses, lessons, progress and school community from your
             mobile device.
@@ -179,14 +194,18 @@ export default function Platform() {
                 group
                 rounded-2xl
                 border
-                border-white/10
-                bg-white/[0.03]
+                border-[#e0e0e0]
+                bg-[#f5f5f5]
                 p-5
                 transition-all
                 duration-300
                 hover:-translate-y-1
-                hover:border-white/20
-                hover:bg-white/[0.06]
+                hover:border-[#50A2FF]/40
+                hover:bg-[#f0f0f0]
+                dark:border-[#2a2a2a]
+                dark:bg-[#222222]
+                dark:hover:border-[#50A2FF]/40
+                dark:hover:bg-[#2a2a2a]
               "
             >
               <div
@@ -199,10 +218,11 @@ export default function Platform() {
                   justify-center
                   rounded-xl
                   bg-blue-500/10
-                  text-blue-300
+                  text-blue-500
                   transition-all
                   duration-300
                   group-hover:bg-blue-500/20
+                  dark:text-blue-300
                 "
               >
                 <FontAwesomeIcon
@@ -211,11 +231,11 @@ export default function Platform() {
                 />
               </div>
 
-              <h3 className="text-sm font-semibold text-white">
+              <h3 className="text-sm font-semibold text-[#1a1a1a] dark:text-white">
                 Learn Anywhere
               </h3>
 
-              <p className="mt-2 text-xs leading-relaxed text-white/40">
+              <p className="mt-2 text-xs leading-relaxed text-[#999] dark:text-[#888]">
                 Study your lessons wherever you are.
               </p>
             </div>
@@ -226,14 +246,18 @@ export default function Platform() {
                 group
                 rounded-2xl
                 border
-                border-white/10
-                bg-white/[0.03]
+                border-[#e0e0e0]
+                bg-[#f5f5f5]
                 p-5
                 transition-all
                 duration-300
                 hover:-translate-y-1
-                hover:border-white/20
-                hover:bg-white/[0.06]
+                hover:border-[#50A2FF]/40
+                hover:bg-[#f0f0f0]
+                dark:border-[#2a2a2a]
+                dark:bg-[#222222]
+                dark:hover:border-[#50A2FF]/40
+                dark:hover:bg-[#2a2a2a]
               "
             >
               <div
@@ -246,10 +270,11 @@ export default function Platform() {
                   justify-center
                   rounded-xl
                   bg-purple-500/10
-                  text-purple-300
+                  text-purple-500
                   transition-all
                   duration-300
                   group-hover:bg-purple-500/20
+                  dark:text-purple-300
                 "
               >
                 <FontAwesomeIcon
@@ -258,11 +283,11 @@ export default function Platform() {
                 />
               </div>
 
-              <h3 className="text-sm font-semibold text-white">
+              <h3 className="text-sm font-semibold text-[#1a1a1a] dark:text-white">
                 Your Courses
               </h3>
 
-              <p className="mt-2 text-xs leading-relaxed text-white/40">
+              <p className="mt-2 text-xs leading-relaxed text-[#999] dark:text-[#888]">
                 Access your subjects and lessons from one place.
               </p>
             </div>
@@ -273,14 +298,18 @@ export default function Platform() {
                 group
                 rounded-2xl
                 border
-                border-white/10
-                bg-white/[0.03]
+                border-[#e0e0e0]
+                bg-[#f5f5f5]
                 p-5
                 transition-all
                 duration-300
                 hover:-translate-y-1
-                hover:border-white/20
-                hover:bg-white/[0.06]
+                hover:border-[#50A2FF]/40
+                hover:bg-[#f0f0f0]
+                dark:border-[#2a2a2a]
+                dark:bg-[#222222]
+                dark:hover:border-[#50A2FF]/40
+                dark:hover:bg-[#2a2a2a]
               "
             >
               <div
@@ -293,10 +322,11 @@ export default function Platform() {
                   justify-center
                   rounded-xl
                   bg-cyan-500/10
-                  text-cyan-300
+                  text-cyan-500
                   transition-all
                   duration-300
                   group-hover:bg-cyan-500/20
+                  dark:text-cyan-300
                 "
               >
                 <FontAwesomeIcon
@@ -305,11 +335,11 @@ export default function Platform() {
                 />
               </div>
 
-              <h3 className="text-sm font-semibold text-white">
+              <h3 className="text-sm font-semibold text-[#1a1a1a] dark:text-white">
                 Track Progress
               </h3>
 
-              <p className="mt-2 text-xs leading-relaxed text-white/40">
+              <p className="mt-2 text-xs leading-relaxed text-[#999] dark:text-[#888]">
                 Keep track of your academic progress.
               </p>
             </div>
@@ -320,14 +350,18 @@ export default function Platform() {
                 group
                 rounded-2xl
                 border
-                border-white/10
-                bg-white/[0.03]
+                border-[#e0e0e0]
+                bg-[#f5f5f5]
                 p-5
                 transition-all
                 duration-300
                 hover:-translate-y-1
-                hover:border-white/20
-                hover:bg-white/[0.06]
+                hover:border-[#50A2FF]/40
+                hover:bg-[#f0f0f0]
+                dark:border-[#2a2a2a]
+                dark:bg-[#222222]
+                dark:hover:border-[#50A2FF]/40
+                dark:hover:bg-[#2a2a2a]
               "
             >
               <div
@@ -340,10 +374,11 @@ export default function Platform() {
                   justify-center
                   rounded-xl
                   bg-green-500/10
-                  text-green-300
+                  text-green-500
                   transition-all
                   duration-300
                   group-hover:bg-green-500/20
+                  dark:text-green-300
                 "
               >
                 <FontAwesomeIcon
@@ -352,11 +387,11 @@ export default function Platform() {
                 />
               </div>
 
-              <h3 className="text-sm font-semibold text-white">
+              <h3 className="text-sm font-semibold text-[#1a1a1a] dark:text-white">
                 Stay Connected
               </h3>
 
-              <p className="mt-2 text-xs leading-relaxed text-white/40">
+              <p className="mt-2 text-xs leading-relaxed text-[#999] dark:text-[#888]">
                 Stay connected with your teachers and school community.
               </p>
             </div>
@@ -364,16 +399,16 @@ export default function Platform() {
 
           {/* MORE ABOUT */}
           <div className="mt-10">
-            <h2 className="text-3xl font-bold tracking-tight text-white">
+            <h2 className="text-3xl font-bold tracking-tight text-[#1a1a1a] dark:text-white">
               Everything
               <br />
 
-              <span className="text-white/50">
+              <span className="text-[#b0b0b0] dark:text-[#666]">
                 in your pocket.
               </span>
             </h2>
 
-            <p className="mt-4 max-w-lg text-sm leading-relaxed text-white/50">
+            <p className="mt-4 max-w-lg text-sm leading-relaxed text-[#999] dark:text-[#888]">
               The mobile experience is designed to make learning simple,
               accessible and connected. Students can continue studying,
               review their courses and stay updated without needing to sit
@@ -383,11 +418,11 @@ export default function Platform() {
 
           {/* SECOND SECTION */}
           <div className="mt-10">
-            <h2 className="text-2xl font-semibold text-white">
+            <h2 className="text-2xl font-semibold text-[#1a1a1a] dark:text-white">
               Built for students
             </h2>
 
-            <p className="mt-3 text-sm leading-relaxed text-white/50">
+            <p className="mt-3 text-sm leading-relaxed text-[#999] dark:text-[#888]">
               Whether you are reviewing a lesson, checking your progress or
               staying connected with your school community, everything is
               designed around your learning experience.
@@ -396,11 +431,11 @@ export default function Platform() {
 
           {/* THIRD SECTION */}
           <div className="mt-10">
-            <h2 className="text-2xl font-semibold text-white">
+            <h2 className="text-2xl font-semibold text-[#1a1a1a] dark:text-white">
               One platform
             </h2>
 
-            <p className="mt-3 text-sm leading-relaxed text-white/50">
+            <p className="mt-3 text-sm leading-relaxed text-[#999] dark:text-[#888]">
               Your courses, subjects, academic information and communication
               can all work together through one connected school platform.
             </p>
@@ -419,19 +454,24 @@ export default function Platform() {
               gap-3
               rounded-xl
               border
-              border-white/10
-              bg-white/5
+              border-[#e0e0e0]
+              bg-white
               px-6
               py-3.5
               text-sm
               font-semibold
-              text-white
+              text-[#1a1a1a]
               backdrop-blur-md
               transition-all
               duration-300
               hover:-translate-y-1
-              hover:border-white/20
-              hover:bg-white/10
+              hover:border-[#50A2FF]/40
+              hover:bg-[#f5f5f5]
+              dark:border-[#2a2a2a]
+              dark:bg-[#222222]
+              dark:text-white
+              dark:hover:border-[#50A2FF]/40
+              dark:hover:bg-[#2a2a2a]
             "
           >
             <span>Explore Mobile App</span>

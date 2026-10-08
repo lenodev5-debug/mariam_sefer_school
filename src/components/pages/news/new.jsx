@@ -39,7 +39,7 @@ export default function News() {
   ];
 
   return (
-    <div className="flex h-[75vh] w-full flex-col items-center bg-[#090909] px-8 py-8">
+    <div className="flex h-[75vh] w-full flex-col items-center bg-[#f5f5f5] px-8 py-8 transition-colors duration-300 dark:bg-[#0f0f0f]">
 
       {/* =====================================================
           HEADER
@@ -47,13 +47,13 @@ export default function News() {
 
       <div className="flex w-full flex-col items-center justify-center">
         <h1
-          className="text-2xl text-white"
+          className="text-2xl text-[#1a1a1a] dark:text-white"
           style={{ fontFamily: "news" }}
         >
           Latest News
         </h1>
 
-        <p className="mt-1 text-center text-sm text-white/50">
+        <p className="mt-1 text-center text-sm text-[#999] dark:text-[#888]">
           Discover the latest achievements and events from our school.
         </p>
       </div>
@@ -68,6 +68,7 @@ export default function News() {
 
         {/* ===================================================
             LEFT SIDE — FEATURED NEWS
+            (stays dark — image with white text overlay)
         ==================================================== */}
 
         <div
@@ -79,8 +80,9 @@ export default function News() {
             overflow-hidden
             rounded-2xl
             border
-            border-white/10
+            border-[#e0e0e0]
             bg-black
+            dark:border-[#2a2a2a]
           "
         >
 
@@ -253,12 +255,16 @@ export default function News() {
                 overflow-hidden
                 rounded-2xl
                 border
-                border-white/10
-                bg-[#111111]
+                border-[#e0e0e0]
+                bg-white
                 transition-all
                 duration-300
-                hover:border-white/20
-                hover:bg-[#151515]
+                hover:border-[#50A2FF]/40
+                hover:bg-[#f5f5f5]
+                dark:border-[#2a2a2a]
+                dark:bg-[#222222]
+                dark:hover:border-[#50A2FF]/40
+                dark:hover:bg-[#2a2a2a]
               "
             >
 
@@ -299,7 +305,8 @@ export default function News() {
                       text-[9px]
                       uppercase
                       tracking-[0.15em]
-                      text-white/30
+                      text-[#b0b0b0]
+                      dark:text-[#666]
                     "
                   >
                     School News
@@ -313,7 +320,8 @@ export default function News() {
                       text-lg
                       font-semibold
                       leading-tight
-                      text-white
+                      text-[#1a1a1a]
+                      dark:text-white
                     "
                     style={{ fontFamily: "news" }}
                   >
@@ -321,7 +329,7 @@ export default function News() {
                   </h2>
 
 
-                  <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-white/45">
+                  <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-[#999] dark:text-[#888]">
                     {item.description}
                   </p>
 
@@ -330,7 +338,7 @@ export default function News() {
 
                 {/* ACTION BAR */}
 
-                <div className="flex items-center gap-1 border-t border-white/5 pt-2">
+                <div className="flex items-center gap-1 border-t border-[#f0f0f0] pt-2 dark:border-[#2a2a2a]">
 
                   <button
                     type="button"
@@ -342,10 +350,13 @@ export default function News() {
                       px-2
                       py-1
                       text-[10px]
-                      text-white/40
+                      text-[#b0b0b0]
                       transition
-                      hover:bg-white/5
-                      hover:text-white
+                      hover:bg-[#f0f0f0]
+                      hover:text-[#1a1a1a]
+                      dark:text-[#888]
+                      dark:hover:bg-[#2a2a2a]
+                      dark:hover:text-white
                     "
                   >
                     <FontAwesomeIcon icon={faHeart} />
@@ -363,10 +374,13 @@ export default function News() {
                       px-2
                       py-1
                       text-[10px]
-                      text-white/40
+                      text-[#b0b0b0]
                       transition
-                      hover:bg-white/5
-                      hover:text-white
+                      hover:bg-[#f0f0f0]
+                      hover:text-[#1a1a1a]
+                      dark:text-[#888]
+                      dark:hover:bg-[#2a2a2a]
+                      dark:hover:text-white
                     "
                   >
                     <FontAwesomeIcon icon={faShareNodes} />
@@ -384,10 +398,13 @@ export default function News() {
                       items-center
                       justify-center
                       rounded-full
-                      text-white/30
+                      text-[#b0b0b0]
                       transition
-                      hover:bg-white/5
-                      hover:text-white
+                      hover:bg-[#f0f0f0]
+                      hover:text-[#1a1a1a]
+                      dark:text-[#666]
+                      dark:hover:bg-[#2a2a2a]
+                      dark:hover:text-white
                     "
                   >
                     <FontAwesomeIcon icon={faEllipsis} />

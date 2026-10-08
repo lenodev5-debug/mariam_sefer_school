@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faMagnifyingGlass,
@@ -10,28 +10,20 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import FloatingMenu from "../../shared/ui/FloatingMenu";
-import userService from "../../../../lib/service/admin/userService"; 
-import UserRow from "../../shared/cards/users/user/userRow";
-import UserDetail from "../../shared/cards/users/user/userDetail";
+import {
+  ProfileList,
+  UserProfileCard
+} from '../../components/profile'
+import { useProfiles } from "../../../hooks/useProfiles";
 
 /* ============================================================
- * Theme tokens (match other librarian pages)
+ * Theme tokens
  * ============================================================ */
 const THEME = {
   teal: "#55b6b6",
   tealHover: "#43a6a6",
   tealSoft: "#eefafa",
   tealText: "#0f2424",
-};
-
-/* ============================================================
- * Helpers
- * ============================================================ */
-const safeArray = (value) => {
-  if (Array.isArray(value)) return value;
-  if (Array.isArray(value?.data)) return value.data;
-  if (Array.isArray(value?.users)) return value.users;
-  return [];
 };
 
 /* ============================================================
@@ -66,76 +58,32 @@ const StatCard = ({ title, value, subtitle, icon, iconClass, valueClass }) => (
  * Main
  * ============================================================ */
 export default function LibrarianMembers() {
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
+  /* ---------- state ---------- */
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
-
-  const [selectedUser, setSelectedUser] = useState(null);
-
+  const [selectedProfile, setSelectedProfile] = useState(null);
   const [page, setPage] = useState(1);
-  const [meta, setMeta] = useState({
-    total: 0,
-    page: 1,
-    limit: 20,
-    pages: 1,
+
+  /* ---------- fetch librarians via the shared hook ---------- */
+  const params = useMemo(
+    () => ({
+      role: "librarian",
+      page,
+      limit: 20,
+      sort: "-createdAt",
+    }),
+    [page]
+  );
+
+  const { profiles, loading, error, refetch, setProfiles } = useProfiles({
+    role: "Librarian", // -> /api/librarian
+    params,
   });
 
-  const [workingId, setWorkingId] = useState(null);
-
-  /* ---------- Load ONLY librarians ---------- */
-  const loadLibrarians = useCallback(async () => {
-    try {
-      setLoading(true);
-      setError("");
-
-      // Fetch only users whose role is "librarian".
-      // The backend can also filter server-side if it supports `role`.
-      const response = await userService.getAllUsers({
-        role: "librarian",
-        page,
-        limit: 20,
-        sort: "-createdAt",
-      });
-
-      // Some APIs ignore unknown params; enforce role filter client-side too.
-      const list = safeArray(response).filter(
-        (u) => String(u?.role || "").toLowerCase() === "librarian"
-      );
-
-      setUsers(list);
-
-      if (response?.meta) {
-        setMeta(response.meta);
-      } else {
-        setMeta({
-          total: list.length,
-          page,
-          limit: 20,
-          pages: 1,
-        });
-      }
-    } catch (err) {
-      console.error("Failed to load librarians:", err);
-      setError(
-        err?.response?.data?.message || "Failed to load librarians."
-      );
-      setUsers([]);
-    } finally {
-      setLoading(false);
-    }
-  }, [page]);
-
-  useEffect(() => {
-    loadLibrarians();
-  }, [loadLibrarians]);
-
-  /* ---------- Derived ---------- */
-  const filteredUsers = useMemo(() => {
+  /* ---------- derived: filter + search ---------- */
+  const filteredProfiles = useMemo(() => {
     const keyword = search.trim().toLowerCase();
-    let list = users;
+    let list = profiles;
 
     if (statusFilter !== "all") {
       list = list.filter(
@@ -155,86 +103,80 @@ export default function LibrarianMembers() {
         phone.includes(keyword)
       );
     });
-  }, [users, search, statusFilter]);
+  }, [profiles, search, statusFilter]);
 
+  /* ---------- derived: stats ---------- */
   const statistics = useMemo(() => {
-    const total = users.length;
-    const active = users.filter(
+    const total = profiles.length;
+    const active = profiles.filter(
       (u) => String(u?.status).toLowerCase() === "active"
     ).length;
-    const inactive = users.filter(
+    const inactive = profiles.filter(
       (u) => String(u?.status).toLowerCase() === "inactive"
     ).length;
-    const suspended = users.filter(
+    const suspended = profiles.filter(
       (u) => String(u?.status).toLowerCase() === "suspended"
     ).length;
 
     return { total, active, inactive, suspended };
-  }, [users]);
+  }, [profiles]);
 
-  /* ---------- Actions ---------- */
-  const handleView = (user) => setSelectedUser(user);
+  /* ---------- pagination meta ---------- */
+  const pagination = useMemo(
+    () => ({
+      page,
+      pages: Math.max(1, Math.ceil(profiles.length / 20) || 1),
+      total: profiles.length,
+    }),
+    [profiles.length, page]
+  );
 
-  const handleBack = () => {
-    setSelectedUser(null);
-    loadLibrarians();
-  };
+  /* ---------- handlers ---------- */
+  const handleView = useCallback((profile) => {
+    setSelectedProfile(profile);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
-  const handleEdit = async (user) => {
-    // Hook this into your edit modal / page.
-    // Example: openEditModal(user)
-    console.log("Edit user:", user);
-  };
+  const handleBack = useCallback(() => {
+    setSelectedProfile(null);
+    refetch();
+  }, [refetch]);
 
-  const handleChangeRole = async (user) => {
-    // Typically you'd open a role picker. Example placeholder:
-    console.log("Change role for:", user);
-  };
+  const handleEdit = useCallback((profile) => {
+    console.log("Edit librarian:", profile);
+    // TODO: open edit modal
+  }, []);
 
-  const handleChangeStatus = async (payload) => {
-    try {
-      const user = payload?.user || payload;
-      const nextStatus = payload?.status;
-      const id = user?._id || user?.id;
-      if (!id || !nextStatus) return;
-
-      setWorkingId(id);
-      await userService.changeUserStatus(id, { status: nextStatus });
-      await loadLibrarians();
-
-      if (selectedUser && (selectedUser._id || selectedUser.id) === id) {
-        setSelectedUser({ ...selectedUser, status: nextStatus });
-      }
-    } catch (err) {
-      console.error("Failed to change status:", err);
-      setError(
-        err?.response?.data?.message || "Failed to change user status."
+  const handleDeleted = useCallback(
+    (id) => {
+      setProfiles((prev) =>
+        prev.filter((p) => (p._id || p.id) !== id)
       );
-    } finally {
-      setWorkingId(null);
-    }
-  };
+      if (
+        selectedProfile &&
+        (selectedProfile._id || selectedProfile.id) === id
+      ) {
+        handleBack();
+      }
+    },
+    [selectedProfile, handleBack, setProfiles]
+  );
 
-  const handleDelete = async (user) => {
-    const id = user?._id || user?.id;
-    if (!id) return;
-
-    const confirmed = window.confirm(
-      `Delete ${user?.name || "this user"}? This cannot be undone.`
-    );
-    if (!confirmed) return;
-
-    try {
-      setWorkingId(id);
-      await userService.deleteUser(id);
-      await loadLibrarians();
-    } catch (err) {
-      console.error("Failed to delete user:", err);
-      setError(err?.response?.data?.message || "Failed to delete user.");
-    } finally {
-      setWorkingId(null);
-    }
-  };
+  const handleStatusChanged = useCallback(
+    (id, status) => {
+      setProfiles((prev) =>
+        prev.map((p) =>
+          (p._id || p.id) === id ? { ...p, status } : p
+        )
+      );
+      setSelectedProfile((prev) =>
+        prev && (prev._id || prev.id) === id
+          ? { ...prev, status }
+          : prev
+      );
+    },
+    [setProfiles]
+  );
 
   /* ============================================================
    * RENDER
@@ -251,17 +193,23 @@ export default function LibrarianMembers() {
         {/* ============================================================
          * DETAIL VIEW
          * ============================================================ */}
-        {selectedUser ? (
-          <UserDetail
-            user={selectedUser}
-            onBack={handleBack}
-            onEdit={handleEdit}
-            onChangeRole={handleChangeRole}
-            onChangeStatus={handleChangeStatus}
-            canEdit
-            canChangeRole
-            canChangeStatus
-          />
+        {selectedProfile ? (
+          <div className="space-y-4">
+            <button
+              onClick={handleBack}
+              className="text-sm text-[#55b6b6] hover:underline"
+            >
+              ← Back to librarians
+            </button>
+
+            <UserProfileCard
+              profile={selectedProfile}
+              variant="card"
+              onEdit={handleEdit}
+              onDeleted={handleDeleted}
+              onStatusChanged={handleStatusChanged}
+            />
+          </div>
         ) : (
           <>
             {/* Header */}
@@ -279,7 +227,7 @@ export default function LibrarianMembers() {
                 <div className="flex items-center gap-2">
                   <button
                     type="button"
-                    onClick={loadLibrarians}
+                    onClick={() => refetch()}
                     disabled={loading}
                     className="inline-flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700 dark:bg-[#1B1A1A] dark:text-gray-200"
                   >
@@ -391,135 +339,56 @@ export default function LibrarianMembers() {
                 </div>
               </div>
 
-              {/* Loading / Empty / Content */}
-              {loading ? (
-                <div className="flex min-h-[350px] items-center justify-center">
-                  <div className="text-center">
-                    <div className="mx-auto mb-3 h-8 w-8 animate-spin rounded-full border-2 border-gray-200 border-t-[#55b6b6] dark:border-gray-800" />
-                    <p className="text-sm text-gray-500">
-                      Loading librarians...
-                    </p>
+              {/* List (loading / empty / data all handled inside) */}
+              <div className="p-4">
+                <ProfileList
+                  role="Librarian"
+                  params={params}
+                  variant="card"
+                  onEdit={handleEdit}
+                  onView={handleView}
+                  onDeleted={handleDeleted}
+                  onStatusChanged={handleStatusChanged}
+                  profilesOverride={filteredProfiles}
+                  loadingOverride={loading}
+                />
+              </div>
+
+              {/* Pagination */}
+              {!loading && filteredProfiles.length > 0 && (
+                <div className="flex flex-col gap-3 border-t border-gray-100 px-4 py-4 dark:border-gray-800 sm:flex-row sm:items-center sm:justify-between">
+                  <p className="text-xs text-gray-500">
+                    Page {pagination.page} of {pagination.pages}
+                    {" · "}
+                    {pagination.total} librarians
+                  </p>
+
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      disabled={page <= 1 || loading}
+                      onClick={() =>
+                        setPage((current) => Math.max(1, current - 1))
+                      }
+                      className="flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-500 transition hover:text-[#55b6b6] disabled:cursor-not-allowed disabled:opacity-30 dark:border-gray-700 dark:bg-[#101010]"
+                    >
+                      <FontAwesomeIcon icon={faChevronLeft} />
+                    </button>
+
+                    <span className="px-2 text-sm text-gray-500">
+                      {page}
+                    </span>
+
+                    <button
+                      type="button"
+                      disabled={page >= pagination.pages || loading}
+                      onClick={() => setPage((current) => current + 1)}
+                      className="flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-500 transition hover:text-[#55b6b6] disabled:cursor-not-allowed disabled:opacity-30 dark:border-gray-700 dark:bg-[#101010]"
+                    >
+                      <FontAwesomeIcon icon={faChevronRight} />
+                    </button>
                   </div>
                 </div>
-              ) : filteredUsers.length === 0 ? (
-                <div className="flex min-h-[350px] items-center justify-center px-6">
-                  <div className="text-center">
-                    <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#eefafa] text-[#55b6b6] dark:bg-[#0f2424]">
-                      <FontAwesomeIcon icon={faUser} className="text-xl" />
-                    </div>
-                    <h3 className="font-medium text-gray-800 dark:text-gray-100">
-                      No librarians found
-                    </h3>
-                    <p className="mt-1 text-sm text-gray-500">
-                      No librarian accounts match the current filter.
-                    </p>
-                  </div>
-                </div>
-              ) : (
-                <>
-                  {/* Desktop table */}
-                  <div className="hidden overflow-x-auto lg:block">
-                    <table className="w-full">
-                      <thead>
-                        <tr className="border-b border-gray-100 text-left dark:border-gray-800">
-                          <th className="px-5 py-4 text-xs font-medium uppercase tracking-wider text-gray-500">
-                            User
-                          </th>
-                          <th className="px-5 py-4 text-xs font-medium uppercase tracking-wider text-gray-500">
-                            Role
-                          </th>
-                          <th className="px-5 py-4 text-xs font-medium uppercase tracking-wider text-gray-500">
-                            Phone
-                          </th>
-                          <th className="px-5 py-4 text-xs font-medium uppercase tracking-wider text-gray-500">
-                            Status
-                          </th>
-                          <th className="px-5 py-4 text-right text-xs font-medium uppercase tracking-wider text-gray-500">
-                            Action
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {filteredUsers.map((user) => (
-                          <UserRow
-                            key={user._id || user.id}
-                            user={user}
-                            onClick={handleView}
-                            onView={handleView}
-                            onEdit={handleEdit}
-                            onChangeRole={handleChangeRole}
-                            onChangeStatus={handleChangeStatus}
-                            onDelete={handleDelete}
-                            canView
-                            canEdit
-                            canChangeRole
-                            canChangeStatus
-                            canDelete
-                          />
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-
-                  {/* Mobile cards */}
-                  <div className="space-y-3 p-4 lg:hidden">
-                    {filteredUsers.map((user) => (
-                      <UserRow
-                        key={user._id || user.id}
-                        user={user}
-                        mobile
-                        onClick={handleView}
-                        onView={handleView}
-                        onEdit={handleEdit}
-                        onChangeRole={handleChangeRole}
-                        onChangeStatus={handleChangeStatus}
-                        onDelete={handleDelete}
-                        canView
-                        canEdit
-                        canChangeRole
-                        canChangeStatus
-                        canDelete
-                      />
-                    ))}
-                  </div>
-
-                  {/* Pagination */}
-                  <div className="flex flex-col gap-3 border-t border-gray-100 px-4 py-4 dark:border-gray-800 sm:flex-row sm:items-center sm:justify-between">
-                    <p className="text-xs text-gray-500">
-                      Page {meta.page || page} of {meta.pages || 1}
-                      {" · "}
-                      {meta.total || filteredUsers.length} librarians
-                    </p>
-
-                    <div className="flex items-center gap-2">
-                      <button
-                        type="button"
-                        disabled={page <= 1 || loading}
-                        onClick={() =>
-                          setPage((current) => Math.max(1, current - 1))
-                        }
-                        className="flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-500 transition hover:text-[#55b6b6] disabled:cursor-not-allowed disabled:opacity-30 dark:border-gray-700 dark:bg-[#101010]"
-                      >
-                        <FontAwesomeIcon icon={faChevronLeft} />
-                      </button>
-
-                      <span className="px-2 text-sm text-gray-500">
-                        {page}
-                      </span>
-
-                      <button
-                        type="button"
-                        disabled={page >= (meta.pages || 1) || loading}
-                        onClick={() =>
-                          setPage((current) => current + 1)
-                        }
-                        className="flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-500 transition hover:text-[#55b6b6] disabled:cursor-not-allowed disabled:opacity-30 dark:border-gray-700 dark:bg-[##101010]"
-                      >
-                        <FontAwesomeIcon icon={faChevronRight} />
-                      </button>
-                    </div>
-                  </div>
-                </>
               )}
             </div>
           </>

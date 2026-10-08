@@ -46,7 +46,7 @@ function Header({ onMenuClick, sidebarOpen }) {
       case 'Librarian':
         navigate('/librarian/dashboard');
         break;
-        
+
       default:
         break;
     }
@@ -61,73 +61,71 @@ function Header({ onMenuClick, sidebarOpen }) {
           items-center
           justify-between
           border-b
-          border-gray-200/20
+          border-[#e0e0e0]
           px-4
           backdrop-blur-xl
-          bg-white/10
-          dark:border-gray-700/30
-          dark:bg-gray-900/10
+          bg-white/70
+          dark:border-[#2a2a2a]
+          dark:bg-[#1a1a1a]/70
         "
       >
 
         {/* Left */}
         <div className="flex items-center gap-3">
-<div className="flex items-center gap-3">
-  {/* Menu */}
-  <button
-    onClick={onMenuClick}
-    type="button"
-    aria-label="Toggle sidebar"
-    className="
-      flex
-      h-10
-      w-10
-      items-center
-      justify-center
-      rounded-xl
-      text-gray-600
-      transition-all
-      duration-300
-      hover:bg-white/30
-      hover:text-blue-500
-      dark:text-gray-300
-      dark:hover:bg-gray-800/30
-      dark:hover:text-blue-400
-    "
-  >
-    <svg
-      className={`
-        h-5
-        w-5
-        transition-transform
-        duration-300
-        ease-in-out
-        ${sidebarOpen ? 'rotate-90' : 'rotate-0'}
-      `}
-      fill="none"
-      stroke="currentColor"
-      viewBox="0 0 24 24"
-    >
-      {sidebarOpen ? (
-        // X icon
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-          d="M6 18L18 6M6 6l12 12"
-        />
-      ) : (
-        // Hamburger icon
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-          d="M4 6h16M4 12h16M4 18h16"
-        />
-      )}
-    </svg>
-  </button>
-</div>
+          <div className="flex items-center gap-3">
+            {/* Menu */}
+            <button
+              onClick={onMenuClick}
+              type="button"
+              aria-label="Toggle sidebar"
+              className="
+                flex
+                h-10
+                w-10
+                items-center
+                justify-center
+                rounded-xl
+                text-[#1a1a1a]
+                transition-all
+                duration-300
+                hover:bg-[#f0f0f0]
+                hover:text-[#50A2FF]
+                dark:text-[#d1d1d1]
+                dark:hover:bg-[#2a2a2a]
+                dark:hover:text-[#50A2FF]
+              "
+            >
+              <svg
+                className={`
+                  h-5
+                  w-5
+                  transition-transform
+                  duration-300
+                  ease-in-out
+                  ${sidebarOpen ? 'rotate-90' : 'rotate-0'}
+                `}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                {sidebarOpen ? (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                ) : (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                )}
+              </svg>
+            </button>
+          </div>
 
           {/* SchoolHub */}
           <div className="flex items-center gap-2">
@@ -137,19 +135,22 @@ function Header({ onMenuClick, sidebarOpen }) {
                 text-lg
                 font-bold
                 tracking-tight
-                text-gray-900
+                text-[#1a1a1a]
                 sm:block
                 dark:text-white
               "
-              style={{fontFamily: 'news'}}
+              style={{ fontFamily: 'news' }}
             >
               <span className="overline decoration-solid decoration-4">
                 {' '}
-                <span className="underline decoration-solid decoration-4 mr-2" style={{fontFamily: 'news'}}>
-                  St 
+                <span
+                  className="underline decoration-solid decoration-4 mr-2"
+                  style={{ fontFamily: 'news' }}
+                >
+                  St
                 </span>
               </span>
-               Theresa
+              Theresa
             </span>
           </div>
         </div>
@@ -157,7 +158,6 @@ function Header({ onMenuClick, sidebarOpen }) {
         {/* Navigation */}
         <nav className="hidden items-center gap-1 md:flex">
 
-          {/* Home */}
           <a
             href="/"
             className="
@@ -166,19 +166,18 @@ function Header({ onMenuClick, sidebarOpen }) {
               py-2
               text-sm
               font-medium
-              text-gray-600
+              text-[#1a1a1a]
               transition
-              hover:bg-white/30
-              hover:text-blue-500
-              dark:text-gray-300
-              dark:hover:bg-gray-800/30
-              dark:hover:text-blue-400
+              hover:bg-[#f0f0f0]
+              hover:text-[#50A2FF]
+              dark:text-[#d1d1d1]
+              dark:hover:bg-[#2a2a2a]
+              dark:hover:text-[#50A2FF]
             "
           >
             Home
           </a>
 
-          {/* About */}
           <a
             href="/about"
             className="
@@ -187,19 +186,18 @@ function Header({ onMenuClick, sidebarOpen }) {
               py-2
               text-sm
               font-medium
-              text-gray-600
+              text-[#1a1a1a]
               transition
-              hover:bg-white/30
-              hover:text-blue-500
-              dark:text-gray-300
-              dark:hover:bg-gray-800/30
-              dark:hover:text-blue-400
+              hover:bg-[#f0f0f0]
+              hover:text-[#50A2FF]
+              dark:text-[#d1d1d1]
+              dark:hover:bg-[#2a2a2a]
+              dark:hover:text-[#50A2FF]
             "
           >
             About
           </a>
 
-          {/* News */}
           <a
             href="/news"
             className="
@@ -208,19 +206,18 @@ function Header({ onMenuClick, sidebarOpen }) {
               py-2
               text-sm
               font-medium
-              text-gray-600
+              text-[#1a1a1a]
               transition
-              hover:bg-white/30
-              hover:text-blue-500
-              dark:text-gray-300
-              dark:hover:bg-gray-800/30
-              dark:hover:text-blue-400
+              hover:bg-[#f0f0f0]
+              hover:text-[#50A2FF]
+              dark:text-[#d1d1d1]
+              dark:hover:bg-[#2a2a2a]
+              dark:hover:text-[#50A2FF]
             "
           >
             News
           </a>
 
-          {/* Books */}
           <a
             href="/books"
             className="
@@ -229,19 +226,18 @@ function Header({ onMenuClick, sidebarOpen }) {
               py-2
               text-sm
               font-medium
-              text-gray-600
+              text-[#1a1a1a]
               transition
-              hover:bg-white/30
-              hover:text-blue-500
-              dark:text-gray-300
-              dark:hover:bg-gray-800/30
-              dark:hover:text-blue-400
+              hover:bg-[#f0f0f0]
+              hover:text-[#50A2FF]
+              dark:text-[#d1d1d1]
+              dark:hover:bg-[#2a2a2a]
+              dark:hover:text-[#50A2FF]
             "
           >
             Books
           </a>
 
-          {/* Contact */}
           <a
             href="/contact"
             className="
@@ -250,13 +246,13 @@ function Header({ onMenuClick, sidebarOpen }) {
               py-2
               text-sm
               font-medium
-              text-gray-600
+              text-[#1a1a1a]
               transition
-              hover:bg-white/30
-              hover:text-blue-500
-              dark:text-gray-300
-              dark:hover:bg-gray-800/30
-              dark:hover:text-blue-400
+              hover:bg-[#f0f0f0]
+              hover:text-[#50A2FF]
+              dark:text-[#d1d1d1]
+              dark:hover:bg-[#2a2a2a]
+              dark:hover:text-[#50A2FF]
             "
           >
             Contact
@@ -266,7 +262,7 @@ function Header({ onMenuClick, sidebarOpen }) {
         {/* Right */}
         <div className="flex items-center gap-2">
 
-          {/* Theme */}
+          {/* Theme toggle */}
           <button
             onClick={toggleTheme}
             type="button"
@@ -277,19 +273,17 @@ function Header({ onMenuClick, sidebarOpen }) {
               w-17.5
               rounded-full
               border
-              border-gray-200/30
-              bg-white/20
+              border-[#e0e0e0]
+              bg-[#f5f5f5]
               p-1
               shadow-inner
               transition-all
               duration-300
               hover:shadow-md
-              dark:border-gray-700/30
-              dark:bg-gray-800/20
+              dark:border-[#3a3a3a]
+              dark:bg-[#222222]
             "
           >
-
-            {/* Static icons */}
             <div
               className="
                 pointer-events-none
@@ -311,7 +305,7 @@ function Header({ onMenuClick, sidebarOpen }) {
                   duration-300
                   ${
                     theme === 'dark'
-                      ? 'text-gray-500'
+                      ? 'text-[#666]'
                       : 'text-yellow-500'
                   }
                 `}
@@ -327,13 +321,12 @@ function Header({ onMenuClick, sidebarOpen }) {
                   ${
                     theme === 'dark'
                       ? 'text-blue-300'
-                      : 'text-gray-400'
+                      : 'text-[#999]'
                   }
                 `}
               />
             </div>
 
-            {/* Sliding thumb */}
             <span
               className={`
                 relative
@@ -349,7 +342,7 @@ function Header({ onMenuClick, sidebarOpen }) {
                 transition-transform
                 duration-300
                 ease-in-out
-                dark:bg-gray-800
+                dark:bg-[#1a1a1a]
                 ${
                   theme === 'dark'
                     ? 'translate-x-7.5'
@@ -374,7 +367,7 @@ function Header({ onMenuClick, sidebarOpen }) {
             </span>
           </button>
 
-          {/* Dynamic Sign In / Profile */}
+          {/* Profile / Sign In */}
           {user ? (
             <button
               onClick={handleProfileClick}
@@ -397,13 +390,13 @@ function Header({ onMenuClick, sidebarOpen }) {
                 ring-2
                 ring-indigo-500/20
                 ring-offset-2
-                ring-offset-white/10
+                ring-offset-[#f5f5f5]
                 transition-all
                 duration-300
                 hover:scale-105
                 hover:ring-indigo-500/50
                 dark:ring-indigo-400/20
-                dark:ring-offset-gray-950/10
+                dark:ring-offset-[#0f0f0f]
               "
             >
               {user.name?.charAt(0).toUpperCase()}
@@ -414,7 +407,7 @@ function Header({ onMenuClick, sidebarOpen }) {
               type="button"
               className="
                 rounded-xl
-                bg-gray-900
+                bg-[#1a1a1a]
                 px-4
                 py-2
                 text-sm
@@ -422,10 +415,11 @@ function Header({ onMenuClick, sidebarOpen }) {
                 text-white
                 transition-all
                 duration-300
-                hover:bg-blue-500
+                hover:bg-[#50A2FF]
                 dark:bg-white
-                dark:text-gray-900
-                dark:hover:bg-blue-400
+                dark:text-[#1a1a1a]
+                dark:hover:bg-[#50A2FF]
+                dark:hover:text-white
               "
             >
               Sign In

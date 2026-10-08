@@ -3,7 +3,7 @@ import Card from '../shared/ui/spaceCard';
 
 export default function Home() {
   return (
-    <div className="relative w-full min-h-screen">
+    <div className="relative w-full min-h-screen bg-[#f5f5f5] transition-colors duration-300 dark:bg-[#0f0f0f]">
       {/* Hero section with card */}
       <div className="relative h-[70vh]">
         <Card />
@@ -17,10 +17,10 @@ export default function Home() {
           </div>
 
           {/* Subtitle */}
-          <p className="text-gray-300 text-center max-w-2xl text-sm md:text-base mb-8">
+          <p className="text-[#d1d1d1] text-center max-w-2xl text-sm md:text-base mb-8">
             Empowering the next generation with modern, accessible,
           </p>
-          <p className="text-gray-300 text-center max-w-2xl text-sm md:text-base mb-8">
+          <p className="text-[#d1d1d1] text-center max-w-2xl text-sm md:text-base mb-8">
             and collaborative learning tools
           </p>
 
@@ -28,7 +28,7 @@ export default function Home() {
           <div className="relative w-1/3 max-w-xl">
             <div className="relative">
               <svg
-                className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"
+                className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#999] dark:text-[#888]"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -53,17 +53,21 @@ export default function Home() {
                   bg-white/90
                   backdrop-blur-xl
                   border
-                  border-white/20
-                  text-gray-900
-                  placeholder-gray-500
+                  border-[#e0e0e0]
+                  text-[#1a1a1a]
+                  placeholder-[#b0b0b0]
                   focus:outline-none
                   focus:ring-2
-                  focus:ring-blue-500/50
+                  focus:ring-[#50A2FF]/50
                   focus:border-transparent
                   transition-all
                   duration-300
                   shadow-lg
                   shadow-black/20
+                  dark:bg-[#1a1a1a]/90
+                  dark:border-[#3a3a3a]
+                  dark:text-white
+                  dark:placeholder-[#666]
                 "
               />
 
@@ -97,7 +101,7 @@ export default function Home() {
       </div>
 
       {/* Books section with proper spacing */}
-      <div className="relative z-20 bg-[#090909] -mt-20">
+      <div className="relative z-20 bg-white transition-colors duration-300 -mt-20 dark:bg-[#0f0f0f]">
         <div className="container mx-auto px-4 pb-12">
           <div className="mb-8 text-center"></div>
           <BookCard />

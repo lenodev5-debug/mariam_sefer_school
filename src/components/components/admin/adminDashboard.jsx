@@ -6,6 +6,7 @@ import MeetingCard from "../../shared/cards/users/metting";
 import StudentsCard from "../../shared/cards/users/student/studentCard";
 import FloatingMenu from "../../shared/ui/FloatingMenu";
 import TeacherAssignmentList from "../teacher/teacherAssignmentList";
+import Users from "../../shared/cards/users/user/users";
 
 export default function AdminDashboard() {
     return (
@@ -29,6 +30,10 @@ export default function AdminDashboard() {
 
                 <div className="grid grid-cols-1">
                     <TeacherAssignmentList />
+                </div>
+
+                <div className="grid grid-cols-1">
+                    <Users />
                 </div>
             </div>
 

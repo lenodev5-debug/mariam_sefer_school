@@ -7,6 +7,9 @@ import SubjectForm from "../../Forms/SubjectForm";
 import UserForm from "../userForm";
 import BookForm from "../BookForm";
 import TeacherAssignmentForm from "../teacherAssignment";
+import GradeCoordinatorForm from "../GradeCoordinatorForm";
+import TeacherProfileForm from "../TeacherProfileForm";
+
 
 import gradeService from "../../../../../../lib/service/admin/gradeService";
 import academicYearService from "../../../../../../lib/service/admin/academicYearService";
@@ -16,6 +19,9 @@ import subjectService from "../../../../../../lib/service/admin/subjectService";
 import userService from "../../../../../../lib/service/admin/userService";
 import bookstoreService from "../../../../../../lib/service/books/bookstoreService";
 import teacherAssignmentService from "../../../../../../lib/service/admin/teacherAssignmentService";
+import teacherGradeCoordinatorService from "../../../../../../lib/service/admin/teacherGradeCoordinatorService";
+import teacherService from "../../../../../../lib/service/admin/teacherService";
+
 
 
 export const FORM_TABS = [
@@ -91,4 +97,22 @@ export const FORM_TABS = [
         listKey: "getAllTeacherAssignments",
         chart: "bar",
     },
+    {
+        key: "teacherGradeCoordinator",
+        label: "Coordinator",
+        description: "Assign teachers as grade coordinators",
+        Component: GradeCoordinatorForm,
+        service: teacherGradeCoordinatorService,
+        listKey: "getAllGradeCoordinators",
+        chart: "bar",
+    },
+    {
+        key: "teacherProfileForm",
+        label: "Profile",
+        description: 'Create Teacher profile',
+        Component: TeacherProfileForm,
+        service: teacherService,
+        listKey: 'GetAllTeacherProfile',
+        chart: "bar,"
+    }
 ];

@@ -1,22 +1,185 @@
 import { useEffect, useMemo, useState } from "react";
 
-import teacherService from "../../../../../lib/service/admin/teacherService";
-import teacherAssignmentService from "../../../../../lib/service/admin/teacherAssignmentService";
 import academicYearService from "../../../../../lib/service/admin/academicYearService";
+import departmentService from "../../../../../lib/service/admin/departmentService";
 import gradeService from "../../../../../lib/service/admin/gradeService";
 import subjectService from "../../../../../lib/service/admin/subjectService";
-import departmentService from "../../../../../lib/service/admin/departmentService";
+import teacherAssignmentService from "../../../../../lib/service/admin/teacherAssignmentService";
+import teacherService from "../../../../../lib/service/admin/teacherService";
+import userService from "../../../../../lib/service/admin/userService";
 
 const ALLOWED_STATUSES = ["active", "inactive"];
 
 const emptyForm = {
     teacherId: "",
     academicYearId: "",
-    gradeIds: [],
-    subjectIds: [],
+    gradeId: "",
+    subjectId: "",
     departmentId: "",
     status: "active",
 };
+
+// ============================================================
+// GET ID
+// ============================================================
+
+const getId = (value) => {
+    if (!value) {
+        return "";
+    }
+
+    if (typeof value === "string") {
+        return value;
+    }
+
+    if (typeof value === "object") {
+        return String(
+            value._id ||
+                value.id ||
+                ""
+        );
+    }
+
+    return "";
+};
+
+// ============================================================
+// NORMALIZE API ARRAY
+// ============================================================
+
+const getArray = (response, keys = []) => {
+    if (Array.isArray(response)) {
+        return response;
+    }
+
+    if (Array.isArray(response?.data)) {
+        return response.data;
+    }
+
+    if (Array.isArray(response?.data?.data)) {
+        return response.data.data;
+    }
+
+    for (const key of keys) {
+        if (Array.isArray(response?.[key])) {
+            return response[key];
+        }
+
+        if (Array.isArray(response?.data?.[key])) {
+            return response.data[key];
+        }
+    }
+
+    return [];
+};
+
+// ============================================================
+// GET TEACHER USER
+// ============================================================
+
+const getTeacherUser = (
+    teacherProfile,
+    users
+) => {
+    if (!teacherProfile) {
+        return null;
+    }
+
+    // Populated userId
+    if (
+        typeof teacherProfile.userId ===
+            "object" &&
+        teacherProfile.userId?._id
+    ) {
+        return teacherProfile.userId;
+    }
+
+    const userId =
+        getId(
+            teacherProfile.userId
+        );
+
+    if (!userId) {
+        return null;
+    }
+
+    return (
+        users.find(
+            (user) =>
+                getId(user) ===
+                userId
+        ) || null
+    );
+};
+
+// ============================================================
+// TEACHER NAME
+// ============================================================
+
+const getTeacherName = (
+    teacherProfile,
+    users
+) => {
+    const user =
+        getTeacherUser(
+            teacherProfile,
+            users
+        );
+
+    return (
+        user?.name ||
+        teacherProfile?.name ||
+        "Unknown teacher"
+    );
+};
+
+// ============================================================
+// GRADE LABEL
+// ============================================================
+
+const getGradeLabel = (grade) => {
+    if (!grade) {
+        return "Unknown grade";
+    }
+
+    const gradeName = String(
+        grade?.gradeName ??
+            grade?.name ??
+            grade?.grade ??
+            ""
+    ).trim();
+
+    const sectionName = String(
+        grade?.sectionName ??
+            grade?.section ??
+            grade?.section_name ??
+            ""
+    ).trim();
+
+    let label = "";
+
+    if (
+        gradeName.toLowerCase() ===
+        "kg"
+    ) {
+        label = "KG";
+    } else if (gradeName) {
+        label = `Grade ${gradeName}`;
+    }
+
+    if (sectionName) {
+        label += ` - Section ${sectionName}`;
+    }
+
+    return (
+        label ||
+        "Unknown grade"
+    );
+};
+
+// ============================================================
+// COMPONENT
+// ============================================================
 
 export default function TeacherAssignmentForm({
     mode = "create",
@@ -24,102 +187,272 @@ export default function TeacherAssignmentForm({
     onSuccess = () => {},
     onCancel = () => {},
 }) {
-    const isEdit = mode === "edit";
+    const isEdit =
+        mode === "edit";
 
-    const [form, setForm] = useState(emptyForm);
-    const [errors, setErrors] = useState({});
-    const [submitting, setSubmitting] = useState(false);
-    const [serverError, setServerError] = useState("");
-    const [resultSummary, setResultSummary] = useState(null);
+    // ========================================================
+    // STATE
+    // ========================================================
 
-    // Relation data
-    const [teachers, setTeachers] = useState([]);
-    const [academicYears, setAcademicYears] = useState([]);
-    const [grades, setGrades] = useState([]);
-    const [subjects, setSubjects] = useState([]);
-    const [departments, setDepartments] = useState([]);
-    const [loadingRelations, setLoadingRelations] = useState(true);
+    const [form, setForm] =
+        useState(emptyForm);
 
-    // ------------------------------------------------------------
-    // LOAD RELATIONS
-    // ------------------------------------------------------------
+    const [errors, setErrors] =
+        useState({});
+
+    const [serverError, setServerError] =
+        useState("");
+
+    const [submitting, setSubmitting] =
+        useState(false);
+
+    const [loadingRelations, setLoadingRelations] =
+        useState(true);
+
+    const [academicYears, setAcademicYears] =
+        useState([]);
+
+    const [grades, setGrades] =
+        useState([]);
+
+    const [subjects, setSubjects] =
+        useState([]);
+
+    const [departments, setDepartments] =
+        useState([]);
+
+    const [teacherProfiles, setTeacherProfiles] =
+        useState([]);
+
+    const [users, setUsers] =
+        useState([]);
+
+    // ========================================================
+    // LOAD RELATION DATA
+    // ========================================================
+
     useEffect(() => {
         let cancelled = false;
 
-        const load = async () => {
+        const loadData = async () => {
             try {
                 setLoadingRelations(true);
                 setServerError("");
 
                 const [
-                    teachersRes,
-                    yearsRes,
-                    gradesRes,
-                    subjectsRes,
-                    departmentsRes,
+                    academicYearResponse,
+                    gradeResponse,
+                    subjectResponse,
+                    departmentResponse,
+                    teacherResponse,
+                    userResponse,
                 ] = await Promise.all([
-                    teacherService.getAllTeachers(),
-                    academicYearService.getAllAcademicYears(),
-                    gradeService.getAllGrades(),
-                    subjectService.getAllSubjects(),
-                    departmentService.getAllDepartments(),
+                    academicYearService
+                        .getAllAcademicYears(),
+
+                    gradeService
+                        .getAllGrades(),
+
+                    subjectService
+                        .getAllSubjects(),
+
+                    departmentService
+                        .getAllDepartments(),
+
+                    teacherService
+                        .getAllTeachers(),
+
+                    userService
+                        .getAllUsers({
+                            role: "Teacher",
+                        }),
                 ]);
 
-                if (cancelled) return;
+                if (cancelled) {
+                    return;
+                }
 
-                const pick = (res) => {
-    if (Array.isArray(res)) {
-        return res;
-    }
+                const academicYearList =
+                    getArray(
+                        academicYearResponse,
+                        [
+                            "academicYears",
+                            "years",
+                        ]
+                    );
 
-    if (Array.isArray(res?.data)) {
-        return res.data;
-    }
+                const gradeList =
+                    getArray(
+                        gradeResponse,
+                        [
+                            "grades",
+                        ]
+                    );
 
-    if (Array.isArray(res?.data?.data)) {
-        return res.data.data;
-    }
+                const subjectList =
+                    getArray(
+                        subjectResponse,
+                        [
+                            "subjects",
+                        ]
+                    );
 
-    return [];
-};
+                const departmentList =
+                    getArray(
+                        departmentResponse,
+                        [
+                            "departments",
+                        ]
+                    );
 
-const activeOnly = (arr) =>
-    arr.filter(
-        (item) =>
-            String(item?.status || "").toLowerCase() ===
-            "active"
-    );
+                const teacherList =
+                    getArray(
+                        teacherResponse,
+                        [
+                            "teachers",
+                            "teacherProfiles",
+                        ]
+                    );
 
-                setTeachers(
-                    activeOnly(pick(teachersRes))
+                const userList =
+                    getArray(
+                        userResponse,
+                        [
+                            "users",
+                        ]
+                    );
+
+                console.log(
+                    "Teacher Assignment - Academic Years:",
+                    academicYearList
                 );
+
+                console.log(
+                    "Teacher Assignment - Grades:",
+                    gradeList
+                );
+
+                console.log(
+                    "Teacher Assignment - Subjects:",
+                    subjectList
+                );
+
+                console.log(
+                    "Teacher Assignment - Departments:",
+                    departmentList
+                );
+
+                console.log(
+                    "Teacher Assignment - Teacher Profiles:",
+                    teacherList
+                );
+
+                console.log(
+                    "Teacher Assignment - Teacher Users:",
+                    userList
+                );
+
+                // ------------------------------------------------
+                // ACADEMIC YEARS
+                // ------------------------------------------------
 
                 setAcademicYears(
-                    pick(yearsRes)
-                    .filter(
-                        (year) =>  ["active", "upcoming"].includes(
-                            String(year?.status || "").toLowerCase()
-                        )
-                        )
+                    academicYearList.filter(
+                        (year) =>
+                            [
+                                "active",
+                                "upcoming",
+                            ].includes(
+                                String(
+                                    year?.status ??
+                                        ""
+                                ).toLowerCase()
+                            )
+                    )
                 );
+
+                // ------------------------------------------------
+                // GRADES
+                // ------------------------------------------------
 
                 setGrades(
-                    activeOnly(pick(gradesRes))
+                    gradeList.filter(
+                        (grade) =>
+                            String(
+                                grade?.status ??
+                                    ""
+                            ).toLowerCase() ===
+                            "active"
+                    )
                 );
+
+                // ------------------------------------------------
+                // SUBJECTS
+                // ------------------------------------------------
 
                 setSubjects(
-                    activeOnly(pick(subjectsRes))
+                    subjectList.filter(
+                        (subject) =>
+                            String(
+                                subject?.status ??
+                                    ""
+                            ).toLowerCase() ===
+                            "active"
+                    )
                 );
+
+                // ------------------------------------------------
+                // DEPARTMENTS
+                // ------------------------------------------------
 
                 setDepartments(
-                    activeOnly(pick(departmentsRes))
+                    departmentList.filter(
+                        (department) =>
+                            String(
+                                department?.status ??
+                                    ""
+                            ).toLowerCase() ===
+                            "active"
+                    )
                 );
-            } catch (err) {
-                if (cancelled) return;
+
+                // ------------------------------------------------
+                // TEACHER PROFILES
+                // ------------------------------------------------
+
+                setTeacherProfiles(
+                    teacherList
+                );
+
+                // ------------------------------------------------
+                // TEACHER USERS
+                // ------------------------------------------------
+
+                setUsers(
+                    userList.filter(
+                        (user) =>
+                            String(
+                                user?.role ??
+                                    ""
+                            ).toLowerCase() ===
+                            "teacher"
+                    )
+                );
+            } catch (error) {
+                if (cancelled) {
+                    return;
+                }
+
+                console.error(
+                    "Load teacher assignment relations error:",
+                    error
+                );
 
                 setServerError(
-                    err?.response?.data?.message ||
-                        "Failed to load form data."
+                    error?.response?.data
+                        ?.message ||
+                        error?.message ||
+                        "Failed to load teacher assignment data."
                 );
             } finally {
                 if (!cancelled) {
@@ -128,761 +461,952 @@ const activeOnly = (arr) =>
             }
         };
 
-        load();
+        loadData();
 
         return () => {
             cancelled = true;
         };
     }, []);
 
-    // ------------------------------------------------------------
-    // HYDRATE EDIT MODE
-    // ------------------------------------------------------------
+    // ========================================================
+    // LOAD EDIT DATA
+    // ========================================================
+
     useEffect(() => {
-        if (!isEdit || !initialData) return;
-
-        const resolveId = (value) => {
-            if (!value) return "";
-
-            if (typeof value === "string") {
-                return value;
-            }
-
-            return value._id || "";
-        };
+        if (
+            !isEdit ||
+            !initialData
+        ) {
+            return;
+        }
 
         setForm({
-            // IMPORTANT:
-            // teacherId must be TeacherProfile._id
-            teacherId: resolveId(initialData.teacherId),
+            teacherId:
+                getId(
+                    initialData.teacherId
+                ),
 
-            academicYearId: resolveId(
-                initialData.academicYearId
-            ),
+            academicYearId:
+                getId(
+                    initialData.academicYearId
+                ),
 
-            gradeIds: [
-                resolveId(initialData.gradeId),
-            ].filter(Boolean),
+            gradeId:
+                getId(
+                    initialData.gradeId
+                ),
 
-            subjectIds: [
-                resolveId(initialData.subjectId),
-            ].filter(Boolean),
+            subjectId:
+                getId(
+                    initialData.subjectId
+                ),
 
-            departmentId: resolveId(
-                initialData.departmentId
-            ),
+            departmentId:
+                getId(
+                    initialData.departmentId
+                ),
 
             status:
-                initialData.status || "active",
+                ALLOWED_STATUSES.includes(
+                    String(
+                        initialData.status ||
+                            ""
+                    ).toLowerCase()
+                )
+                    ? String(
+                          initialData.status
+                      ).toLowerCase()
+                    : "active",
         });
-    }, [isEdit, initialData]);
+    }, [
+        isEdit,
+        initialData,
+    ]);
 
-    // ------------------------------------------------------------
-    // DERIVED DEPARTMENT
-    // ------------------------------------------------------------
-    const selectedSubjects = useMemo(() => {
-        return subjects.filter((subject) =>
-            form.subjectIds.includes(subject._id)
-        );
-    }, [subjects, form.subjectIds]);
+    // ========================================================
+    // ACTIVE TEACHERS
+    //
+    // IMPORTANT:
+    //
+    // Teacher Assignment does NOT use existing assignments.
+    //
+    // A teacher is eligible when:
+    //
+    // 1. User exists
+    // 2. User.role === Teacher
+    // 3. TeacherProfile exists
+    // 4. TeacherProfile.status === active
+    // ========================================================
 
-    const derivedDepartmentIds = useMemo(() => {
-        const ids = new Set();
+    const eligibleTeachers =
+        useMemo(() => {
+            return teacherProfiles.filter(
+                (teacherProfile) => {
+                    const profileStatus =
+                        String(
+                            teacherProfile?.status ??
+                                ""
+                        ).toLowerCase();
 
-        selectedSubjects.forEach((subject) => {
-            const departmentId =
-                subject?.departmentId?._id ||
-                subject?.departmentId ||
-                "";
+                    if (
+                        profileStatus !==
+                        "active"
+                    ) {
+                        return false;
+                    }
 
-            if (departmentId) {
-                ids.add(String(departmentId));
-            }
-        });
+                    const user =
+                        getTeacherUser(
+                            teacherProfile,
+                            users
+                        );
 
-        return ids;
-    }, [selectedSubjects]);
+                    if (!user) {
+                        return false;
+                    }
 
-    const derivedDepartmentId =
-        derivedDepartmentIds.size === 1
-            ? [...derivedDepartmentIds][0]
-            : "";
+                    return (
+                        String(
+                            user?.role ??
+                                ""
+                        ).toLowerCase() ===
+                        "teacher"
+                    );
+                }
+            );
+        }, [
+            teacherProfiles,
+            users,
+        ]);
 
-    useEffect(() => {
-        if (!derivedDepartmentId) return;
+    // ========================================================
+    // ACTIVE SUBJECTS
+    // ========================================================
 
-        setForm((previous) => ({
-            ...previous,
-            departmentId: derivedDepartmentId,
-        }));
-    }, [derivedDepartmentId]);
+    const eligibleSubjects =
+        useMemo(() => {
+            return subjects.filter(
+                (subject) => {
+                    if (
+                        !form.departmentId
+                    ) {
+                        return true;
+                    }
 
-    // ------------------------------------------------------------
-    // HANDLERS
-    // ------------------------------------------------------------
-    const handleChange = (field, value) => {
-        setForm((previous) => ({
-            ...previous,
-            [field]: value,
-        }));
+                    const subjectDepartmentId =
+                        getId(
+                            subject?.departmentId
+                        );
 
-        setErrors((previous) => ({
-            ...previous,
-            [field]: undefined,
-        }));
+                    return (
+                        !subjectDepartmentId ||
+                        subjectDepartmentId ===
+                            form.departmentId
+                    );
+                }
+            );
+        }, [
+            subjects,
+            form.departmentId,
+        ]);
 
-        setServerError("");
-        setResultSummary(null);
-    };
+    // ========================================================
+    // HANDLE CHANGE
+    // ========================================================
 
-    const handleMultiToggle = (field, id) => {
-        setForm((previous) => {
-            const list = previous[field];
-
-            const next = list.includes(id)
-                ? list.filter((item) => item !== id)
-                : [...list, id];
-
-            return {
+    const handleChange = (
+        field,
+        value
+    ) => {
+        setForm(
+            (previous) => ({
                 ...previous,
-                [field]: next,
-            };
-        });
+                [field]: value,
+            })
+        );
 
-        setErrors((previous) => ({
-            ...previous,
-            [field]: undefined,
-        }));
+        setErrors(
+            (previous) => ({
+                ...previous,
+                [field]: undefined,
+            })
+        );
 
         setServerError("");
-        setResultSummary(null);
     };
 
-    // ------------------------------------------------------------
+    // ========================================================
+    // SUBJECT CHANGE
+    // ========================================================
+
+    const handleSubjectChange = (
+        value
+    ) => {
+        const selectedSubject =
+            subjects.find(
+                (subject) =>
+                    getId(subject) ===
+                    value
+            );
+
+        const subjectDepartmentId =
+            getId(
+                selectedSubject?.departmentId
+            );
+
+        setForm(
+            (previous) => ({
+                ...previous,
+                subjectId: value,
+
+                departmentId:
+                    subjectDepartmentId ||
+                    previous.departmentId,
+            })
+        );
+
+        setErrors(
+            (previous) => ({
+                ...previous,
+                subjectId: undefined,
+                departmentId: undefined,
+            })
+        );
+
+        setServerError("");
+    };
+
+    // ========================================================
     // VALIDATION
-    // ------------------------------------------------------------
+    // ========================================================
+
     const validate = () => {
         const next = {};
 
+        // ----------------------------------------------------
+        // TEACHER
+        // ----------------------------------------------------
+
         if (!form.teacherId) {
-            next.teacherId = "Teacher is required.";
+            next.teacherId =
+                "Teacher is required.";
+        } else {
+            const selectedTeacher =
+                eligibleTeachers.find(
+                    (teacher) =>
+                        getId(teacher) ===
+                        form.teacherId
+                );
+
+            if (!selectedTeacher) {
+                next.teacherId =
+                    "Selected teacher does not have an active TeacherProfile.";
+            }
         }
+
+        // ----------------------------------------------------
+        // ACADEMIC YEAR
+        // ----------------------------------------------------
 
         if (!form.academicYearId) {
             next.academicYearId =
                 "Academic year is required.";
         }
 
-        if (form.gradeIds.length === 0) {
-            next.gradeIds =
-                "Pick at least one grade.";
+        // ----------------------------------------------------
+        // GRADE
+        // ----------------------------------------------------
+
+        if (!form.gradeId) {
+            next.gradeId =
+                "Grade / section is required.";
         }
 
-        if (form.subjectIds.length === 0) {
-            next.subjectIds =
-                "Pick at least one subject.";
+        // ----------------------------------------------------
+        // SUBJECT
+        // ----------------------------------------------------
+
+        if (!form.subjectId) {
+            next.subjectId =
+                "Subject is required.";
         }
 
-        if (!ALLOWED_STATUSES.includes(form.status)) {
-            next.status = "Invalid status.";
+        // ----------------------------------------------------
+        // DEPARTMENT
+        // ----------------------------------------------------
+
+        if (!form.departmentId) {
+            next.departmentId =
+                "Department is required.";
+        }
+
+        // ----------------------------------------------------
+        // STATUS
+        // ----------------------------------------------------
+
+        if (
+            !ALLOWED_STATUSES.includes(
+                String(
+                    form.status
+                ).toLowerCase()
+            )
+        ) {
+            next.status =
+                "Invalid status.";
         }
 
         setErrors(next);
 
-        return Object.keys(next).length === 0;
+        return (
+            Object.keys(next)
+                .length === 0
+        );
     };
 
-    // ------------------------------------------------------------
+    // ========================================================
     // SUBMIT
-    // ------------------------------------------------------------
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    // ========================================================
+
+    const handleSubmit = async (
+        event
+    ) => {
+        event.preventDefault();
 
         setServerError("");
-        setResultSummary(null);
 
-        if (!validate()) return;
-
-        // --------------------------------------------------------
-        // EDIT MODE
-        // --------------------------------------------------------
-        if (isEdit) {
-            const payload = {
-                teacherId: form.teacherId,
-                academicYearId: form.academicYearId,
-                gradeId: form.gradeIds[0],
-                subjectId: form.subjectIds[0],
-                departmentId:
-                    form.departmentId || null,
-                status: form.status,
-            };
-
-            try {
-                setSubmitting(true);
-
-                const result =
-                    await teacherAssignmentService.updateTeacherAssignment(
-                        initialData._id,
-                        payload
-                    );
-
-                onSuccess(result?.data || result);
-            } catch (err) {
-                setServerError(
-                    err?.response?.data?.message ||
-                        "Failed to update teacher assignment."
-                );
-            } finally {
-                setSubmitting(false);
-            }
-
+        if (!validate()) {
             return;
         }
 
-        // --------------------------------------------------------
-        // CREATE MODE
-        //
-        // grade × subject
-        //
-        // 2 grades × 3 subjects = 6 assignments
-        // --------------------------------------------------------
-        const pairs = [];
+        const payload = {
+            teacherId:
+                form.teacherId,
 
-        for (const gradeId of form.gradeIds) {
-            for (const subjectId of form.subjectIds) {
-                pairs.push({
-                    gradeId,
-                    subjectId,
-                });
-            }
-        }
+            academicYearId:
+                form.academicYearId,
 
-        const created = [];
-        const failed = [];
+            gradeId:
+                form.gradeId,
+
+            subjectId:
+                form.subjectId,
+
+            departmentId:
+                form.departmentId,
+
+            status:
+                form.status,
+        };
+
+        console.log(
+            "Teacher Assignment Payload:",
+            payload
+        );
 
         try {
             setSubmitting(true);
 
-            for (const pair of pairs) {
-                const payload = {
-                    teacherId: form.teacherId,
-                    academicYearId: form.academicYearId,
-                    gradeId: pair.gradeId,
-                    subjectId: pair.subjectId,
-                    departmentId:
-                        form.departmentId || null,
-                    status: form.status,
-                };
+            let response;
 
-                try {
-                    const response =
-                        await teacherAssignmentService.createTeacherAssignment(
+            if (isEdit) {
+                response =
+                    await teacherAssignmentService
+                        .updateTeacherAssignment(
+                            initialData._id,
                             payload
                         );
-
-                    created.push({
-                        gradeId: pair.gradeId,
-                        subjectId: pair.subjectId,
-                        assignment:
-                            response?.data ||
-                            response,
-                    });
-                } catch (err) {
-                    failed.push({
-                        gradeId: pair.gradeId,
-                        subjectId: pair.subjectId,
-                        message:
-                            err?.response?.data?.message ||
-                            "Failed to create assignment.",
-                    });
-                }
+            } else {
+                response =
+                    await teacherAssignmentService
+                        .createTeacherAssignment(
+                            payload
+                        );
             }
 
-            setResultSummary({
-                created: created.length,
-                failed: failed.length,
-                failures: failed,
-            });
+            console.log(
+                "Teacher Assignment Response:",
+                response
+            );
 
-            if (failed.length === 0) {
-                onSuccess({
-                    created: created.length,
-                    assignments: created.map(
-                        (item) => item.assignment
-                    ),
-                });
-            }
-        } catch (err) {
+            onSuccess(
+                response?.data ||
+                    response
+            );
+        } catch (error) {
+            console.error(
+                "Teacher assignment submit error:",
+                error
+            );
+
             setServerError(
-                err?.response?.data?.message ||
-                    "Failed to create teacher assignments."
+                error?.response?.data
+                    ?.message ||
+                    error?.message ||
+                    (isEdit
+                        ? "Failed to update teacher assignment."
+                        : "Failed to create teacher assignment.")
             );
         } finally {
             setSubmitting(false);
         }
     };
 
-    // ------------------------------------------------------------
+    // ========================================================
+    // CSS
+    // ========================================================
+
+    const selectClass =
+        "w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 outline-none transition focus:border-gray-400 focus:ring-2 focus:ring-gray-200 dark:border-white/10 dark:bg-[#1b1b1b] dark:text-white dark:focus:border-white/20 dark:focus:ring-white/10";
+
+    const labelClass =
+        "mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300";
+
+    const errorClass =
+        "border-red-500 focus:border-red-500 focus:ring-red-500/20";
+
+    // ========================================================
     // RENDER
-    // ------------------------------------------------------------
+    // ========================================================
+
     return (
         <form
             onSubmit={handleSubmit}
             className="w-full space-y-5"
             noValidate
         >
+            {/* ================================================= */}
             {/* SERVER ERROR */}
+            {/* ================================================= */}
+
             {serverError && (
-                <div className="rounded-xl border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-900/60 dark:bg-red-950/40 dark:text-red-300">
+                <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-500/20 dark:bg-red-500/10 dark:text-red-300">
                     {serverError}
                 </div>
             )}
 
-            {/* RESULT SUMMARY */}
-            {resultSummary &&
-                resultSummary.failed > 0 && (
-                    <div className="rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-800 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-300">
-                        <p className="font-medium">
-                            {resultSummary.created} created,{" "}
-                            {resultSummary.failed} failed.
-                        </p>
+            {/* ================================================= */}
+            {/* LOADING */}
+            {/* ================================================= */}
 
-                        <ul className="mt-2 list-disc space-y-1 pl-5">
-                            {resultSummary.failures.map(
-                                (failure, index) => (
-                                    <li key={index}>
-                                        {gradeLabel(
-                                            failure.gradeId,
-                                            grades
-                                        )}{" "}
-                                        ·{" "}
-                                        {subjectLabel(
-                                            failure.subjectId,
-                                            subjects
-                                        )}{" "}
-                                        —{" "}
-                                        {failure.message}
-                                    </li>
+            {loadingRelations ? (
+                <div className="rounded-xl border border-gray-200 bg-gray-50 px-4 py-8 text-center text-sm text-gray-500 dark:border-white/10 dark:bg-white/5 dark:text-gray-400">
+                    Loading teachers,
+                    academic years,
+                    grades, subjects and
+                    departments...
+                </div>
+            ) : (
+                <>
+                    {/* ========================================= */}
+                    {/* TEACHER */}
+                    {/* ========================================= */}
+
+                    <div>
+                        <label
+                            className={labelClass}
+                        >
+                            Teacher
+                        </label>
+
+                        <select
+                            value={
+                                form.teacherId
+                            }
+                            onChange={(event) =>
+                                handleChange(
+                                    "teacherId",
+                                    event.target.value
                                 )
-                            )}
-                        </ul>
-                    </div>
-                )}
-
-            {/* -------------------------------------------------- */}
-            {/* TEACHER */}
-            {/* -------------------------------------------------- */}
-            <Field
-                label="Teacher"
-                error={errors.teacherId}
-            >
-                <select
-                    value={form.teacherId}
-                    onChange={(e) =>
-                        handleChange(
-                            "teacherId",
-                            e.target.value
-                        )
-                    }
-                    disabled={
-                        loadingRelations ||
-                        submitting ||
-                        isEdit
-                    }
-                    className={selectClass(
-                        errors.teacherId
-                    )}
-                >
-                    <option value="">
-                        {loadingRelations
-                            ? "Loading..."
-                            : "Select teacher"}
-                    </option>
-
-                    {teachers.map((teacher) => {
-                        const teacherName =
-                            teacher?.userId?.name ||
-                            teacher?.name ||
-                            "Teacher";
-
-                        const teacherEmail =
-                            teacher?.userId?.email ||
-                            teacher?.email ||
-                            "";
-
-                        return (
-                            <option
-                                key={teacher._id}
-                                value={teacher._id}
-                            >
-                                {teacherName}
-                                {teacherEmail
-                                    ? ` — ${teacherEmail}`
-                                    : ""}
+                            }
+                            disabled={
+                                submitting ||
+                                eligibleTeachers.length ===
+                                    0
+                            }
+                            className={`${selectClass} ${
+                                errors.teacherId
+                                    ? errorClass
+                                    : ""
+                            } ${
+                                submitting ||
+                                eligibleTeachers.length ===
+                                    0
+                                    ? "cursor-not-allowed opacity-50"
+                                    : ""
+                            }`}
+                        >
+                            <option value="">
+                                {eligibleTeachers.length ===
+                                0
+                                    ? "No active teachers with profiles found"
+                                    : "Select teacher"}
                             </option>
-                        );
-                    })}
-                </select>
-            </Field>
 
-            {/* -------------------------------------------------- */}
-            {/* ACADEMIC YEAR */}
-            {/* -------------------------------------------------- */}
-            <Field
-                label="Academic Year"
-                error={errors.academicYearId}
-            >
-                <select
-                    value={form.academicYearId}
-                    onChange={(e) =>
-                        handleChange(
-                            "academicYearId",
-                            e.target.value
-                        )
-                    }
-                    disabled={
-                        loadingRelations ||
-                        submitting
-                    }
-                    className={selectClass(
-                        errors.academicYearId
-                    )}
-                >
-                    <option value="">
-                        {loadingRelations
-                            ? "Loading..."
-                            : "Select academic year"}
-                    </option>
+                            {eligibleTeachers.map(
+                                (teacher) => {
+                                    const teacherId =
+                                        getId(
+                                            teacher
+                                        );
 
-                    {academicYears.map((year) => (
-                        <option
-                            key={year._id}
-                            value={year._id}
-                        >
-                            {year.name ||
-                                year.yearName ||
-                                `${year.startYear} - ${year.endYear}`}
+                                    const user =
+                                        getTeacherUser(
+                                            teacher,
+                                            users
+                                        );
 
-                            {year.status
-                                ? ` (${year.status})`
-                                : ""}
-                        </option>
-                    ))}
-                </select>
-            </Field>
+                                    const name =
+                                        getTeacherName(
+                                            teacher,
+                                            users
+                                        );
 
-            {/* -------------------------------------------------- */}
-            {/* GRADES */}
-            {/* -------------------------------------------------- */}
-            <Field
-                label={`Grades${
-                    form.gradeIds.length
-                        ? ` (${form.gradeIds.length})`
-                        : ""
-                }`}
-                hint="Select every grade this teacher will teach."
-                error={errors.gradeIds}
-            >
-                <div
-                    className={[
-                        "max-h-48 overflow-y-auto rounded-xl border p-2",
-                        errors.gradeIds
-                            ? "border-red-400 dark:border-red-800"
-                            : "border-zinc-300 dark:border-zinc-700",
-                        "bg-white dark:bg-zinc-900",
-                    ].join(" ")}
-                >
-                    {grades.length === 0 && (
-                        <p className="px-2 py-1 text-sm text-zinc-500 dark:text-zinc-400">
-                            No active grades.
-                        </p>
-                    )}
+                                    const employeeNumber =
+                                        teacher?.employeeNumber ||
+                                        "";
 
-                    {grades.map((grade) => {
-                        const checked =
-                            form.gradeIds.includes(
-                                grade._id
-                            );
+                                    const specialization =
+                                        teacher?.specialization ||
+                                        "";
 
-                        return (
+                                    return (
+                                        <option
+                                            key={
+                                                teacherId
+                                            }
+                                            value={
+                                                teacherId
+                                            }
+                                        >
+                                            {employeeNumber
+                                                ? `${employeeNumber} - `
+                                                : ""}
+
+                                            {name}
+
+                                            {specialization
+                                                ? ` (${specialization})`
+                                                : ""}
+
+                                            {user?.email
+                                                ? ` — ${user.email}`
+                                                : ""}
+                                        </option>
+                                    );
+                                }
+                            )}
+                        </select>
+
+                        {errors.teacherId && (
+                            <p className="mt-1 text-xs text-red-500">
+                                {
+                                    errors.teacherId
+                                }
+                            </p>
+                        )}
+
+                        {!errors.teacherId && (
+                            <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                                {eligibleTeachers.length >
+                                0
+                                    ? `${eligibleTeachers.length} active teacher profile${
+                                          eligibleTeachers.length !==
+                                          1
+                                              ? "s"
+                                              : ""
+                                      } available.`
+                                    : "Only Teacher users with an active TeacherProfile can receive assignments."}
+                            </p>
+                        )}
+                    </div>
+
+                    {/* ========================================= */}
+                    {/* ACADEMIC YEAR + GRADE */}
+                    {/* ========================================= */}
+
+                    <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                        {/* ACADEMIC YEAR */}
+
+                        <div>
                             <label
-                                key={grade._id}
-                                className="flex cursor-pointer items-center gap-3 rounded-lg px-2 py-1.5 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                                className={
+                                    labelClass
+                                }
                             >
-                                <input
-                                    type="checkbox"
-                                    checked={checked}
-                                    disabled={
-                                        submitting ||
-                                        (isEdit &&
-                                            !checked)
-                                    }
-                                    onChange={() =>
-                                        handleMultiToggle(
-                                            "gradeIds",
-                                            grade._id
-                                        )
-                                    }
-                                    className="h-4 w-4 rounded border-zinc-400 text-[#1c1c1c] focus:ring-0 dark:border-zinc-600"
-                                />
-
-                                <span className="text-sm text-zinc-800 dark:text-zinc-200">
-                                    {grade.gradeName}
-
-                                    {grade.sectionName
-                                        ? ` - ${grade.sectionName}`
-                                        : ""}
-                                </span>
+                                Academic Year
                             </label>
-                        );
-                    })}
-                </div>
-            </Field>
 
-            {/* -------------------------------------------------- */}
-            {/* SUBJECTS */}
-            {/* -------------------------------------------------- */}
-            <Field
-                label={`Subjects${
-                    form.subjectIds.length
-                        ? ` (${form.subjectIds.length})`
-                        : ""
-                }`}
-                hint="Select every subject this teacher will teach in the chosen grades."
-                error={errors.subjectIds}
-            >
-                <div
-                    className={[
-                        "max-h-48 overflow-y-auto rounded-xl border p-2",
-                        errors.subjectIds
-                            ? "border-red-400 dark:border-red-800"
-                            : "border-zinc-300 dark:border-zinc-700",
-                        "bg-white dark:bg-zinc-900",
-                    ].join(" ")}
-                >
-                    {subjects.length === 0 && (
-                        <p className="px-2 py-1 text-sm text-zinc-500 dark:text-zinc-400">
-                            No active subjects.
-                        </p>
-                    )}
+                            <select
+                                value={
+                                    form.academicYearId
+                                }
+                                onChange={(event) =>
+                                    handleChange(
+                                        "academicYearId",
+                                        event.target
+                                            .value
+                                    )
+                                }
+                                disabled={
+                                    submitting
+                                }
+                                className={`${selectClass} ${
+                                    errors.academicYearId
+                                        ? errorClass
+                                        : ""
+                                }`}
+                            >
+                                <option value="">
+                                    Select academic
+                                    year
+                                </option>
 
-                    {subjects.map((subject) => {
-                        const checked =
-                            form.subjectIds.includes(
-                                subject._id
-                            );
+                                {academicYears.map(
+                                    (year) => (
+                                        <option
+                                            key={
+                                                year._id
+                                            }
+                                            value={
+                                                year._id
+                                            }
+                                        >
+                                            {year.name ||
+                                                year.year ||
+                                                year.title ||
+                                                "Academic Year"}
 
-                        return (
+                                            {String(
+                                                year?.status
+                                            ).toLowerCase() ===
+                                            "active"
+                                                ? " • Active"
+                                                : ""}
+                                        </option>
+                                    )
+                                )}
+                            </select>
+
+                            {errors.academicYearId && (
+                                <p className="mt-1 text-xs text-red-500">
+                                    {
+                                        errors.academicYearId
+                                    }
+                                </p>
+                            )}
+                        </div>
+
+                        {/* GRADE */}
+
+                        <div>
                             <label
-                                key={subject._id}
-                                className="flex cursor-pointer items-center gap-3 rounded-lg px-2 py-1.5 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                                className={
+                                    labelClass
+                                }
                             >
-                                <input
-                                    type="checkbox"
-                                    checked={checked}
-                                    disabled={
-                                        submitting ||
-                                        (isEdit &&
-                                            !checked)
-                                    }
-                                    onChange={() =>
-                                        handleMultiToggle(
-                                            "subjectIds",
-                                            subject._id
-                                        )
-                                    }
-                                    className="h-4 w-4 rounded border-zinc-400 text-[#1c1c1c] focus:ring-0 dark:border-zinc-600"
-                                />
-
-                                <span className="text-sm text-zinc-800 dark:text-zinc-200">
-                                    {subject.name}
-
-                                    {subject.code
-                                        ? ` (${subject.code})`
-                                        : ""}
-                                </span>
+                                Grade / Section
                             </label>
-                        );
-                    })}
-                </div>
-            </Field>
 
-            {/* -------------------------------------------------- */}
-            {/* DEPARTMENT */}
-            {/* -------------------------------------------------- */}
-            <Field
-                label="Department"
-                hint={
-                    derivedDepartmentIds.size > 1
-                        ? "Selected subjects span multiple departments."
-                        : "Automatically determined by the selected subject(s)."
-                }
-            >
-                <select
-                    value={form.departmentId}
-                    onChange={() => {}}
-                    disabled
-                    className={`${selectClass()} opacity-70`}
-                >
-                    <option value="">
-                        {derivedDepartmentIds.size > 1
-                            ? "Multiple departments"
-                            : "—"}
-                    </option>
+                            <select
+                                value={
+                                    form.gradeId
+                                }
+                                onChange={(event) =>
+                                    handleChange(
+                                        "gradeId",
+                                        event.target
+                                            .value
+                                    )
+                                }
+                                disabled={
+                                    submitting
+                                }
+                                className={`${selectClass} ${
+                                    errors.gradeId
+                                        ? errorClass
+                                        : ""
+                                }`}
+                            >
+                                <option value="">
+                                    Select grade /
+                                    section
+                                </option>
 
-                    {departments.map((department) => (
-                        <option
-                            key={department._id}
-                            value={department._id}
+                                {grades.map(
+                                    (grade) => (
+                                        <option
+                                            key={
+                                                grade._id
+                                            }
+                                            value={
+                                                grade._id
+                                            }
+                                        >
+                                            {getGradeLabel(
+                                                grade
+                                            )}
+                                        </option>
+                                    )
+                                )}
+                            </select>
+
+                            {errors.gradeId && (
+                                <p className="mt-1 text-xs text-red-500">
+                                    {
+                                        errors.gradeId
+                                    }
+                                </p>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* ========================================= */}
+                    {/* DEPARTMENT + SUBJECT */}
+                    {/* ========================================= */}
+
+                    <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                        {/* DEPARTMENT */}
+
+                        <div>
+                            <label
+                                className={
+                                    labelClass
+                                }
+                            >
+                                Department
+                            </label>
+
+                            <select
+                                value={
+                                    form.departmentId
+                                }
+                                onChange={(event) =>
+                                    handleChange(
+                                        "departmentId",
+                                        event.target
+                                            .value
+                                    )
+                                }
+                                disabled={
+                                    submitting
+                                }
+                                className={`${selectClass} ${
+                                    errors.departmentId
+                                        ? errorClass
+                                        : ""
+                                }`}
+                            >
+                                <option value="">
+                                    Select department
+                                </option>
+
+                                {departments.map(
+                                    (department) => (
+                                        <option
+                                            key={
+                                                department._id
+                                            }
+                                            value={
+                                                department._id
+                                            }
+                                        >
+                                            {
+                                                department.name
+                                            }
+                                        </option>
+                                    )
+                                )}
+                            </select>
+
+                            {errors.departmentId && (
+                                <p className="mt-1 text-xs text-red-500">
+                                    {
+                                        errors.departmentId
+                                    }
+                                </p>
+                            )}
+                        </div>
+
+                        {/* SUBJECT */}
+
+                        <div>
+                            <label
+                                className={
+                                    labelClass
+                                }
+                            >
+                                Subject
+                            </label>
+
+                            <select
+                                value={
+                                    form.subjectId
+                                }
+                                onChange={(event) =>
+                                    handleSubjectChange(
+                                        event.target
+                                            .value
+                                    )
+                                }
+                                disabled={
+                                    submitting ||
+                                    !form.departmentId
+                                }
+                                className={`${selectClass} ${
+                                    errors.subjectId
+                                        ? errorClass
+                                        : ""
+                                } ${
+                                    !form.departmentId
+                                        ? "cursor-not-allowed opacity-50"
+                                        : ""
+                                }`}
+                            >
+                                <option value="">
+                                    {!form.departmentId
+                                        ? "Select department first"
+                                        : "Select subject"}
+                                </option>
+
+                                {eligibleSubjects.map(
+                                    (subject) => (
+                                        <option
+                                            key={
+                                                subject._id
+                                            }
+                                            value={
+                                                subject._id
+                                            }
+                                        >
+                                            {subject.name}
+
+                                            {subject.code
+                                                ? ` (${subject.code})`
+                                                : ""}
+                                        </option>
+                                    )
+                                )}
+                            </select>
+
+                            {errors.subjectId && (
+                                <p className="mt-1 text-xs text-red-500">
+                                    {
+                                        errors.subjectId
+                                    }
+                                </p>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* ========================================= */}
+                    {/* STATUS */}
+                    {/* ========================================= */}
+
+                    <div>
+                        <label
+                            className={
+                                labelClass
+                            }
                         >
-                            {department.name}
-                        </option>
-                    ))}
-                </select>
-            </Field>
+                            Status
+                        </label>
 
-            {/* -------------------------------------------------- */}
-            {/* STATUS */}
-            {/* -------------------------------------------------- */}
-            <Field
-                label="Status"
-                error={errors.status}
-            >
-                <select
-                    value={form.status}
-                    onChange={(e) =>
-                        handleChange(
-                            "status",
-                            e.target.value
-                        )
-                    }
-                    disabled={submitting}
-                    className={selectClass(
-                        errors.status
-                    )}
-                >
-                    <option value="active">
-                        Active
-                    </option>
+                        <select
+                            value={
+                                form.status
+                            }
+                            onChange={(event) =>
+                                handleChange(
+                                    "status",
+                                    event.target
+                                        .value
+                                )
+                            }
+                            disabled={
+                                submitting
+                            }
+                            className={`${selectClass} ${
+                                errors.status
+                                    ? errorClass
+                                    : ""
+                            }`}
+                        >
+                            <option value="active">
+                                Active
+                            </option>
 
-                    <option value="inactive">
-                        Inactive
-                    </option>
-                </select>
-            </Field>
+                            <option value="inactive">
+                                Inactive
+                            </option>
+                        </select>
 
-            {/* -------------------------------------------------- */}
-            {/* ACTIONS */}
-            {/* -------------------------------------------------- */}
-            <div className="flex items-center justify-end gap-3 pt-2">
-                <button
-                    type="button"
-                    onClick={onCancel}
-                    disabled={submitting}
-                    className="rounded-xl border border-zinc-300 bg-white px-4 py-2 text-sm font-medium text-zinc-700 transition hover:bg-zinc-100 disabled:opacity-50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
-                >
-                    Cancel
-                </button>
+                        {errors.status && (
+                            <p className="mt-1 text-xs text-red-500">
+                                {
+                                    errors.status
+                                }
+                            </p>
+                        )}
+                    </div>
 
-                <button
-                    type="submit"
-                    disabled={
-                        submitting ||
-                        loadingRelations
-                    }
-                    className="rounded-xl bg-[#1c1c1c] px-4 py-2 text-sm font-medium text-white transition hover:bg-black disabled:opacity-50 dark:bg-white dark:text-black dark:hover:bg-zinc-200"
-                >
-                    {submitting
-                        ? "Saving..."
-                        : isEdit
-                        ? "Update Assignment"
-                        : `Create ${
-                              form.gradeIds.length *
-                              form.subjectIds.length
-                          } Assignment${
-                              form.gradeIds.length *
-                                  form.subjectIds.length !==
-                              1
-                                  ? "s"
-                                  : ""
-                          }`}
-                </button>
-            </div>
+                    {/* ========================================= */}
+                    {/* INFORMATION */}
+                    {/* ========================================= */}
+
+                    <div className="rounded-xl border border-gray-200 bg-gray-50 p-4 dark:border-white/10 dark:bg-white/5">
+                        <p className="text-sm font-medium text-gray-900 dark:text-white">
+                            Teacher eligibility
+                        </p>
+
+                        <p className="mt-1 text-xs leading-5 text-gray-500 dark:text-gray-400">
+                            A teacher must have a
+                            User account with the
+                            Teacher role and an active
+                            TeacherProfile. An existing
+                            TeacherAssignment is not
+                            required.
+                        </p>
+                    </div>
+
+                    {/* ========================================= */}
+                    {/* ACTIONS */}
+                    {/* ========================================= */}
+
+                    <div className="flex flex-col-reverse gap-3 border-t border-gray-100 pt-5 dark:border-white/10 sm:flex-row sm:justify-end">
+                        {onCancel && (
+                            <button
+                                type="button"
+                                onClick={onCancel}
+                                disabled={
+                                    submitting
+                                }
+                                className="rounded-xl border border-gray-200 px-5 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-white/10 dark:text-gray-300 dark:hover:bg-white/5"
+                            >
+                                Cancel
+                            </button>
+                        )}
+
+                        <button
+                            type="submit"
+                            disabled={
+                                submitting ||
+                                loadingRelations ||
+                                eligibleTeachers.length ===
+                                    0
+                            }
+                            className="rounded-xl bg-gray-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-white dark:text-black dark:hover:bg-gray-200"
+                        >
+                            {submitting
+                                ? isEdit
+                                    ? "Updating..."
+                                    : "Creating..."
+                                : isEdit
+                                ? "Update Assignment"
+                                : "Create Assignment"}
+                        </button>
+                    </div>
+                </>
+            )}
         </form>
-    );
-}
-
-// ------------------------------------------------------------
-// HELPERS
-// ------------------------------------------------------------
-
-function Field({
-    label,
-    hint,
-    error,
-    children,
-}) {
-    return (
-        <div className="space-y-1.5">
-            <label className="block text-sm font-medium text-zinc-800 dark:text-zinc-200">
-                {label}
-            </label>
-
-            {children}
-
-            {hint && !error && (
-                <p className="text-xs text-zinc-500 dark:text-zinc-400">
-                    {hint}
-                </p>
-            )}
-
-            {error && (
-                <p className="text-xs text-red-600 dark:text-red-400">
-                    {error}
-                </p>
-            )}
-        </div>
-    );
-}
-
-function selectClass(error) {
-    return [
-        "w-full rounded-xl border bg-white px-3 py-2 text-sm",
-        "text-zinc-900 outline-none transition",
-        "focus:border-zinc-400 focus:ring-2 focus:ring-zinc-200",
-        "disabled:cursor-not-allowed",
-        "dark:bg-zinc-900 dark:text-zinc-100 dark:focus:ring-zinc-800",
-        error
-            ? "border-red-400 dark:border-red-800"
-            : "border-zinc-300 dark:border-zinc-700",
-    ].join(" ");
-}
-
-function gradeLabel(id, grades) {
-    const grade = grades.find(
-        (item) => item._id === id
-    );
-
-    if (!grade) return "Unknown grade";
-
-    return `${grade.gradeName}${
-        grade.sectionName
-            ? ` - ${grade.sectionName}`
-            : ""
-    }`;
-}
-
-function subjectLabel(id, subjects) {
-    const subject = subjects.find(
-        (item) => item._id === id
-    );
-
-    if (!subject) return "Unknown subject";
-
-    return (
-        subject.name +
-        (subject.code
-            ? ` (${subject.code})`
-            : "")
     );
 }

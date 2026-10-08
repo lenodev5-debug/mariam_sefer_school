@@ -34,16 +34,22 @@ function SocialButton({ icon, name }) {
         justify-center
         rounded-lg
         border
-        border-white/10
-        bg-[#111111]
-        text-white/50
+        border-[#e0e0e0]
+        bg-white
+        text-[#999]
         shadow-lg
         transition-all
         duration-300
         hover:-translate-y-1
-        hover:border-white/20
-        hover:bg-white/[0.08]
-        hover:text-white
+        hover:border-[#50A2FF]/40
+        hover:bg-[#f5f5f5]
+        hover:text-[#1a1a1a]
+        dark:border-[#2a2a2a]
+        dark:bg-[#222222]
+        dark:text-[#888]
+        dark:hover:border-[#50A2FF]/40
+        dark:hover:bg-[#2a2a2a]
+        dark:hover:text-white
       "
     >
       <FontAwesomeIcon
@@ -56,10 +62,6 @@ function SocialButton({ icon, name }) {
         "
       />
 
-      {/* ==================================================
-          TOOLTIP
-      ================================================== */}
-
       <span
         className="
           pointer-events-none
@@ -69,17 +71,19 @@ function SocialButton({ icon, name }) {
           -translate-x-1/2
           whitespace-nowrap
           rounded-md
-          bg-white
+          bg-[#1a1a1a]
           px-2
           py-1
           text-[9px]
           font-medium
-          text-black
+          text-white
           opacity-0
           transition-all
           duration-300
           group-hover:-translate-y-1
           group-hover:opacity-100
+          dark:bg-white
+          dark:text-black
         "
       >
         {name}
@@ -88,10 +92,6 @@ function SocialButton({ icon, name }) {
   );
 }
 
-
-// ============================================================
-// FOOTER LINK
-// ============================================================
 
 function FooterLink({ children }) {
   return (
@@ -104,21 +104,25 @@ function FooterLink({ children }) {
         items-center
         gap-2
         text-sm
-        text-white/40
+        text-[#999]
         transition-all
         duration-300
         hover:translate-x-1
-        hover:text-white
+        hover:text-[#1a1a1a]
+        dark:text-[#888]
+        dark:hover:text-white
       "
     >
       <FontAwesomeIcon
         icon={faChevronRight}
         className="
           text-[7px]
-          text-white/20
+          text-[#b0b0b0]
           transition
           duration-300
-          group-hover:text-white
+          group-hover:text-[#50A2FF]
+          dark:text-[#666]
+          dark:group-hover:text-white
         "
       />
 
@@ -127,10 +131,6 @@ function FooterLink({ children }) {
   );
 }
 
-
-// ============================================================
-// FOOTER
-// ============================================================
 
 export default function Footer() {
   return (
@@ -143,7 +143,10 @@ export default function Footer() {
         flex-col
         justify-between
         overflow-hidden
-        bg-[#0D0D0D]
+        bg-[#f5f5f5]
+        transition-colors
+        duration-300
+        dark:bg-[#0f0f0f]
       "
     >
 
@@ -160,8 +163,9 @@ export default function Footer() {
           h-[1px]
           w-[55%]
           -translate-x-1/2
-          bg-white/20
+          bg-[#1a1a1a]/20
           blur-sm
+          dark:bg-white/20
         "
       />
 
@@ -187,16 +191,10 @@ export default function Footer() {
         "
       >
 
-        {/* ==================================================
-            SCHOOL BRAND
-        ================================================== */}
+        {/* SCHOOL BRAND */}
 
         <div className="flex flex-col">
-
-          {/* LOGO */}
-
           <div className="flex items-center gap-3">
-
             <div
               className="
                 flex
@@ -206,233 +204,151 @@ export default function Footer() {
                 justify-center
                 rounded-xl
                 border
-                border-white/10
-                bg-white/[0.04]
+                border-[#e0e0e0]
+                bg-white
+                dark:border-[#2a2a2a]
+                dark:bg-[#1a1a1a]
               "
             >
               <FontAwesomeIcon
                 icon={faGraduationCap}
-                className="text-lg text-white"
+                className="text-lg text-[#1a1a1a] dark:text-white"
               />
             </div>
 
             <div>
-
               <h2
-                className="text-lg font-semibold text-white"
+                className="text-lg font-semibold text-[#1a1a1a] dark:text-white"
                 style={{ fontFamily: "news" }}
               >
                 Our School
               </h2>
 
-              <p className="text-[10px] uppercase tracking-[0.2em] text-white/30">
+              <p className="text-[10px] uppercase tracking-[0.2em] text-[#b0b0b0] dark:text-[#666]">
                 Learn • Grow • Succeed
               </p>
-
             </div>
-
           </div>
 
-
-          {/* DESCRIPTION */}
-
-          <p className="mt-6 max-w-sm text-sm leading-6 text-white/40">
+          <p className="mt-6 max-w-sm text-sm leading-6 text-[#999] dark:text-[#888]">
             Empowering students with knowledge, confidence, and the
             skills they need to build a brighter future.
           </p>
 
-
-          {/* SOCIAL MEDIA */}
-
           <div className="mt-7 flex items-center gap-3">
-
-            <SocialButton
-              icon={faFacebookF}
-              name="Facebook"
-            />
-
-            <SocialButton
-              icon={faInstagram}
-              name="Instagram"
-            />
-
-            <SocialButton
-              icon={faTelegram}
-              name="Telegram"
-            />
-
-            <SocialButton
-              icon={faYoutube}
-              name="YouTube"
-            />
-
-            <SocialButton
-              icon={faTiktok}
-              name="TikTok"
-            />
-
+            <SocialButton icon={faFacebookF} name="Facebook" />
+            <SocialButton icon={faInstagram} name="Instagram" />
+            <SocialButton icon={faTelegram} name="Telegram" />
+            <SocialButton icon={faYoutube} name="YouTube" />
+            <SocialButton icon={faTiktok} name="TikTok" />
           </div>
-
         </div>
 
 
-        {/* ==================================================
-            SCHOOL
-        ================================================== */}
-
+        {/* SCHOOL */}
         <div>
-
           <h3
-            className="mb-6 text-sm font-semibold text-white"
+            className="mb-6 text-sm font-semibold text-[#1a1a1a] dark:text-white"
             style={{ fontFamily: "news" }}
           >
             School
           </h3>
 
           <div className="flex flex-col gap-3">
-
             <FooterLink>About Us</FooterLink>
-
             <FooterLink>Teachers</FooterLink>
-
             <FooterLink>Students</FooterLink>
-
             <FooterLink>News & Events</FooterLink>
-
             <FooterLink>Contact</FooterLink>
-
           </div>
-
         </div>
 
 
-        {/* ==================================================
-            ACADEMICS
-        ================================================== */}
-
+        {/* ACADEMICS */}
         <div>
-
           <h3
-            className="mb-6 text-sm font-semibold text-white"
+            className="mb-6 text-sm font-semibold text-[#1a1a1a] dark:text-white"
             style={{ fontFamily: "news" }}
           >
             Academics
           </h3>
 
           <div className="flex flex-col gap-3">
-
             <FooterLink>
               <span className="flex items-center gap-2">
                 <FontAwesomeIcon
                   icon={faBookOpen}
-                  className="text-[10px] text-white/20"
+                  className="text-[10px] text-[#b0b0b0] dark:text-[#666]"
                 />
                 Courses
               </span>
             </FooterLink>
 
             <FooterLink>Subjects</FooterLink>
-
             <FooterLink>Library</FooterLink>
-
             <FooterLink>Exams</FooterLink>
-
             <FooterLink>Assignments</FooterLink>
-
           </div>
-
         </div>
 
 
-        {/* ==================================================
-            CONTACT
-        ================================================== */}
-
+        {/* CONTACT */}
         <div>
-
           <h3
-            className="mb-6 text-sm font-semibold text-white"
+            className="mb-6 text-sm font-semibold text-[#1a1a1a] dark:text-white"
             style={{ fontFamily: "news" }}
           >
             Get in Touch
           </h3>
 
-
           <div className="flex flex-col gap-5">
 
-            {/* LOCATION */}
-
             <div className="flex items-start gap-3">
-
               <FontAwesomeIcon
                 icon={faLocationDot}
-                className="mt-1 text-xs text-white/30"
+                className="mt-1 text-xs text-[#b0b0b0] dark:text-[#666]"
               />
-
               <div>
-
-                <p className="text-[10px] uppercase tracking-wider text-white/25">
+                <p className="text-[10px] uppercase tracking-wider text-[#b0b0b0] dark:text-[#666]">
                   Address
                 </p>
-
-                <p className="mt-1 text-sm text-white/50">
+                <p className="mt-1 text-sm text-[#999] dark:text-[#888]">
                   Dire Dawa, Ethiopia
                 </p>
-
               </div>
-
             </div>
 
-
-            {/* EMAIL */}
-
             <div className="flex items-start gap-3">
-
               <FontAwesomeIcon
                 icon={faEnvelope}
-                className="mt-1 text-xs text-white/30"
+                className="mt-1 text-xs text-[#b0b0b0] dark:text-[#666]"
               />
-
               <div>
-
-                <p className="text-[10px] uppercase tracking-wider text-white/25">
+                <p className="text-[10px] uppercase tracking-wider text-[#b0b0b0] dark:text-[#666]">
                   Email
                 </p>
-
-                <p className="mt-1 text-sm text-white/50">
+                <p className="mt-1 text-sm text-[#999] dark:text-[#888]">
                   Saint Treza@gmail.com
                 </p>
-
               </div>
-
             </div>
 
-
-            {/* PHONE */}
-
             <div className="flex items-start gap-3">
-
               <FontAwesomeIcon
                 icon={faPhone}
-                className="mt-1 text-xs text-white/30"
+                className="mt-1 text-xs text-[#b0b0b0] dark:text-[#666]"
               />
-
               <div>
-
-                <p className="text-[10px] uppercase tracking-wider text-white/25">
+                <p className="text-[10px] uppercase tracking-wider text-[#b0b0b0] dark:text-[#666]">
                   Phone
                 </p>
-
-                <p className="mt-1 text-sm text-white/50">
+                <p className="mt-1 text-sm text-[#999] dark:text-[#888]">
                   +251 900 000 000
                 </p>
-
               </div>
-
             </div>
 
           </div>
-
         </div>
 
       </div>
@@ -443,7 +359,6 @@ export default function Footer() {
       ======================================================= */}
 
       <div className="mx-auto w-full max-w-7xl px-8">
-
         <div
           className="
             flex
@@ -458,22 +373,18 @@ export default function Footer() {
             md:items-center
           "
         >
-
           <div>
-
             <h3
-              className="text-sm font-semibold text-white"
+              className="text-sm font-semibold text-[#1a1a1a] dark:text-white"
               style={{ fontFamily: "news" }}
             >
               Stay connected with our school
             </h3>
 
-            <p className="mt-1 text-xs text-white/30">
+            <p className="mt-1 text-xs text-[#b0b0b0] dark:text-[#666]">
               Follow our latest news, events, and student achievements.
             </p>
-
           </div>
-
 
           <button
             type="button"
@@ -484,17 +395,21 @@ export default function Footer() {
               gap-2
               rounded-lg
               border
-              border-white/10
-              bg-white
+              border-[#e0e0e0]
+              bg-[#1a1a1a]
               px-4
               py-2.5
               text-xs
               font-semibold
-              text-black
+              text-white
               transition-all
               duration-300
               hover:-translate-y-1
-              hover:bg-white/90
+              hover:bg-[#333333]
+              hover:border-[#50A2FF]/40
+              dark:bg-white
+              dark:text-black
+              dark:hover:bg-white/90
             "
           >
             Explore School
@@ -510,9 +425,7 @@ export default function Footer() {
             />
 
           </button>
-
         </div>
-
       </div>
 
 
@@ -521,7 +434,6 @@ export default function Footer() {
       ======================================================= */}
 
       <div className="mx-auto mt-10 w-full max-w-7xl px-8">
-
         <div
           className="
             flex
@@ -530,46 +442,30 @@ export default function Footer() {
             justify-between
             gap-3
             border-t
-            border-white/10
+            border-[#e0e0e0]
             py-6
             text-center
             md:flex-row
             md:text-left
+            dark:border-[#2a2a2a]
           "
         >
-
-          <p className="text-[10px] text-white/25">
+          <p className="text-[10px] text-[#b0b0b0] dark:text-[#666]">
             © 2026 Our School. All rights reserved.
           </p>
 
-
           <div className="flex items-center gap-5">
-
-            <a
-              href="#"
-              className="text-[10px] text-white/25 transition hover:text-white"
-            >
+            <a href="#" className="text-[10px] text-[#b0b0b0] transition hover:text-[#1a1a1a] dark:text-[#666] dark:hover:text-white">
               Privacy
             </a>
-
-            <a
-              href="#"
-              className="text-[10px] text-white/25 transition hover:text-white"
-            >
+            <a href="#" className="text-[10px] text-[#b0b0b0] transition hover:text-[#1a1a1a] dark:text-[#666] dark:hover:text-white">
               Terms
             </a>
-
-            <a
-              href="#"
-              className="text-[10px] text-white/25 transition hover:text-white"
-            >
+            <a href="#" className="text-[10px] text-[#b0b0b0] transition hover:text-[#1a1a1a] dark:text-[#666] dark:hover:text-white">
               Help
             </a>
-
           </div>
-
         </div>
-
       </div>
 
     </footer>

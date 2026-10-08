@@ -43,7 +43,7 @@ export default function CoursesDisplay() {
   ];
 
   return (
-    <div className="flex flex-col items-center w-full min-h-screen bg-[#090909]">
+    <div className="flex flex-col items-center w-full min-h-screen bg-[#f5f5f5] transition-colors duration-300 dark:bg-[#0f0f0f]">
 
       {/* =====================================================
           BROWSE BUTTON
@@ -86,10 +86,13 @@ export default function CoursesDisplay() {
           w-[1521px]
           h-[760px]
           max-w-[calc(100vw-32px)]
-          bg-[#090909]
+          bg-white
           rounded-3xl
           px-12
           py-10
+          transition-colors
+          duration-300
+          dark:bg-[#1a1a1a]
         "
       >
 
@@ -103,9 +106,10 @@ export default function CoursesDisplay() {
             className="
               text-[48px]
               leading-tight
-              text-[#F3F4F6]
+              text-[#1a1a1a]
               font-semibold
               tracking-tight
+              dark:text-[#F3F4F6]
             "
             style={{
               fontFamily: "Montserrat, Inter, sans-serif",
@@ -118,8 +122,9 @@ export default function CoursesDisplay() {
             className="
               mt-4
               text-[18px]
-              text-[#9CA3AF]
+              text-[#999]
               max-w-2xl
+              dark:text-[#888]
             "
             style={{
               fontFamily: "Inter, sans-serif",
@@ -158,16 +163,19 @@ export default function CoursesDisplay() {
                 overflow-hidden
                 flex
                 flex-col
-                bg-[#171717]
+                bg-[#f5f5f5]
                 border-2
-                border-[#212121]
+                border-[#e0e0e0]
                 rounded-[8px]
                 min-h-[190px]
                 p-6
                 transition-all
                 duration-300
                 hover:-translate-y-1
-                hover:border-[#353535]
+                hover:border-[#50A2FF]/40
+                dark:bg-[#222222]
+                dark:border-[#2a2a2a]
+                dark:hover:border-[#50A2FF]/40
               "
             >
 
@@ -183,9 +191,10 @@ export default function CoursesDisplay() {
                   w-40
                   h-40
                   rounded-full
-                  bg-white/[0.03]
+                  bg-black/[0.03]
                   blur-3xl
                   pointer-events-none
+                  dark:bg-white/[0.03]
                 "
               />
 
@@ -199,8 +208,9 @@ export default function CoursesDisplay() {
                 <h2
                   className="
                     text-[20px]
-                    text-[#F3F4F6]
+                    text-[#1a1a1a]
                     font-semibold
+                    dark:text-[#F3F4F6]
                   "
                   style={{
                     fontFamily:
@@ -213,14 +223,15 @@ export default function CoursesDisplay() {
                 <FontAwesomeIcon
                   icon={faArrowDown}
                   size="1xl"
-                  color="#D1D5DB"
                   className="
                     rotate-[240deg]
                     relative
+                    text-[#b0b0b0]
                     transition-transform
                     duration-300
                     group-hover:translate-x-1
                     group-hover:-translate-y-1
+                    dark:text-[#D1D5DB]
                   "
                 />
 
@@ -237,8 +248,9 @@ export default function CoursesDisplay() {
                   mt-3
                   text-[14px]
                   leading-5
-                  text-[#9CA3AF]
+                  text-[#999]
                   max-w-md
+                  dark:text-[#888]
                 "
                 style={{
                   fontFamily: "Inter, sans-serif",
@@ -272,20 +284,26 @@ export default function CoursesDisplay() {
                     key={tag}
                     className="
                       flex-shrink-0
-                      bg-[#111111]
+                      bg-white
                       border
-                      border-[#353535]
+                      border-[#e0e0e0]
                       rounded-full
                       px-3
                       py-1
                       text-[12px]
-                      text-[#D1D5DB]
+                      text-[#1a1a1a]
                       whitespace-nowrap
                       transition-all
                       duration-200
-                      hover:bg-[#212121]
-                      hover:text-[#F2F2F2]
-                      hover:border-[#4a4a4a]
+                      hover:bg-[#f0f0f0]
+                      hover:text-[#1a1a1a]
+                      hover:border-[#50A2FF]/40
+                      dark:bg-[#1a1a1a]
+                      dark:border-[#3a3a3a]
+                      dark:text-[#D1D5DB]
+                      dark:hover:bg-[#2a2a2a]
+                      dark:hover:text-white
+                      dark:hover:border-[#50A2FF]/40
                     "
                     style={{
                       fontFamily: "Inter, sans-serif",

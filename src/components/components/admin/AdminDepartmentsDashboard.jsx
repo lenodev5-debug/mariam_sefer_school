@@ -277,30 +277,30 @@ export default function AdminDepartmentsDashboard() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gray-50 p-6 dark:bg-[#0f0f0f]">
+            <div className="min-h-screen bg-[#f5f5f5] p-6 dark:bg-[#0f0f0f]">
                 <div className="mx-auto max-w-7xl">
                     <div className="mb-8">
-                        <div className="h-8 w-56 animate-pulse rounded-lg bg-gray-200 dark:bg-gray-800" />
-                        <div className="mt-3 h-4 w-80 animate-pulse rounded bg-gray-200 dark:bg-gray-800" />
+                        <div className="h-8 w-56 animate-pulse rounded-lg bg-[#e5e5e5] dark:bg-[#1a1a1a]" />
+                        <div className="mt-3 h-4 w-80 animate-pulse rounded bg-[#e5e5e5] dark:bg-[#1a1a1a]" />
                     </div>
 
                     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                         {[1, 2, 3, 4].map((item) => (
                             <div
                                 key={item}
-                                className="h-32 animate-pulse rounded-2xl bg-gray-200 dark:bg-gray-800"
+                                className="h-32 animate-pulse rounded-2xl bg-[#e5e5e5] dark:bg-[#1a1a1a]"
                             />
                         ))}
                     </div>
 
                     <div className="mt-6 grid gap-4 lg:grid-cols-3">
-                        <div className="h-72 animate-pulse rounded-2xl bg-gray-200 dark:bg-gray-800 lg:col-span-2" />
-                        <div className="h-72 animate-pulse rounded-2xl bg-gray-200 dark:bg-gray-800" />
+                        <div className="h-72 animate-pulse rounded-2xl bg-[#e5e5e5] dark:bg-[#1a1a1a] lg:col-span-2" />
+                        <div className="h-72 animate-pulse rounded-2xl bg-[#e5e5e5] dark:bg-[#1a1a1a]" />
                     </div>
 
                     <div className="mt-6 grid gap-4 lg:grid-cols-3">
-                        <div className="h-64 animate-pulse rounded-2xl bg-gray-200 dark:bg-gray-800" />
-                        <div className="h-64 animate-pulse rounded-2xl bg-gray-200 dark:bg-gray-800 lg:col-span-2" />
+                        <div className="h-64 animate-pulse rounded-2xl bg-[#e5e5e5] dark:bg-[#1a1a1a]" />
+                        <div className="h-64 animate-pulse rounded-2xl bg-[#e5e5e5] dark:bg-[#1a1a1a] lg:col-span-2" />
                     </div>
                 </div>
             </div>
@@ -313,7 +313,7 @@ export default function AdminDepartmentsDashboard() {
 
     if (error) {
         return (
-            <div className="min-h-screen bg-gray-50 p-6 dark:bg-[#0f0f0f]">
+            <div className="min-h-screen bg-[#f5f5f5] p-6 dark:bg-[#0f0f0f]">
                 <div className="mx-auto max-w-7xl">
                     <div className="rounded-2xl border border-red-200 bg-red-50 p-6 dark:border-red-900/40 dark:bg-red-950/20">
                         <div className="flex items-center gap-4">
@@ -340,16 +340,16 @@ export default function AdminDepartmentsDashboard() {
      * ============================================================ */
 
     return (
-        <div className="min-h-screen bg-[#0f0f0f] p-4 pt-20 sm:p-6 sm:pt-20">
+        <div className="min-h-screen bg-[#f5f5f5] p-4 pt-20 transition-colors duration-300 sm:p-6 sm:pt-20 dark:bg-[#0f0f0f]">
             <div className="mx-auto max-w-7xl">
 
                 {/* HEADER */}
                 <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <div>
-                        <h1 className="text-2xl font-bold tracking-tight text-white">
+                        <h1 className="text-2xl font-bold tracking-tight text-[#1a1a1a] dark:text-white">
                             Departments
                         </h1>
-                        <p className="mt-1 text-sm text-gray-400">
+                        <p className="mt-1 text-sm text-[#999] dark:text-[#888]">
                             Manage departments and subjects
                         </p>
                     </div>
@@ -392,18 +392,18 @@ export default function AdminDepartmentsDashboard() {
 
                 <div className="mb-6 grid gap-4 lg:grid-cols-3">
 
-                    <div className="rounded-2xl border border-gray-800 bg-[#171717] p-5 lg:col-span-2">
+                    <div className="rounded-[20px] border border-[#e0e0e0] bg-white p-5 transition-colors duration-300 lg:col-span-2 dark:border-[#3a3a3a] dark:bg-[#1a1a1a]">
                         <div className="mb-6 flex items-center justify-between">
                             <div className="flex items-center gap-2">
                                 <FontAwesomeIcon
                                     icon={faChartLine}
                                     className="text-indigo-400"
                                 />
-                                <h2 className="text-base font-semibold text-white">
+                                <h2 className="text-base font-semibold text-[#1a1a1a] dark:text-white">
                                     Growth
                                 </h2>
                             </div>
-                            <div className="flex items-center gap-2 rounded-lg border border-gray-700 px-3 py-1.5 text-xs text-gray-300">
+                            <div className="flex items-center gap-2 rounded-lg border border-[#e0e0e0] px-3 py-1.5 text-xs text-[#999] dark:border-[#3a3a3a] dark:text-[#888]">
                                 Last 12 months
                                 <FontAwesomeIcon
                                     icon={faLayerGroup}
@@ -415,12 +415,12 @@ export default function AdminDepartmentsDashboard() {
                         <AreaChart data={monthlyData} />
                     </div>
 
-                    <div className="rounded-2xl border border-gray-800 bg-[#171717] p-5">
+                    <div className="rounded-[20px] border border-[#e0e0e0] bg-white p-5 transition-colors duration-300 dark:border-[#3a3a3a] dark:bg-[#1a1a1a]">
                         <div className="mb-4 flex items-center justify-between">
-                            <h2 className="text-base font-semibold text-white">
+                            <h2 className="text-base font-semibold text-[#1a1a1a] dark:text-white">
                                 Department Status
                             </h2>
-                            <button className="text-gray-500 hover:text-gray-300">
+                            <button className="text-[#999] hover:text-[#1a1a1a] dark:text-[#666] dark:hover:text-white">
                                 <FontAwesomeIcon icon={faEllipsisVertical} />
                             </button>
                         </div>
@@ -438,20 +438,20 @@ export default function AdminDepartmentsDashboard() {
 
                 <div className="mb-6 grid gap-4 lg:grid-cols-3">
 
-                    <div className="rounded-2xl border border-gray-800 bg-[#171717] p-5">
+                    <div className="rounded-[20px] border border-[#e0e0e0] bg-white p-5 transition-colors duration-300 dark:border-[#3a3a3a] dark:bg-[#1a1a1a]">
                         <div className="mb-4 flex items-center justify-between">
-                            <h2 className="text-base font-semibold text-white">
+                            <h2 className="text-base font-semibold text-[#1a1a1a] dark:text-white">
                                 Weekly Report
                             </h2>
-                            <button className="text-gray-500 hover:text-gray-300">
+                            <button className="text-[#999] hover:text-[#1a1a1a] dark:text-[#666] dark:hover:text-white">
                                 <FontAwesomeIcon icon={faEllipsisVertical} />
                             </button>
                         </div>
 
-                        <p className="text-xs text-gray-400">Total this week</p>
-                        <p className="mt-1 text-2xl font-bold text-white">
+                        <p className="text-xs text-[#999] dark:text-[#888]">Total this week</p>
+                        <p className="mt-1 text-2xl font-bold text-[#1a1a1a] dark:text-white">
                             {weeklyData.reduce((s, d) => s + d.value, 0)}{' '}
-                            <span className="text-sm font-normal text-gray-400">
+                            <span className="text-sm font-normal text-[#b0b0b0] dark:text-[#666]">
                                 departments
                             </span>
                         </p>
@@ -459,18 +459,18 @@ export default function AdminDepartmentsDashboard() {
                         <BarChart data={weeklyData} />
                     </div>
 
-                    <div className="rounded-2xl border border-gray-800 bg-[#171717] p-5 lg:col-span-2">
+                    <div className="rounded-[20px] border border-[#e0e0e0] bg-white p-5 transition-colors duration-300 lg:col-span-2 dark:border-[#3a3a3a] dark:bg-[#1a1a1a]">
                         <div className="mb-4 flex items-center justify-between">
-                            <h2 className="text-base font-semibold text-white">
+                            <h2 className="text-base font-semibold text-[#1a1a1a] dark:text-white">
                                 Recent Departments
                             </h2>
-                            <button className="text-gray-500 hover:text-gray-300">
+                            <button className="text-[#999] hover:text-[#1a1a1a] dark:text-[#666] dark:hover:text-white">
                                 <FontAwesomeIcon icon={faEllipsisVertical} />
                             </button>
                         </div>
 
                         {recentDepartments.length === 0 ? (
-                            <p className="py-8 text-center text-sm text-gray-500">
+                            <p className="py-8 text-center text-sm text-[#b0b0b0] dark:text-[#666]">
                                 No departments yet.
                             </p>
                         ) : (
@@ -487,20 +487,20 @@ export default function AdminDepartmentsDashboard() {
                                         <li key={d._id}>
                                             <div className="flex items-start justify-between gap-4">
                                                 <div className="min-w-0 flex-1">
-                                                    <p className="truncate font-medium text-white">
+                                                    <p className="truncate font-medium text-[#1a1a1a] dark:text-white">
                                                         {d.name || 'Unnamed'}
                                                     </p>
-                                                    <p className="mt-0.5 truncate text-xs text-gray-400">
+                                                    <p className="mt-0.5 truncate text-xs text-[#999] dark:text-[#888]">
                                                         {d.description ||
                                                             'No description'}
                                                     </p>
                                                 </div>
-                                                <span className="shrink-0 text-xs font-medium text-gray-300">
+                                                <span className="shrink-0 text-xs font-medium text-[#999] dark:text-[#888]">
                                                     {timeAgo(d.createdAt)}
                                                 </span>
                                             </div>
 
-                                            <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-gray-800">
+                                            <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-[#f0f0f0] dark:bg-[#2a2a2a]">
                                                 <div
                                                     className={`h-full rounded-full ${
                                                         d.status === 'active'
@@ -527,41 +527,41 @@ export default function AdminDepartmentsDashboard() {
                 <div className="mb-6 grid gap-4 lg:grid-cols-3">
 
                     {/* Subject counts */}
-                    <div className="rounded-2xl border border-gray-800 bg-[#171717] p-5">
+                    <div className="rounded-[20px] border border-[#e0e0e0] bg-white p-5 transition-colors duration-300 dark:border-[#3a3a3a] dark:bg-[#1a1a1a]">
                         <div className="mb-4 flex items-center gap-2">
                             <FontAwesomeIcon
                                 icon={faBookOpen}
                                 className="text-cyan-400"
                             />
-                            <h2 className="text-base font-semibold text-white">
+                            <h2 className="text-base font-semibold text-[#1a1a1a] dark:text-white">
                                 Subjects
                             </h2>
                         </div>
 
                         <div className="space-y-4">
                             <div>
-                                <p className="text-xs text-gray-400">
+                                <p className="text-xs text-[#999] dark:text-[#888]">
                                     Total subjects
                                 </p>
-                                <p className="text-3xl font-bold text-white">
+                                <p className="text-3xl font-bold text-[#1a1a1a] dark:text-white">
                                     {subjects.length}
                                 </p>
                             </div>
 
                             <div className="grid grid-cols-2 gap-3">
                                 <div className="rounded-xl bg-green-500/10 p-3">
-                                    <p className="text-xs text-green-400">
+                                    <p className="text-xs text-green-500 dark:text-green-400">
                                         Active
                                     </p>
-                                    <p className="text-lg font-semibold text-white">
+                                    <p className="text-lg font-semibold text-[#1a1a1a] dark:text-white">
                                         {activeSubjects}
                                     </p>
                                 </div>
                                 <div className="rounded-xl bg-orange-500/10 p-3">
-                                    <p className="text-xs text-orange-400">
+                                    <p className="text-xs text-orange-500 dark:text-orange-400">
                                         Inactive
                                     </p>
-                                    <p className="text-lg font-semibold text-white">
+                                    <p className="text-lg font-semibold text-[#1a1a1a] dark:text-white">
                                         {inactiveSubjects}
                                     </p>
                                 </div>
@@ -570,24 +570,24 @@ export default function AdminDepartmentsDashboard() {
                     </div>
 
                     {/* Top subjects per department */}
-                    <div className="rounded-2xl border border-gray-800 bg-[#171717] p-5 lg:col-span-2">
+                    <div className="rounded-[20px] border border-[#e0e0e0] bg-white p-5 transition-colors duration-300 lg:col-span-2 dark:border-[#3a3a3a] dark:bg-[#1a1a1a]">
                         <div className="mb-4 flex items-center justify-between">
                             <div className="flex items-center gap-2">
                                 <FontAwesomeIcon
                                     icon={faLayerGroup}
                                     className="text-violet-400"
                                 />
-                                <h2 className="text-base font-semibold text-white">
+                                <h2 className="text-base font-semibold text-[#1a1a1a] dark:text-white">
                                     Subjects per Department
                                 </h2>
                             </div>
-                            <button className="text-gray-500 hover:text-gray-300">
+                            <button className="text-[#999] hover:text-[#1a1a1a] dark:text-[#666] dark:hover:text-white">
                                 <FontAwesomeIcon icon={faEllipsisVertical} />
                             </button>
                         </div>
 
                         {topSubjectsByDepartment.length === 0 ? (
-                            <p className="py-8 text-center text-sm text-gray-500">
+                            <p className="py-8 text-center text-sm text-[#b0b0b0] dark:text-[#666]">
                                 No subjects yet.
                             </p>
                         ) : (
@@ -600,29 +600,29 @@ export default function AdminDepartmentsDashboard() {
                                         <li key={i}>
                                             <div className="flex items-start justify-between gap-4">
                                                 <div className="flex items-center gap-3 min-w-0 flex-1">
-                                                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/5 text-cyan-300">
+                                                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#f5f5f5] text-cyan-500 dark:bg-[#2a2a2a] dark:text-cyan-300">
                                                         <FontAwesomeIcon
                                                             icon={faBook}
                                                             className="text-sm"
                                                         />
                                                     </div>
                                                     <div className="min-w-0">
-                                                        <p className="truncate font-medium text-white">
+                                                        <p className="truncate font-medium text-[#1a1a1a] dark:text-white">
                                                             {d.name}
                                                         </p>
-                                                        <p className="mt-0.5 truncate text-xs text-gray-400">
+                                                        <p className="mt-0.5 truncate text-xs text-[#999] dark:text-[#888]">
                                                             {d.active} active ·{' '}
                                                             {d.count - d.active}{' '}
                                                             inactive
                                                         </p>
                                                     </div>
                                                 </div>
-                                                <span className="shrink-0 text-xs font-medium text-gray-300">
+                                                <span className="shrink-0 text-xs font-medium text-[#999] dark:text-[#888]">
                                                     {d.count} subjects
                                                 </span>
                                             </div>
 
-                                            <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-gray-800">
+                                            <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-[#f0f0f0] dark:bg-[#2a2a2a]">
                                                 <div
                                                     className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-cyan-400"
                                                     style={{
@@ -642,13 +642,13 @@ export default function AdminDepartmentsDashboard() {
                     ALL DEPARTMENTS LIST
                 ================================================ */}
 
-                <div className="overflow-hidden rounded-2xl border border-gray-800 bg-[#171717]">
-                    <div className="flex flex-col gap-4 border-b border-gray-800 p-5 sm:flex-row sm:items-center sm:justify-between">
+                <div className="overflow-hidden rounded-[20px] border border-[#e0e0e0] bg-white transition-colors duration-300 dark:border-[#3a3a3a] dark:bg-[#1a1a1a]">
+                    <div className="flex flex-col gap-4 border-b border-[#f0f0f0] p-5 transition-colors duration-300 sm:flex-row sm:items-center sm:justify-between dark:border-[#2a2a2a]">
                         <div>
-                            <h2 className="text-lg font-semibold text-white">
+                            <h2 className="text-lg font-semibold text-[#1a1a1a] dark:text-white">
                                 All Departments
                             </h2>
-                            <p className="mt-1 text-sm text-gray-400">
+                            <p className="mt-1 text-sm text-[#999] dark:text-[#888]">
                                 {filteredDepartments.length} departments found
                             </p>
                         </div>
@@ -656,7 +656,7 @@ export default function AdminDepartmentsDashboard() {
                         <div className="relative w-full sm:w-72">
                             <FontAwesomeIcon
                                 icon={faMagnifyingGlass}
-                                className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-gray-400"
+                                className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-[#b0b0b0] dark:text-[#666]"
                             />
 
                             <input
@@ -664,23 +664,23 @@ export default function AdminDepartmentsDashboard() {
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
                                 placeholder="Search departments..."
-                                className="h-10 w-full rounded-xl border border-gray-700 bg-[#202020] pl-9 pr-4 text-sm text-white outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/10"
+                                className="h-10 w-full rounded-xl border border-[#e0e0e0] bg-white pl-9 pr-4 text-sm text-[#1a1a1a] outline-none transition placeholder:text-[#b0b0b0] focus:border-[#50A2FF] focus:ring-2 focus:ring-[#50A2FF]/10 dark:border-[#3a3a3a] dark:bg-[#2a2a2a] dark:text-white dark:placeholder:text-[#666]"
                             />
                         </div>
                     </div>
 
                     {filteredDepartments.length === 0 && (
                         <div className="px-6 py-16 text-center">
-                            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-gray-800 text-gray-400">
+                            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-[#f5f5f5] text-[#b0b0b0] dark:bg-[#2a2a2a] dark:text-[#666]">
                                 <FontAwesomeIcon
                                     icon={faFolderOpen}
                                     className="text-2xl"
                                 />
                             </div>
-                            <h3 className="mt-4 font-semibold text-white">
+                            <h3 className="mt-4 font-semibold text-[#1a1a1a] dark:text-white">
                                 No departments found
                             </h3>
-                            <p className="mt-1 text-sm text-gray-400">
+                            <p className="mt-1 text-sm text-[#999] dark:text-[#888]">
                                 Try changing your search.
                             </p>
                         </div>
@@ -700,10 +700,10 @@ export default function AdminDepartmentsDashboard() {
                                 return (
                                     <div
                                         key={department._id}
-                                        className="group rounded-2xl border border-gray-800 bg-[#202020] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-blue-500/40 hover:shadow-lg"
+                                        className="group rounded-[20px] border border-[#e0e0e0] bg-white p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[#50A2FF]/40 hover:shadow-lg dark:border-[#3a3a3a] dark:bg-[#2a2a2a]"
                                     >
                                         <div className="flex items-start justify-between">
-                                            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-500/10 text-blue-400">
+                                            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#50A2FF]/10 text-[#50A2FF]">
                                                 <FontAwesomeIcon
                                                     icon={faSchool}
                                                     className="text-lg"
@@ -713,33 +713,33 @@ export default function AdminDepartmentsDashboard() {
                                             <span
                                                 className={`rounded-full px-2.5 py-1 text-xs font-medium ${
                                                     department.status === 'active'
-                                                        ? 'bg-green-500/10 text-green-400'
-                                                        : 'bg-gray-700 text-gray-300'
+                                                        ? 'bg-green-500/10 text-green-500 dark:text-green-400'
+                                                        : 'bg-[#f0f0f0] text-[#999] dark:bg-[#3a3a3a] dark:text-[#888]'
                                                 }`}
                                             >
                                                 {department.status || 'unknown'}
                                             </span>
                                         </div>
 
-                                        <h3 className="mt-5 truncate text-lg font-semibold text-white">
+                                        <h3 className="mt-5 truncate text-lg font-semibold text-[#1a1a1a] dark:text-white">
                                             {department.name || 'Unnamed Department'}
                                         </h3>
 
                                         {department.code && (
-                                            <p className="mt-1 text-xs font-medium uppercase tracking-wider text-blue-400">
+                                            <p className="mt-1 text-xs font-medium uppercase tracking-wider text-[#50A2FF]">
                                                 {department.code}
                                             </p>
                                         )}
 
-                                        <p className="mt-3 line-clamp-2 min-h-10 text-sm leading-5 text-gray-400">
+                                        <p className="mt-3 line-clamp-2 min-h-10 text-sm leading-5 text-[#999] dark:text-[#888]">
                                             {department.description ||
                                                 'No description available.'}
                                         </p>
 
-                                        <div className="mt-4 flex items-center gap-2 text-xs text-gray-400">
+                                        <div className="mt-4 flex items-center gap-2 text-xs text-[#999] dark:text-[#888]">
                                             <FontAwesomeIcon
                                                 icon={faBook}
-                                                className="text-cyan-400"
+                                                className="text-cyan-500 dark:text-cyan-400"
                                             />
                                             <span>
                                                 {count} subject
@@ -767,7 +767,7 @@ export default function AdminDepartmentsDashboard() {
 function GradientStatCard({ title, value, gradient, icon }) {
     return (
         <div
-            className={`relative overflow-hidden rounded-2xl bg-gradient-to-br ${gradient} p-5 text-white shadow-lg`}
+            className={`relative overflow-hidden rounded-[20px] bg-gradient-to-br ${gradient} p-5 text-white shadow-lg`}
         >
             <svg
                 className="pointer-events-none absolute bottom-0 left-0 h-20 w-full opacity-30"

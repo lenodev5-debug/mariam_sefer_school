@@ -59,39 +59,66 @@ export default function TeacherAssignmentList({
     // LOAD ASSIGNMENTS
     // ------------------------------------------------------------
     const loadAssignments = useCallback(async () => {
-        try {
-            setLoading(true);
-            setError("");
+    try {
+        setLoading(true);
+        setError("");
 
-            const params = {};
-            if (filterYear) params.academicYearId = filterYear;
-            if (filterGrade) params.gradeId = filterGrade;
-            if (filterStatus) params.status = filterStatus;
-            if (filterCoordinator === "true") params.isCoordinator = "true";
-            if (filterCoordinator === "false") params.isCoordinator = "false";
+        const params = {};
 
-            const res =
-                await teacherAssignmentService.getAllTeacherAssignments(
-                    params
-                );
-
-            const list = Array.isArray(res) ? res : res?.data || [];
-            setAssignments(list);
-        } catch (err) {
-            setError(
-                err?.response?.data?.message ||
-                    "Failed to load teacher assignments."
-            );
-            setAssignments([]);
-        } finally {
-            setLoading(false);
+        if (filterYear) {
+            params.academicYearId = filterYear;
         }
-    }, [
-        filterYear,
-        filterGrade,
-        filterStatus,
-        filterCoordinator,
-    ]);
+
+        if (filterGrade) {
+            params.gradeId = filterGrade;
+        }
+
+        if (filterStatus) {
+            params.status = filterStatus;
+        }
+
+        if (filterCoordinator === "true") {
+            params.isCoordinator = "true";
+        }
+
+        if (filterCoordinator === "false") {
+            params.isCoordinator = "false";
+        }
+
+        const res =
+            await teacherAssignmentService.getAllTeacherAssignments(
+                params
+            );
+
+        console.log("TEACHER ASSIGNMENTS RESPONSE:", res);
+
+        const list = Array.isArray(res)
+            ? res
+            : res?.assignments ||
+              res?.data ||
+              [];
+
+        console.log("TEACHER ASSIGNMENTS LIST:", list);
+
+        setAssignments(list);
+    } catch (err) {
+        console.error("LOAD ASSIGNMENTS ERROR:", err);
+
+        setError(
+            err?.response?.data?.message ||
+                "Failed to load teacher assignments."
+        );
+
+        setAssignments([]);
+    } finally {
+        setLoading(false);
+    }
+}, [
+    filterYear,
+    filterGrade,
+    filterStatus,
+    filterCoordinator,
+]);
 
     useEffect(() => {
         loadAssignments();

@@ -1,250 +1,119 @@
 
-import { useEffect, useMemo, useState } from "react";
 
-import userService from "../../../../lib/service/admin/userService"; 
-
-import UserList from "../../shared/cards/users/user/userlist";
-import UserDetail from "../../shared/cards/users/user/userDetail";
+import { useCallback, useState } from "react";
 import FloatingMenu from "../../shared/ui/FloatingMenu";
+import { ProfileList, UserProfileCard } from '../../components/profile'
+
+const ROLE_TABS = [
+  { key: "User", label: "All Users" },
+  { key: "Student", label: "Students" },
+  { key: "Teacher", label: "Teachers" },
+  { key: "Parent", label: "Parents" },
+  { key: "Librarian", label: "Librarians" },
+  { key: "Admin", label: "Admins" },
+];
 
 export default function AdminUserDashboard() {
-    /* ---------- state ---------- */
-    const [users, setUsers] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState("");
+  const [role, setRole] = useState("User");
+  const [selectedProfile, setSelectedProfile] = useState(null);
+  const [view, setView] = useState("list");
 
-    const [selectedUser, setSelectedUser] = useState(null);
-    const [view, setView] = useState("list"); // "list" | "detail"
+  const handleView = useCallback((profile) => {
+    if (!profile || (!profile._id && !profile.id)) return;
+    setSelectedProfile(profile);
+    setView("detail");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
-    const [pagination, setPagination] = useState(null);
-    const [page, setPage] = useState(1);
+  const handleBack = useCallback(() => {
+    setView("list");
+    setSelectedProfile(null);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
-    /* ---------- permissions (hook into your auth later) ---------- */
-    const canView = true;
-    const canEdit = true;
-    const canChangeRole = true;
-    const canChangeStatus = true;
-    const canDelete = true;
+  const handleEdit = useCallback((p) => console.log("Edit:", p), []);
 
-    /* ---------- load users ---------- */
-    useEffect(() => {
-        let cancelled = false;
+  const handleDeleted = useCallback(
+    (id) => {
+      if (selectedProfile && (selectedProfile._id || selectedProfile.id) === id) {
+        handleBack();
+      }
+    },
+    [selectedProfile, handleBack]
+  );
 
-        const loadUsers = async () => {
-            try {
-                setLoading(true);
-                setError("");
-
-                const response =
-                    await userService.getAllUsers({
-                        page,
-                    });
-
-                if (cancelled) return;
-
-                if (!response?.success) {
-                    throw new Error(
-                        response?.message ||
-                            "Failed to load users."
-                    );
-                }
-
-                // response.data might be { users: [], pagination: {} }
-                // or just an array — handle both
-                const list = Array.isArray(response.data)
-                    ? response.data
-                    : response.data?.users || [];
-
-                setUsers(list);
-
-                if (response.pagination) {
-                    setPagination(response.pagination);
-                } else if (response.data?.pagination) {
-                    setPagination(response.data.pagination);
-                } else {
-                    setPagination(null);
-                }
-            } catch (err) {
-                if (cancelled) return;
-                console.error("Load users error:", err);
-                setError(
-                    err.response?.data?.message ||
-                        err.message ||
-                        "Failed to load users."
-                );
-            } finally {
-                if (!cancelled) setLoading(false);
-            }
-        };
-
-        loadUsers();
-
-        return () => {
-            cancelled = true;
-        };
-    }, [page]);
-
-    /* ---------- handlers ---------- */
-
-    // Open detail view
-    const handleUserClick = (user) => {
-        setSelectedUser(user);
-        setView("detail");
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    };
-
-    const handleView = (user) => {
-        setSelectedUser(user);
-        setView("detail");
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    };
-
-    const handleBack = () => {
-        setView("list");
-        setSelectedUser(null);
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    };
-
-    const handleEdit = (user) => {
-        // TODO: open edit modal
-        console.log("Edit user:", user);
-    };
-
-    const handleChangeRole = (user) => {
-        // TODO: open change-role modal
-        console.log("Change role:", user);
-    };
-
-    const handleChangeStatus = async (payload) => {
-        // payload can be { user, status } from UserDetail
-        // or just a user from UserMenu
-        const user = payload?.user || payload;
-        const status =
-            payload?.status ||
-            (user?.status === "active"
-                ? "inactive"
-                : "active");
-
-        if (!user?._id && !user?.id) return;
-
-        try {
-            const id = user._id || user.id;
-
-            const response =
-                await userService.changeUserStatus?.(id, {
-                    status,
-                }) ||
-                (await userService.updateUser?.(id, { status }));
-
-            // Optimistic local update
-            setUsers((prev) =>
-                prev.map((u) =>
-                    (u._id || u.id) === id
-                        ? { ...u, status }
-                        : u
-                )
-            );
-
-            // Update selected user if open
-            setSelectedUser((prev) =>
-                prev && (prev._id || prev.id) === id
-                    ? { ...prev, status }
-                    : prev
-            );
-        } catch (err) {
-            console.error("Change status error:", err);
-            alert(
-                err.response?.data?.message ||
-                    err.message ||
-                    "Failed to change status."
-            );
-        }
-    };
-
-    const handleDelete = async (user) => {
-        if (!user?._id && !user?.id) return;
-
-        const confirmed = window.confirm(
-            `Delete ${user.name || "this user"}?`
-        );
-        if (!confirmed) return;
-
-        try {
-            const id = user._id || user.id;
-            await userService.deleteUser?.(id);
-
-            setUsers((prev) =>
-                prev.filter((u) => (u._id || u.id) !== id)
-            );
-
-            if (
-                selectedUser &&
-                (selectedUser._id || selectedUser.id) === id
-            ) {
-                handleBack();
-            }
-        } catch (err) {
-            console.error("Delete user error:", err);
-            alert(
-                err.response?.data?.message ||
-                    err.message ||
-                    "Failed to delete user."
-            );
-        }
-    };
-
-    const handlePageChange = (nextPage) => {
-        setPage(nextPage);
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    };
-
-    if (view === "detail" && selectedUser) {
-        return (
-            <div className="min-h-screen w-full p-3 sm:p-5">
-                <div className="mx-auto w-full max-w-350">
-                    <UserDetail
-                        user={selectedUser}
-                        onBack={handleBack}
-                        onEdit={handleEdit}
-                        onChangeRole={handleChangeRole}
-                        onChangeStatus={handleChangeStatus}
-                        canEdit={canEdit}
-                        canChangeRole={canChangeRole}
-                        canChangeStatus={canChangeStatus}
-                    />
-                </div>
-            </div>
-        );
-    }
-
-    return (
-        <div className="min-h-screen w-full p-3 sm:p-5">
-            <div className="mx-auto w-full max-w-350 space-y-5 mt-15">
-                {error && (
-                    <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-900/50 dark:bg-red-950/30 dark:text-red-400">
-                        {error}
-                    </div>
-                )}
-
-                <UserList
-                    users={users}
-                    loading={loading}
-                    onUserClick={handleUserClick}
-                    onView={handleView}
-                    onEdit={handleEdit}
-                    onChangeRole={handleChangeRole}
-                    onChangeStatus={handleChangeStatus}
-                    onDelete={handleDelete}
-                    canView={canView}
-                    canEdit={canEdit}
-                    canChangeRole={canChangeRole}
-                    canChangeStatus={canChangeStatus}
-                    canDelete={canDelete}
-                    pagination={pagination}
-                    onPageChange={handlePageChange}
-                />
-            </div>
-            <FloatingMenu />
-        </div>
+  const handleStatusChanged = useCallback((id, status) => {
+    setSelectedProfile((prev) =>
+      prev && (prev._id || prev.id) === id ? { ...prev, status } : prev
     );
+  }, []);
+
+  return (
+    <div className="min-h-screen w-full bg-[#f3f3f3] px-4 py-6 dark:bg-[#111111] relative top-12">
+      <div className="mx-auto w-[96%]">
+        {view === "detail" && selectedProfile ? (
+          <div className="space-y-4">
+            <button
+              onClick={handleBack}
+              className="text-sm font-medium text-[#14b8a6] hover:underline"
+            >
+              ← Back to list
+            </button>
+
+            <UserProfileCard
+              profile={selectedProfile}
+              variant="card"
+              onEdit={handleEdit}
+              onDeleted={handleDeleted}
+              onStatusChanged={handleStatusChanged}
+            />
+          </div>
+        ) : (
+          <>
+            {/* Header */}
+            <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <h1 className="text-xl font-semibold text-gray-800 dark:text-gray-100">
+                  User Management
+                </h1>
+                <p className="text-sm text-gray-500">
+                  Browse, edit, and manage user accounts.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap gap-1.5">
+                {ROLE_TABS.map((tab) => {
+                  const active = role === tab.key;
+                  return (
+                    <button
+                      key={tab.key}
+                      onClick={() => setRole(tab.key)}
+                      className={`h-8 rounded px-3 text-xs font-medium transition ${
+                        active
+                          ? "bg-[#14b8a6] text-white"
+                          : "border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 dark:border-[#2a2a2a] dark:bg-[#1f1f1f] dark:text-gray-200 dark:hover:bg-[#262626]"
+                      }`}
+                    >
+                      {tab.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <ProfileList
+              key={role}
+              role={role}
+              onEdit={handleEdit}
+              onDeleted={handleDeleted}
+              onStatusChanged={handleStatusChanged}
+              onView={handleView}
+            />
+          </>
+        )}
+      </div>
+
+      <FloatingMenu />
+    </div>
+  );
 }

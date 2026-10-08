@@ -60,10 +60,6 @@ const tags = [
   { name: 'Library', icon: faBook },
 ];
 
-// ============================================================
-// TAG COMPONENT
-// ============================================================
-
 function Tag({ tag }) {
   return (
     <div
@@ -76,17 +72,23 @@ function Tag({ tag }) {
         gap-2
         rounded-md
         border
-        border-white/10
-        bg-[#090909]
+        border-[#e0e0e0]
+        bg-white
         px-5
         text-sm
-        text-gray-300
+        text-[#1a1a1a]
         backdrop-blur-md
         transition-all
         duration-300
-        hover:border-white/20
-        hover:bg-white/[0.08]
-        hover:text-white
+        hover:border-[#50A2FF]/40
+        hover:bg-[#f5f5f5]
+        hover:text-[#1a1a1a]
+        dark:border-[#2a2a2a]
+        dark:bg-[#1a1a1a]
+        dark:text-[#d1d1d1]
+        dark:hover:border-[#50A2FF]/40
+        dark:hover:bg-[#2a2a2a]
+        dark:hover:text-white
       "
     >
       <FontAwesomeIcon
@@ -99,14 +101,18 @@ function Tag({ tag }) {
           justify-center
           rounded-md
           border
-          border-white/20
+          border-[#e0e0e0]
           p-2
           text-sm
-          text-gray-400
+          text-[#999]
           transition-all
           duration-300
-          group-hover:border-white/40
-          group-hover:text-white
+          group-hover:border-[#50A2FF]/40
+          group-hover:text-[#50A2FF]
+          dark:border-[#3a3a3a]
+          dark:text-[#888]
+          dark:group-hover:border-[#50A2FF]/40
+          dark:group-hover:text-[#50A2FF]
         "
       />
 
@@ -120,59 +126,23 @@ function StatCard({ item }) {
       <div className="relative mb-8 h-28 w-44">
         <FontAwesomeIcon
           icon={item.icon}
-          className="
-            stat-icon
-            absolute
-            left-3
-            top-0
-            text-4xl
-            text-white
-          "
-          style={{
-            animationDelay: '0s',
-          }}
+          className="stat-icon absolute left-3 top-0 text-4xl text-[#1a1a1a] dark:text-white"
+          style={{ animationDelay: '0s' }}
         />
         <FontAwesomeIcon
           icon={item.icon1}
-          className="
-            stat-icon
-            absolute
-            right-3
-            top-6
-            text-4xl
-            text-white
-          "
-          style={{
-            animationDelay: '0.4s',
-          }}
+          className="stat-icon absolute right-3 top-6 text-4xl text-[#1a1a1a] dark:text-white"
+          style={{ animationDelay: '0.4s' }}
         />
         <FontAwesomeIcon
           icon={item.icon2}
-          className="
-            stat-icon
-            absolute
-            left-7
-            top-19
-            text-4xl
-            text-white
-          "
-          style={{
-            animationDelay: '0.8s',
-          }}
+          className="stat-icon absolute left-7 top-19 text-4xl text-[#1a1a1a] dark:text-white"
+          style={{ animationDelay: '0.8s' }}
         />
         <FontAwesomeIcon
           icon={item.icon3}
-          className="
-            stat-icon
-            absolute
-            right-8
-            top-24
-            text-4xl
-            text-white
-          "
-          style={{
-            animationDelay: '1.2s',
-          }}
+          className="stat-icon absolute right-8 top-24 text-4xl text-[#1a1a1a] dark:text-white"
+          style={{ animationDelay: '1.2s' }}
         />
       </div>
       <h1
@@ -181,16 +151,17 @@ function StatCard({ item }) {
           text-5xl
           font-black
           tracking-tight
-          text-white
+          text-[#1a1a1a]
           md:text-6xl
+          dark:text-white
         "
-        style={{
-          fontFamily: 'Inter, sans-serif',
-        }}
+        style={{ fontFamily: 'Inter, sans-serif' }}
       >
         {item.number}
       </h1>
-      <p className="mt-2 text-center text-lg font-medium text-gray-400">{item.name}</p>
+      <p className="mt-2 text-center text-lg font-medium text-[#999] dark:text-[#888]">
+        {item.name}
+      </p>
     </div>
   );
 }
@@ -199,7 +170,7 @@ export default function Baner() {
   const animatedTags = [...tags, ...tags, ...tags];
 
   return (
-    <div className="bg-[#090909] h-[80vh]">
+    <div className="h-[80vh] bg-[#f5f5f5] transition-colors duration-300 dark:bg-[#0f0f0f]">
       <div
         className="
           relative
@@ -208,11 +179,17 @@ export default function Baner() {
           overflow-hidden
           rounded-2xl
           border
-          border-white/10
-          bg-[#090909]
-          shadow-[0_10px_40px_rgba(0,0,0,0.25)]
+          border-[#e0e0e0]
+          bg-white
+          shadow-[0_10px_40px_rgba(0,0,0,0.08)]
+          transition-colors
+          duration-300
+          dark:border-[#2a2a2a]
+          dark:bg-[#1a1a1a]
+          dark:shadow-[0_10px_40px_rgba(0,0,0,0.25)]
         "
       >
+        {/* ✅ LEFT FADE — gradient */}
         <div
           className="
             pointer-events-none
@@ -221,9 +198,16 @@ export default function Baner() {
             left-0
             z-20
             w-32
-            bg-[#090909]
+            bg-gradient-to-r
+            from-white
+            to-transparent
+            transition-colors
+            duration-300
+            dark:from-[#1a1a1a]
           "
         />
+
+        {/* ✅ RIGHT FADE — gradient */}
         <div
           className="
             pointer-events-none
@@ -232,10 +216,16 @@ export default function Baner() {
             right-0
             z-20
             w-32
-            bg-[#090909]
+            bg-gradient-to-l
+            from-white
+            to-transparent
+            transition-colors
+            duration-300
+            dark:from-[#1a1a1a]
           "
         />
-        <div className="tags-track flex w-max gap-3">
+
+        <div className="tags-track flex w-max gap-3 pt-4">
           {animatedTags.map((tag, index) => (
             <Tag key={`row1-${tag.name}-${index}`} tag={tag} />
           ))}
@@ -245,7 +235,7 @@ export default function Baner() {
             <Tag key={`row2-${tag.name}-${index}`} tag={tag} />
           ))}
         </div>
-        <div className="tags-track mt-2 flex w-max gap-3">
+        <div className="tags-track mt-2 flex w-max gap-3 pb-4">
           {animatedTags.map((tag, index) => (
             <Tag key={`row3-${tag.name}-${index}`} tag={tag} />
           ))}

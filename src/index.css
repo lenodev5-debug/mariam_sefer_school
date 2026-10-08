@@ -1,5 +1,11 @@
 @import 'tailwindcss';
 
+/* ==================================================
+   DARK MODE — class based
+   (works with ThemeProvider toggling `dark` on <html>)
+   ================================================== */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-mediumturquoise: #48d1cc;
   --color-lightblue: #add8e6;
@@ -141,8 +147,6 @@
   animation: statIconFloat 2.2s ease-in-out infinite;
 }
 
-
-
 /* ==================================================
    STUDENT COMMENTS — LEFT
    ================================================== */
@@ -156,7 +160,6 @@
     transform: translateX(-33.333%);
   }
 }
-
 
 /* ==================================================
    STUDENT COMMENTS — RIGHT
@@ -172,7 +175,6 @@
   }
 }
 
-
 /* ==================================================
    COMMENT TRACK
    ================================================== */
@@ -185,7 +187,6 @@
   animation: commentsSlideReverse 36s linear infinite;
 }
 
-
 /* ==================================================
    PAUSE ON HOVER
    ================================================== */
@@ -194,7 +195,6 @@
 .comments-track-reverse:hover {
   animation-play-state: paused;
 }
-
 
 /* ==================================================
    REDUCED MOTION
